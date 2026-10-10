@@ -286,6 +286,7 @@ footer a { color: var(--ink-2); }
     <a href="#acesso">Acesso e exceções</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
+    <a href="#integracao">Cadastros e integração</a>
     <a href="#papel">Papel zero</a>
     <a href="#hardware">Hardware e custos</a>
     <a href="#desenvolvimento">Desenvolvimento</a>
@@ -665,7 +666,7 @@ footer a { color: var(--ink-2); }
       </table></div>
       <p class="rule">A doca é definida antes de o veículo entrar no pátio.</p>
       <div class="prose"><p>A onda escolhe a doca dos tocos e a agenda escolhe a das carretas; a portaria só confirma. Veículos com rota fixa ou preferencial mantêm a mesma doca sempre que couber, e o carregamento fica mais rápido.</p><p>A agenda da carreta só oferece docas que aceitam carreta e fazem recebimento; a onda dá a cada rota uma doca de expedição compatível com o toco; o placar mostra doca e lado. Com 16 docas, o limite deixa de ser a doca e passa a ser câmaras e pessoas, e o simulador mostra essa disputa.</p></div>
-      <p class="note">A confirmar: qual lado recebe carreta e qual atende os tocos, quais docas são mistas e quais câmaras ficam junto de quais docas.</p>
+      <p class="note">Configurável: lado de carretas e tocos, docas mistas e seus horários e a câmara de cada doca vêm do cadastro de docas. O simulador lê o mesmo cadastro.</p>
     </section>
 
     <section id="recebimento">
@@ -711,7 +712,7 @@ footer a { color: var(--ink-2); }
         <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3". O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
         <div class="card"><h3>Crachá de palete</h3><p>Reutilizável, preso por abraçadeira no bloco de madeira, fora do stretch. NFC para ler de perto e QR grande para ler com a câmera a 1–2 m.</p></div>
       </div>
-      <p class="note">A confirmar: quem sobe e desce paletes do 3º nível, e se o palete de madeira volta ao fornecedor.</p>
+      <p class="note">Decidido: empilhadeira a bateria sobe e desce o 3º nível, só com operador habilitado no cadastro. O palete PBR tem muitas avarias e só parte volta; a regra é configurada por fornecedor, e o avariado vai para a fila de avarias.</p>
     </section>
 
     <section id="camaras">
@@ -981,6 +982,34 @@ footer a { color: var(--ink-2); }
       <div class="prose"><p>Qualquer aparelho gera o mesmo evento. Se os óculos ficam sem bateria, o conferente pega o celular e continua da torre em que parou, porque o progresso está no servidor. A empresa começa só com celular e liga os outros modos conforme compra os acessórios.</p></div>
     </section>
 
+    <section id="integracao">
+      <span class="eyebrow">Cadastros e integração</span>
+      <h2>Nada fixo no código: mudou a operação, muda o cadastro</h2>
+      <p class="lead">Docas, turnos, janelas de carreta, capacidade, patrimônio de cada fornecedor e destinos de avaria são cadastros. O app nasce pronto para qualquer empresa; só lei e segurança ficam travadas.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Cadastro</th><th>O que guarda</th><th>Quem altera</th></tr></thead>
+        <tbody>
+          <tr><td>Docas</td><td>Lado, tipo (carreta, toco, mista), horários, câmara ligada</td><td>Administrador</td></tr>
+          <tr><td>Turnos e janelas</td><td>Horários, prioridades, janela livre por fornecedor</td><td>Administrador + compras</td></tr>
+          <tr><td>Capacidade</td><td>Torres por carreta, dollys por dia, rendimento</td><td>Calculado; supervisor ajusta</td></tr>
+          <tr><td>Fornecedores</td><td>O que volta (dolly, cesta, PBR) e regra de troca</td><td>Compras</td></tr>
+          <tr><td>Avarias</td><td>Destinos possíveis e quem aprova cada um</td><td>Gerente</td></tr>
+          <tr><td>Equipamentos</td><td>Empilhadeiras a bateria, celulares, TVs, sensores</td><td>Administrador</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Dolly no cliente</h3>
+      <div class="prose"><p>O dolly vai até o cliente, então tem saldo por cliente, como uma conta corrente de patrimônio. Saiu na rampa, entregue com o celular encostado no crachá, coletado com a mesma leitura, de volta no retorno de rota. Passou do prazo configurado, vendedor e supervisor de rota são avisados.</p></div>
+      <h3>Conexão com o sistema da empresa</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Uso</th><th>Quando</th><th>O que passa</th></tr></thead>
+        <tbody>
+          <tr><td>Migração</td><td>Uma vez, na implantação</td><td>Produtos, clientes, rotas, fornecedores, saldos</td></tr>
+          <tr><td>Conexão on-line</td><td>O tempo todo</td><td>Pedidos e compras entram; NF, retornos, avarias e saldos voltam</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">API do Deméter com chave por empresa. O conector lê uma view do banco, a API do ERP ou, em último caso, um arquivo exportado. Se o ERP cair, os eventos esperam numa fila e a doca não para.</p>
+    </section>
+
     <section id="papel">
       <span class="eyebrow">Papel zero</span>
       <h2>Nenhum papel circula na operação</h2>
@@ -1005,7 +1034,8 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Item</th><th>Referência</th><th>Qtd.</th><th>Valor unitário</th></tr></thead>
         <tbody>
-          <tr><td>Celular com NFC</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a></td><td>29</td><td>~R$ 630</td></tr>
+          <tr><td>Celular do armazém</td><td><a href="https://www.hardware.com.br/?p=267535" target="_blank" rel="noopener">Galaxy XCover7</a> (robusto, IP68, luva)</td><td>12</td><td>~R$ 2.499</td></tr>
+          <tr><td>Celular da entrega</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a></td><td>17</td><td>~R$ 630</td></tr>
           <tr><td>Etiqueta NFC on-metal</td><td><a href="https://store.gototags.com/on-metal-nfc-sticker-ntag213-30-mm-circle/" target="_blank" rel="noopener">NTAG213</a></td><td>~600</td><td>R$ 3–15</td></tr>
           <tr><td>Ímã de neodímio</td><td><a href="https://magazineluiza.com.br/busca/kit+imas+redondo" target="_blank" rel="noopener">N35</a></td><td>~200</td><td>R$ 4–17</td></tr>
           <tr><td>Access point Wi-Fi</td><td><a href="https://magazineluiza.com.br/busca/ubiquiti+ap/" target="_blank" rel="noopener">UniFi U6+</a></td><td>5–6</td><td>R$ 1.058–1.196</td></tr>
