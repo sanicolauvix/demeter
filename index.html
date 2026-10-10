@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="assets/demeter_icone_192.png">
+<title>Deméter</title>
+<meta name="description" content="Deméter: ecossistema de logística de alimentos com celular, crachá NFC e IA, do recebimento ao caminhão.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: índice fixo à esquerda no desktop, conteúdo em coluna de leitura; a abertura é um placar de doca. */
+:root {
+  --bg: #F7F1E6;
+  --surface: #FFFBF4;
+  --sunk: #EFE4D2;
+  --line: #E2D6C3;
+  --ink: #2B1D14;
+  --ink-2: #5C4A3B;
+  --ink-3: #7A6A5A;
+  --accent: #C8742B;
+  --accent-ink: #A4561B;
+  --board: #2B1D14;
+  --board-ink: #F7F1E6;
+  --board-dim: #C9B8A2;
+  --ok: #2F7A4D;
+  --warn: #9A6A00;
+  --bad: #B23A2A;
+  --info: #2F5F8A;
+  --font-display: 'Rubik', 'Trebuchet MS', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', Consolas, 'Courier New', monospace;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1E1510; --surface: #2A1E17; --sunk: #33251C; --line: #45352A;
+    --ink: #F3E9DA; --ink-2: #D2C1AA; --ink-3: #A8957E;
+    --accent: #E3A15E; --accent-ink: #E8AE70;
+    --board: #120C08; --board-ink: #F7F1E6; --board-dim: #A8957E;
+    --ok: #6CC08E; --warn: #E2B44F; --bad: #F08A78; --info: #8DB8E0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1E1510; --surface: #2A1E17; --sunk: #33251C; --line: #45352A;
+  --ink: #F3E9DA; --ink-2: #D2C1AA; --ink-3: #A8957E;
+  --accent: #E3A15E; --accent-ink: #E8AE70;
+  --board: #120C08; --board-ink: #F7F1E6; --board-dim: #A8957E;
+  --ok: #6CC08E; --warn: #E2B44F; --bad: #F08A78; --info: #8DB8E0;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 20px; padding-block: 0 64px; }
+a { color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; }
+h3 { font-size: 21px; font-weight: 600; }
+p { margin: 0; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+.state { font-family: var(--font-mono); font-size: 13px; background: var(--sunk); color: var(--ink); padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+
+.shell { max-width: 1180px; margin-inline: auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; }
+@media (max-width: 920px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } }
+
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 32px; max-height: calc(100vh - 48px); overflow-y: auto; }
+.toc a { display: block; text-decoration: none; color: var(--ink-3); font-size: 14px; padding: 5px 0 5px 12px; border-left: 2px solid var(--line); }
+.toc a:hover { color: var(--ink); }
+.toc a.on { color: var(--ink); border-left-color: var(--accent); font-weight: 500; }
+.toc .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: var(--font-display); font-weight: 600; letter-spacing: 3px; font-size: 15px; color: var(--ink); }
+.toc .brand svg { width: 32px; height: 32px; }
+.toc .grp { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-3); margin: 18px 0 6px; }
+
+main { min-width: 0; display: flex; flex-direction: column; gap: 88px; padding-top: 32px; }
+section { display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
+.eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-ink); }
+.lead { font-size: 19px; color: var(--ink-2); max-width: 64ch; }
+.prose { max-width: 66ch; color: var(--ink-2); display: flex; flex-direction: column; gap: 12px; }
+
+/* Abertura */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: center; }
+@media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+.hero-mark { display: flex; align-items: center; gap: 16px; }
+.hero-mark svg { width: 76px; height: 76px; flex: none; }
+.hero-mark span { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 6vw, 64px); letter-spacing: 6px; }
+.hero h1 { font-size: clamp(30px, 4.4vw, 48px); font-weight: 500; margin-top: 28px; }
+.hero h1 em { font-style: normal; color: var(--accent-ink); }
+.hero .lead { margin-top: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tags span { font-size: 13px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); }
+
+.board { background: var(--board); color: var(--board-ink); border-radius: var(--radius); padding: 20px; font-family: var(--font-mono); min-width: 0; }
+.board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.board-head b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 1px; }
+.board-head span { color: var(--board-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+.board-scroll { overflow-x: auto; }
+.board table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 440px; }
+.board th { text-align: left; color: var(--board-dim); font-weight: 400; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 8px; }
+.board td { padding: 9px 8px; border-top: 1px solid rgba(247, 241, 230, 0.12); white-space: nowrap; }
+.flap { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.flap.ok { background: #2F7A4D; color: #F2FBF5; }
+.flap.go { background: #2F5F8A; color: #EEF5FC; }
+.flap.wait { background: #9A6A00; color: #FFF7E5; }
+.flap.bad { background: #B23A2A; color: #FFF0ED; }
+.flap.dim { color: var(--board-dim); padding-left: 0; }
+@keyframes flip { 0% { transform: rotateX(90deg); opacity: 0; } 100% { transform: rotateX(0); opacity: 1; } }
+.flap.flipping { animation: flip 0.45s ease-out; }
+.board-note { color: var(--board-dim); font-size: 12px; margin-top: 10px; font-family: var(--font-body); }
+
+/* Blocos */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card p { color: var(--ink-2); font-size: 16px; }
+.card.dark { background: var(--board); border-color: var(--board); }
+.card.dark h3 { color: var(--board-ink); }
+.card.dark p { color: var(--board-dim); }
+.big { font-family: var(--font-display); font-size: 44px; font-weight: 600; color: var(--accent-ink); line-height: 1; }
+.card.dark .big { color: #E3A15E; }
+
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table.t { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 1px; padding: 12px 16px; background: var(--sunk); }
+table.t td { padding: 11px 16px; border-top: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+table.t td:first-child { color: var(--ink); font-weight: 500; }
+table.t tr.total td { font-weight: 600; color: var(--ink); background: var(--sunk); }
+
+ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; color: var(--ink-2); }
+ol.steps li::before { content: counter(s); font-family: var(--font-mono); font-size: 13px; color: var(--accent-ink); border: 1px solid var(--line); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; background: var(--surface); }
+ol.steps li b { color: var(--ink); font-weight: 600; }
+
+.callout { border: 1px solid var(--accent); background: var(--surface); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.callout b { font-family: var(--font-mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-ink); }
+.callout p { color: var(--ink-2); }
+.rule { font-family: var(--font-display); font-size: clamp(22px, 3vw, 28px); font-weight: 500; border-left: 4px solid var(--accent); padding: 4px 0 4px 18px; max-width: 40ch; }
+
+.flow { overflow-x: auto; }
+.flow svg { width: 100%; min-width: 640px; height: auto; display: block; }
+.flow a { cursor: pointer; }
+.flow a:hover rect { stroke: var(--accent); }
+
+.states { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.states .arrow { color: var(--ink-3); }
+
+/* Calculadoras */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+@media (max-width: 760px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.inputs { display: flex; flex-direction: column; gap: 14px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr) 96px; align-items: center; gap: 12px; }
+.field label { font-size: 15px; color: var(--ink-2); }
+.field input, .field select { width: 100%; font: inherit; font-size: 15px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-variant-numeric: tabular-nums; }
+.field select { padding-right: 4px; }
+.out { display: flex; flex-direction: column; gap: 12px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.kpi { background: var(--sunk); border-radius: 10px; padding: 14px; }
+.kpi span { display: block; font-size: 13px; color: var(--ink-3); }
+.kpi b { font-family: var(--font-display); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.out .t td, .out .t th { padding: 8px 12px; font-size: 14px; }
+.note { font-size: 13px; color: var(--ink-3); }
+
+.check { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.check > li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.check ul { padding-left: 18px; margin: 0; color: var(--ink-2); font-size: 15px; display: flex; flex-direction: column; gap: 4px; }
+
+footer { max-width: 1180px; margin: 96px auto 0; border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--ink-3); font-size: 14px; }
+footer a { color: var(--ink-2); }
+.theme-btn { font: inherit; font-size: 13px; background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 512 512">
+      <g fill="var(--ink)" transform="translate(256 262) scale(0.8) translate(-256 -262)">
+        <g transform="translate(256 388)"><path d="M-5 -240C-37.5 -210 -50 -165 -50 -125C-50 -75 -27.5 -40 -5 -30Z M5 -240C37.5 -210 50 -165 50 -125C50 -75 27.5 -40 5 -30Z M-5 -24L5 -24L3 0L-3 0Z"/></g>
+        <g transform="translate(206 382) rotate(-28)"><path d="M-5 -190C-33 -168 -44 -132 -44 -100C-44 -60 -24.2 -34 -5 -24Z M5 -190C33 -168 44 -132 44 -100C44 -60 24.2 -34 5 -24Z M-5 -18L5 -18L3 0L-3 0Z"/></g>
+        <g transform="translate(306 382) rotate(28)"><path d="M-5 -190C-33 -168 -44 -132 -44 -100C-44 -60 -24.2 -34 -5 -24Z M5 -190C33 -168 44 -132 44 -100C44 -60 24.2 -34 5 -24Z M-5 -18L5 -18L3 0L-3 0Z"/></g>
+      </g>
+      <path d="M429.1 164A196 196 0 1 0 410.5 376.7" fill="none" stroke="#C8742B" stroke-width="38"/>
+      <polygon points="448.6,327.8 443,409.7 370.5,353.1" fill="#C8742B"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+  <nav class="toc" aria-label="Seções">
+    <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
+    <div class="grp">Ideia</div>
+    <a href="#problema">O problema</a>
+    <a href="#principios">Princípios</a>
+    <a href="#fluxo">Fluxo ponta a ponta</a>
+    <a href="#torre">Torre e crachá</a>
+    <div class="grp">Operação</div>
+    <a href="#recebimento">Recebimento</a>
+    <a href="#estoque">Estoque e inventário</a>
+    <a href="#onda">Onda</a>
+    <a href="#linha">Linha de dollys</a>
+    <a href="#expedicao">Expedição</a>
+    <a href="#retorno">Retorno de rota</a>
+    <a href="#pessoas">Turnos e pessoas</a>
+    <div class="grp">Tecnologia</div>
+    <a href="#cenarios">Cenários</a>
+    <a href="#papel">Papel zero</a>
+    <a href="#hardware">Hardware e custos</a>
+    <a href="#desenvolvimento">Desenvolvimento</a>
+    <a href="#necessario">O que é necessário</a>
+  </nav>
+
+  <main>
+    <!-- Abertura -->
+    <section class="hero" id="topo" aria-label="Apresentação">
+      <div>
+        <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
+        <h1>Logística de alimentos onde <em>tudo que sai, volta certo</em>.</h1>
+        <p class="lead">Um ecossistema para distribuidoras de alimentos: da compra na fábrica até o caminhão de entrega, com celular Android, crachá NFC reutilizável e IA planejando a operação. O piloto nasce numa distribuidora de pães.</p>
+        <div class="tags"><span>Pães</span><span>Cereais</span><span>Laticínios</span><span>Massas</span><span>Papel zero</span></div>
+      </div>
+      <div class="board" aria-label="Exemplo de placar de chegadas da doca">
+        <div class="board-head"><b>Chegadas · doca</b><span id="relogio">15:17</span></div>
+        <div class="board-scroll">
+          <table>
+            <thead><tr><th>Prev.</th><th>Origem</th><th>Torres</th><th>Doca</th><th>Status</th></tr></thead>
+            <tbody id="placar">
+              <tr><td>13:30</td><td>Fábrica A</td><td>12/12</td><td>1</td><td><span class="flap ok">Liberada</span></td></tr>
+              <tr><td>14:45</td><td>Fábrica B</td><td>7/12</td><td>2</td><td><span class="flap go">Descarregando</span></td></tr>
+              <tr><td>15:00</td><td>Fábrica C</td><td>0/10</td><td>1</td><td><span class="flap go">Na portaria</span></td></tr>
+              <tr><td>14:00</td><td>Fábrica D</td><td>0/8</td><td>—</td><td><span class="flap wait">Atrasado</span></td></tr>
+              <tr><td>15:30</td><td>Fábrica A</td><td>0/12</td><td>—</td><td><span class="flap dim">Previsto</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="board-note">Exemplo ilustrativo. Ninguém digita no placar: ele mostra os eventos registrados pelos celulares.</p>
+      </div>
+    </section>
+
+    <section id="problema">
+      <span class="eyebrow">Ponto de partida</span>
+      <h2>Hoje, a operação roda no olho e na memória</h2>
+      <div class="cards">
+        <div class="card"><h3>Conferência visual</h3><p>Torres chegam envoltas em filme stretch e são contadas no olho. O erro entra no estoque já no recebimento.</p></div>
+        <div class="card"><h3>Separação sem rumo</h3><p>Separador e ajudante pegam uma carga e andam o depósito inteiro, cruzando com outros dollys num espaço pequeno.</p></div>
+        <div class="card"><h3>Patrimônio sem saldo</h3><p>Dollys e cestas retornáveis entram e saem sem contagem. A perda é silenciosa e ninguém sabe quem deve a quem.</p></div>
+      </div>
+    </section>
+
+    <section id="principios">
+      <span class="eyebrow">Princípios</span>
+      <h2>Seis regras guiam todo o desenho</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
+        <tbody>
+          <tr><td>Tudo começa no recebimento</td><td>O que entra errado contamina o resto do fluxo</td></tr>
+          <tr><td>Patrimônio é dinheiro</td><td>Dolly e cesta têm saldo por fábrica, como conta corrente</td></tr>
+          <tr><td>IA propõe, pessoa aprova</td><td>Ondas, veículos e exceções sempre têm um responsável</td></tr>
+          <tr><td>Processo independe do aparelho</td><td>Celular, óculos, portal ou robô geram o mesmo resultado</td></tr>
+          <tr><td>Comercial não é da logística</td><td>Retorno, corte e troca vêm de quem tem autoridade</td></tr>
+          <tr><td>Papel zero</td><td>Todo registro nasce no app e vira indicador e aprendizado</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="fluxo">
+      <span class="eyebrow">Fluxo ponta a ponta</span>
+      <h2>Da compra ao caminhão em dez etapas</h2>
+      <p class="lead">A onda é o ponto de virada: antes dela o produto entra e é conferido; depois, cada dolly já sabe cliente, veículo e rampa. Toque numa etapa para ir até ela.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 236" role="img" aria-label="Fluxo em dez etapas: compra, recebimento, armazenamento, onda, abastecimento, linha, pulmão, conferência, rampa e carregamento">
+          <defs><marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-3)"/></marker></defs>
+          <g fill="none" stroke="var(--ink-3)" stroke-width="1.25">
+            <path d="M154 64H166" marker-end="url(#seta)"/><path d="M300 64H312" marker-end="url(#seta)"/><path d="M446 64H458" marker-end="url(#seta)"/><path d="M592 64H604" marker-end="url(#seta)"/>
+            <path d="M671 92V142" marker-end="url(#seta)"/>
+            <path d="M604 172H592" marker-end="url(#seta)"/><path d="M458 172H446" marker-end="url(#seta)"/><path d="M312 172H300" marker-end="url(#seta)"/><path d="M166 172H154" marker-end="url(#seta)"/>
+          </g>
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <a href="#recebimento"><rect x="20" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="87" y="60" font-size="14" font-weight="600" fill="var(--ink)">Compra</text><text x="87" y="78" font-size="11.5" fill="var(--ink-3)">ordem de retorno</text></a>
+            <a href="#recebimento"><rect x="166" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="233" y="60" font-size="14" font-weight="600" fill="var(--ink)">Recebimento</text><text x="233" y="78" font-size="11.5" fill="var(--ink-3)">NF conferida</text></a>
+            <a href="#estoque"><rect x="312" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="379" y="60" font-size="14" font-weight="600" fill="var(--ink)">Armazenamento</text><text x="379" y="78" font-size="11.5" fill="var(--ink-3)">baias e validade</text></a>
+            <a href="#onda"><rect x="458" y="36" width="134" height="56" rx="10" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="2"/><text x="525" y="60" font-size="14" font-weight="600" fill="var(--ink)">Onda</text><text x="525" y="78" font-size="11.5" fill="var(--ink-2)">IA + aprovação</text></a>
+            <a href="#linha"><rect x="604" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="671" y="60" font-size="14" font-weight="600" fill="var(--ink)">Abastecimento</text><text x="671" y="78" font-size="11.5" fill="var(--ink-3)">FEFO na linha</text></a>
+            <a href="#linha"><rect x="604" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="671" y="168" font-size="14" font-weight="600" fill="var(--ink)">Linha de dollys</text><text x="671" y="186" font-size="11.5" fill="var(--ink-3)">cheias e picado</text></a>
+            <a href="#expedicao"><rect x="458" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="525" y="168" font-size="14" font-weight="600" fill="var(--ink)">Pré-carga</text><text x="525" y="186" font-size="11.5" fill="var(--ink-3)">pulmão misturado</text></a>
+            <a href="#expedicao"><rect x="312" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="379" y="168" font-size="14" font-weight="600" fill="var(--ink)">Conferência</text><text x="379" y="186" font-size="11.5" fill="var(--ink-3)">dolly a dolly</text></a>
+            <a href="#expedicao"><rect x="166" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="233" y="168" font-size="14" font-weight="600" fill="var(--ink)">Rampa</text><text x="233" y="186" font-size="11.5" fill="var(--ink-3)">por veículo</text></a>
+            <a href="#expedicao"><rect x="20" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="87" y="168" font-size="14" font-weight="600" fill="var(--ink)">Carregamento</text><text x="87" y="186" font-size="11.5" fill="var(--ink-3)">assinatura</text></a>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="torre">
+      <span class="eyebrow">Unidade de controle</span>
+      <h2>A torre ganha um crachá que a empresa reutiliza</h2>
+      <div class="cards">
+        <div class="card"><span class="big">1</span><h3>Doly de ferro</h3><p>Base com quatro rodinhas. Volta para a fábrica.</p></div>
+        <div class="card"><span class="big">32</span><h3>Cestas plásticas</h3><p>Padronizadas, com pelo menos duas cestas de cada produto.</p></div>
+        <div class="card dark"><span class="big">NFC</span><h3>Crachá com ímã</h3><p>Etiqueta on-metal NTAG213 num estojo numerado. Fixado na chegada, retirado antes do retorno. R$ 9 a 37 cada.</p></div>
+      </div>
+      <div class="states" aria-label="Estados do crachá">
+        <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">RECEBIDA</span><span class="arrow">→</span><span class="state">SINCRONIZADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">LIBERADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
+      </div>
+    </section>
+
+    <section id="recebimento">
+      <span class="eyebrow">Recebimento</span>
+      <h2>A carreta encontra uma câmara vazia e outra cheia</h2>
+      <div class="cards">
+        <div class="card"><h3>Câmara de descarregamento</h3><p>Precisa estar vazia para abrir. Tudo o que entra nela pertence àquela NF, então nada se identifica durante a descarga.</p></div>
+        <div class="card"><h3>Câmara de retorno</h3><p>Precisa estar cheia, com dollys e cestas iguais à ordem de retorno da compra. A logística executa; quem define é Compras.</p></div>
+      </div>
+      <ol class="steps">
+        <li><span>Conferente escaneia a NF no celular e abre o descarregamento, vinculado à compra.</span></li>
+        <li><span>Ajudantes entram a pé, de dois em dois, e puxam as torres na mão até a câmara.</span></li>
+        <li><span><b>Em paralelo:</b> ajudantes carregam o retorno na carreta e o conferente sincroniza as torres (produtos, validade, baia).</span></li>
+        <li><span>NF conferida e retorno carregado: o motorista assina no celular.</span></li>
+        <li><span>Carreta liberada. O placar mostra <span class="state">Liberada</span>.</span></li>
+      </ol>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Sincronização</th><th>Celular</th><th>Futurista</th></tr></thead>
+        <tbody>
+          <tr><td>Torre</td><td>Encosta no crachá</td><td>Câmera lê o crachá</td></tr>
+          <tr><td>Produtos</td><td>Toque na lista da NF</td><td>IA reconhece, voz confirma</td></tr>
+          <tr><td>Validade</td><td>Toque ou foto da etiqueta</td><td>Leitura automática</td></tr>
+          <tr><td>Baia</td><td>NFC da baia</td><td>Placa lida pela câmera</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="estoque">
+      <span class="eyebrow">Estoque e inventário</span>
+      <h2>Vendas só enxergam o que pode ser vendido</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Situação</th><th>Onde está</th><th>Vende?</th></tr></thead>
+        <tbody>
+          <tr><td>Prevista</td><td>Carreta a caminho</td><td>Sim, sujeito à chegada</td></tr>
+          <tr><td>Em conferência</td><td>Câmara de descarregamento</td><td>Sim, sujeito à conferência</td></tr>
+          <tr><td>Armazenada</td><td>Câmara de armazenamento, por baia</td><td>Sim</td></tr>
+          <tr><td>Abastecida</td><td>Posição da linha de dollys</td><td>Sim</td></tr>
+          <tr><td>Carregada</td><td>Dolly do cliente ou caminhão</td><td>Não, já comprometida</td></tr>
+          <tr><td>Avaria</td><td>Área de avaria</td><td>Não</td></tr>
+          <tr><td>Sem data para venda</td><td>Bloqueada pela validade</td><td>Não</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose">
+        <p>O melhor momento para inventariar é logo antes de a carreta chegar, quando o estoque está no mínimo. Contagem cíclica diária da linha, câmara completa antes de cada carreta, patrimônio semanal e inventário geral mensal. A contagem é cega: o inventariante não vê o saldo do sistema.</p>
+      </div>
+    </section>
+
+    <section id="onda">
+      <span class="eyebrow">Onda</span>
+      <h2>A IA propõe a onda; o responsável aprova antes de separar</h2>
+      <div class="cards">
+        <div class="card"><h3>A IA gera</h3><p>Dollys por pedido, cestas cheias e unidades picadas, veículo e rampa de cada rota.</p></div>
+        <div class="card"><h3>A IA confere</h3><p>Posições no baú, peso e temperatura. Não cabe? Sugere outro veículo, segunda viagem ou divisão da rota.</p></div>
+        <div class="card"><h3>O responsável decide</h3><p>Aceita ou altera. Toda alteração fica registrada e ensina a IA para a próxima onda.</p></div>
+      </div>
+      <div class="states"><span class="state">PROPOSTA</span><span class="arrow">→</span><span class="state">EM_REVISAO</span><span class="arrow">→</span><span class="state">APROVADA</span><span class="arrow">→</span><span class="state">EM_SEPARACAO</span><span class="arrow">→</span><span class="state">CONCLUIDA</span></div>
+    </section>
+
+    <section id="linha">
+      <span class="eyebrow">Linha de dollys</span>
+      <h2>O estoque fica parado; o dolly do cliente anda</h2>
+      <p class="lead">Abastecimento e separação acontecem ao mesmo tempo, o dia todo. A torre vazia sai da posição, a cheia entra pela validade mais curta, e o dolly do cliente percorre as posições guiado pelo celular.</p>
+      <p class="rule">Um dolly só entra na linha se há estoque para o pedido inteiro.</p>
+      <div class="prose">
+        <p>Cestas cheias vão embaixo, na primeira passada. As unidades picadas vêm numa segunda passada, por cima, em cestas mistas que enchem por ocupação. O crachá é vinculado ao pedido antes da primeira cesta e o acompanha até o caminhão.</p>
+      </div>
+    </section>
+
+    <section id="expedicao">
+      <span class="eyebrow">Expedição</span>
+      <h2>Duas conferências até a responsabilidade mudar de mãos</h2>
+      <ol class="steps">
+        <li><span><b>Pulmão.</b> Os dollys de uma onda ficam misturados, mas cada um tem baia no sistema.</span></li>
+        <li><span><b>Conferidor.</b> Lê os códigos de barras e QR das cestas e unidades, valida o pedido e leva o dolly à rampa do veículo.</span></li>
+        <li><span><b>Rampa.</b> Só dollys da rota, alinhados do último cliente para o primeiro.</span></li>
+        <li><span><b>Caminhão.</b> A equipe de entrega encosta no crachá de cada dolly ao subir, confere e o motorista assina.</span></li>
+      </ol>
+      <div class="callout"><b>Cestas escondidas</b><p>As cestas do meio da pilha não aparecem. A linha garante o que entrou, registrado cesta a cesta; a conferência garante total, faces visíveis e picado no topo. Desmontar dolly é exceção.</p></div>
+    </section>
+
+    <section id="retorno">
+      <span class="eyebrow">Retorno de rota</span>
+      <h2>O caminhão volta com devoluções, cestas e dollys</h2>
+      <p class="lead">A equipe de entrega registra a devolução no cliente, com motivo e foto. Na doca, o conferente só confirma, cataloga e libera o caminhão antes do terceiro turno.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Motivo</th><th>Destino padrão</th><th>Quem é avisado</th></tr></thead>
+        <tbody>
+          <tr><td>Cliente fechado</td><td>Estoque, se a validade permitir</td><td>Comercial</td></tr>
+          <tr><td>Pedido errado</td><td>Estoque</td><td>Supervisor</td></tr>
+          <tr><td>Recusa comercial</td><td>Estoque</td><td>Comercial</td></tr>
+          <tr><td>Avaria no transporte</td><td>Avaria</td><td>Logística de entrega</td></tr>
+          <tr><td>Vencido / troca</td><td>A configurar</td><td>Compras</td></tr>
+          <tr><td>Validade curta</td><td>Sem data para venda</td><td>Comercial</td></tr>
+          <tr><td>Divergência</td><td>Bloqueado até apurar</td><td>Supervisor e motorista</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Configurar</b><p>O destino da troca de pão vencido ainda não está definido: volta à fábrica com crédito ou é descartada na distribuidora. O sistema deixa essa regra configurável por fábrica ou por produto.</p></div>
+    </section>
+
+    <section id="pessoas">
+      <span class="eyebrow">Turnos e pessoas</span>
+      <h2>Sem equipes fixas: o sistema distribui o turno</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Turno</th><th>Foco</th><th>Também faz</th></tr></thead>
+        <tbody>
+          <tr><td>1º</td><td>Recebimento, armazenagem, abastecimento</td><td>Retornos da manhã, inventário antes da carreta</td></tr>
+          <tr><td>2º</td><td>Ondas e separação</td><td>1 a 2 carretas por dia, retornos da tarde</td></tr>
+          <tr><td>3º</td><td>Carregamento</td><td>Pendências da onda, se aceitar; pode barrar</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. O supervisor acompanha o painel e muda a dinâmica quando precisa.</p></div>
+
+      <h3>Calculadora de QLP</h3>
+      <form class="calc" id="qlp" aria-label="Calculadora de quadro de pessoal" onsubmit="return false">
+        <div class="inputs">
+          <div class="field"><label for="q-carretas">Carretas por semana</label><input id="q-carretas" type="number" min="0" step="1" value="3"></div>
+          <div class="field"><label for="q-torres">Torres por carreta</label><input id="q-torres" type="number" min="1" step="1" value="60"></div>
+          <div class="field"><label for="q-dollys">Dollys de saída por dia</label><input id="q-dollys" type="number" min="0" step="10" value="150"></div>
+          <div class="field"><label for="q-min">Minutos por dolly na linha</label><input id="q-min" type="number" min="1" step="0.5" value="8"></div>
+          <div class="field"><label for="q-dias">Dias de operação por semana</label><input id="q-dias" type="number" min="1" max="7" step="1" value="6"></div>
+          <div class="field"><label for="q-horas">Horas produtivas por pessoa</label><input id="q-horas" type="number" min="1" step="0.1" value="6.2"></div>
+          <div class="field"><label for="q-cob">Cobertura (férias, faltas) %</label><input id="q-cob" type="number" min="0" step="1" value="12"></div>
+        </div>
+        <div class="out" aria-live="polite">
+          <div class="kpis">
+            <div class="kpi"><span>Horas de operadores/dia</span><b id="r-hho">30</b></div>
+            <div class="kpi"><span>Operadores no quadro</span><b id="r-op">7</b></div>
+            <div class="kpi"><span>Conferentes no quadro</span><b id="r-conf">2</b></div>
+          </div>
+          <div class="tbl"><table class="t">
+            <thead><tr><th>Tarefa</th><th>Horas/dia</th></tr></thead>
+            <tbody id="r-tab"></tbody>
+          </table></div>
+          <p class="note">Tempos iniciais estimados. Na operação, a previsão é substituída pelos tempos reais de cada pessoa. Quadro para um turno; com três turnos, cada um precisa do seu supervisor e de um mínimo de pessoas.</p>
+        </div>
+      </form>
+    </section>
+
+    <section id="cenarios">
+      <span class="eyebrow">Cenários</span>
+      <h2>Cada etapa usa o melhor aparelho disponível</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Aspecto</th><th>Hoje</th><th>Celular</th><th>Futurista</th></tr></thead>
+        <tbody>
+          <tr><td>Torre</td><td>Visual</td><td>Crachá NFC</td><td>Câmera lê crachá</td></tr>
+          <tr><td>Produtos</td><td>Olho e memória</td><td>Lista da NF</td><td>IA + voz</td></tr>
+          <tr><td>Validade</td><td>Sem registro</td><td>Toque ou foto</td><td>Leitura automática</td></tr>
+          <tr><td>Linha</td><td>Andando por carga</td><td>Celular guia</td><td>Robô + luz</td></tr>
+          <tr><td>Dolly</td><td>Visual</td><td>Leitura de códigos</td><td>Óculos ou portal</td></tr>
+          <tr><td>Custo</td><td>—</td><td>Muito baixo</td><td>Médio a alto</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>Qualquer aparelho gera o mesmo evento. Se os óculos ficam sem bateria, o conferente pega o celular e continua da torre em que parou, porque o progresso está no servidor. A empresa começa só com celular e liga os outros modos conforme compra os acessórios.</p></div>
+    </section>
+
+    <section id="papel">
+      <span class="eyebrow">Papel zero</span>
+      <h2>Nenhum papel circula na operação</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Papel de hoje</th><th>No Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Conferência anotada da NF</td><td>Sincronização no celular, contra a NF-e</td></tr>
+          <tr><td>Comprovante da carreta</td><td>Assinatura na tela, enviada por WhatsApp ou e-mail</td></tr>
+          <tr><td>Romaneio de separação</td><td>Celular guiando posição por posição</td></tr>
+          <tr><td>Lista das cestas mistas</td><td>Conteúdo ligado ao crachá, consultado por NFC</td></tr>
+          <tr><td>Canhoto de entrega</td><td>Assinatura e foto no celular</td></tr>
+          <tr><td>Fichas de inventário</td><td>Contagem cega no app</td></tr>
+          <tr><td>Relatórios impressos</td><td>Painéis e placar nas TVs</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">A verificar com a contabilidade: documentos fiscais que a lei exija impressos no transporte ficam fora do papel zero até confirmação.</p>
+    </section>
+
+    <section id="hardware">
+      <span class="eyebrow">Hardware e custos</span>
+      <h2>Começa com os celulares e crachás de poucos reais</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Item</th><th>Referência</th><th>Qtd.</th><th>Valor unitário</th></tr></thead>
+        <tbody>
+          <tr><td>Celular com NFC</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a></td><td>29</td><td>~R$ 630</td></tr>
+          <tr><td>Etiqueta NFC on-metal</td><td><a href="https://store.gototags.com/on-metal-nfc-sticker-ntag213-30-mm-circle/" target="_blank" rel="noopener">NTAG213</a></td><td>~600</td><td>R$ 3–15</td></tr>
+          <tr><td>Ímã de neodímio</td><td><a href="https://magazineluiza.com.br/busca/kit+imas+redondo" target="_blank" rel="noopener">N35</a></td><td>~200</td><td>R$ 4–17</td></tr>
+          <tr><td>Access point Wi-Fi</td><td><a href="https://magazineluiza.com.br/busca/ubiquiti+ap/" target="_blank" rel="noopener">UniFi U6+</a></td><td>5–6</td><td>R$ 1.058–1.196</td></tr>
+          <tr><td>Impressora de placas</td><td><a href="https://www.kabum.com.br/produto/402918/impressora-de-etiquetas-elgin-termica-l42-pro-full-ethernet-usb-e-serial" target="_blank" rel="noopener">Elgin L42 Pro</a></td><td>1</td><td>R$ 1.736</td></tr>
+          <tr><td>TV do placar</td><td>TV 43" + TV box</td><td>3–4</td><td>A cotar</td></tr>
+          <tr><td>Óculos (futuro)</td><td><a href="https://tecnoblog.net/noticias/ray-ban-meta-gen-2-chega-ao-brasil-saiba-o-preco/" target="_blank" rel="noopener">Ray-Ban Meta Gen 2</a></td><td>—</td><td>a partir de R$ 3.299</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Calculadora de custo mensal</h3>
+      <form class="calc" id="custo" aria-label="Calculadora de custo mensal" onsubmit="return false">
+        <div class="inputs">
+          <div class="field"><label for="c-caminhoes">Caminhões de entrega</label><input id="c-caminhoes" type="number" min="0" step="1" value="15"></div>
+          <div class="field"><label for="c-plano">Plano de dados por linha (R$)</label><input id="c-plano" type="number" min="0" step="1" value="59"></div>
+          <div class="field"><label for="c-vps">VPS (R$/mês)</label><input id="c-vps" type="number" min="0" step="10" value="200"></div>
+          <div class="field"><label for="c-fotos">Fotos analisadas pela IA/mês</label><input id="c-fotos" type="number" min="0" step="500" value="6000"></div>
+          <div class="field"><label for="c-modelo">Modelo de IA</label>
+            <select id="c-modelo"><option value="sonnet">Sonnet 5.5</option><option value="haiku">Haiku 5.5</option></select></div>
+          <div class="field"><label for="c-dolar">Dólar (R$)</label><input id="c-dolar" type="number" min="1" step="0.1" value="5.6"></div>
+        </div>
+        <div class="out" aria-live="polite">
+          <div class="kpis">
+            <div class="kpi"><span>Total por mês</span><b id="k-total">R$ 1.900</b></div>
+            <div class="kpi"><span>IA por mês</span><b id="k-ia">R$ 450</b></div>
+          </div>
+          <div class="tbl"><table class="t">
+            <thead><tr><th>Item</th><th>R$/mês</th></tr></thead>
+            <tbody id="k-tab"></tbody>
+          </table></div>
+          <p class="note">Preços da API por milhão de tokens: Sonnet 5.5 US$ 2 entrada / US$ 10 saída; Haiku 5.5 US$ 0,10 / US$ 0,50 (<a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">tabela oficial</a>). Estimativa: ~3.000 tokens de entrada e ~300 de saída por foto. Fora da conta: desenvolvimento e manutenção.</p>
+        </div>
+      </form>
+    </section>
+
+    <section id="desenvolvimento">
+      <span class="eyebrow">Desenvolvimento</span>
+      <h2>Um código em Python, três plataformas</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>Tecnologia</th><th>Papel</th></tr></thead>
+        <tbody>
+          <tr><td>Interface</td><td>Flet (Flutter)</td><td>Android na operação, Windows no escritório, Web numa VPS</td></tr>
+          <tr><td>Servidor</td><td>FastAPI</td><td>Regras, eventos, API para aparelhos e painéis</td></tr>
+          <tr><td>Banco central</td><td>PostgreSQL</td><td>Fonte única da verdade com muitos aparelhos gravando</td></tr>
+          <tr><td>Banco no aparelho</td><td>SQLite</td><td>Trabalhar sem sinal na câmara fria e sincronizar depois</td></tr>
+          <tr><td>Hospedagem</td><td>Oracle Cloud + servidor local</td><td>Acesso externo e operação sem internet</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Maior risco técnico</b><p>O Flet não tem controle pronto para NFC nem para leitura de código de barras pela câmera. Os dois entram como extensões Flutter e precisam ser provados primeiro, num app mínimo no Android.</p></div>
+      <ol class="steps">
+        <li><span>Prova técnica: NFC e código de barras no Flet Android.</span></li>
+        <li><span>Recebimento: compra, placar, descarga, sincronização, validade, baia.</span></li>
+        <li><span>Estoque e inventário.</span></li>
+        <li><span>Onda, abastecimento e linha de dollys.</span></li>
+        <li><span>Expedição, carregamento e retorno de rota.</span></li>
+        <li><span>Pessoas, capacidade e QLP dinâmico.</span></li>
+        <li><span>IA que aprende tempos e pedidos, e cenário futurista.</span></li>
+      </ol>
+    </section>
+
+    <section id="necessario">
+      <span class="eyebrow">O que é necessário</span>
+      <h2>Antes de qualquer código</h2>
+      <ul class="check">
+        <li><h3>Dados da operação</h3><ul><li>Torres por carreta e carretas por dia</li><li>Dollys por dia e clientes por rota</li><li>Horários dos turnos</li><li>Baús dos veículos e posições de dolly</li><li>Cadastro de produtos e validades</li><li>Origem dos pedidos e compras hoje</li></ul></li>
+        <li><h3>Decisões de negócio</h3><ul><li>Destino da troca de pão vencido</li><li>Regra de corte quando falta produto</li><li>Dolly vai até o cliente?</li><li>Quem aprova ondas e exceções</li><li>Avarias e paletizados</li></ul></li>
+        <li><h3>Prova técnica</h3><ul><li>Celular Android com NFC</li><li>20 crachás de teste com ímã</li><li>Ler crachá e DANFE no app Flet</li><li>Gravar offline e sincronizar</li><li>Testar dentro da câmara fria</li></ul></li>
+        <li><h3>Pessoas e aprovações</h3><ul><li>Patrocinador do piloto</li><li>Compras e contabilidade</li><li>Responsável pela rede</li><li>LGPD: a equipe sabe como seus dados de produtividade, fotos e assinaturas são usados</li></ul></li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span>Deméter · ideia aberta de Sebastião Alves Nicolau · outubro de 2026</span>
+  <span><a href="https://github.com/sanicolauvix" target="_blank" rel="noopener">GitHub</a> · <a href="https://linkedin.com/in/sebastiao-alves-nicolau-421ab71bb" target="_blank" rel="noopener">LinkedIn</a> · <button class="theme-btn" id="tema" type="button">Alternar tema</button></span>
+</footer>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const num = (id) => { const v = parseFloat($(id).value); return Number.isFinite(v) ? v : 0; };
+  const fmt = (v, d = 1) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const brl = (v) => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+
+  function calcQlp() {
+    const carretas = num('q-carretas'), torres = Math.max(num('q-torres'), 1), dollys = num('q-dollys');
+    const minDolly = num('q-min'), dias = Math.max(num('q-dias'), 1), horas = Math.max(num('q-horas'), 0.1), cob = num('q-cob') / 100;
+    const torresDia = (torres * carretas) / dias;
+    const linhas = [
+      ['Descarga e carga do retorno', (8 * (torres / 60) * carretas) / dias, 'op'],
+      ['Descarga → armazenamento', (3 * torresDia) / 60, 'op'],
+      ['Abastecimento da linha', (4 * torresDia) / 60, 'op'],
+      ['Separação (linha)', (minDolly * dollys) / 60, 'op'],
+      ['Rampa', dollys / 60, 'op'],
+      ['Sincronização da NF', (3 * torresDia) / 60, 'conf'],
+      ['Conferência de expedição', (2 * dollys) / 60, 'conf'],
+    ];
+    const hhOp = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0);
+    const hhConf = linhas.filter((l) => l[2] === 'conf').reduce((s, l) => s + l[1], 0);
+    $('r-hho').textContent = fmt(hhOp);
+    $('r-op').textContent = String(Math.ceil((hhOp / horas) * (1 + cob)));
+    $('r-conf').textContent = String(Math.max(1, Math.ceil((hhConf / horas) * (1 + cob))));
+    $('r-tab').innerHTML = linhas.map((l) => `<tr><td>${l[0]}</td><td>${fmt(l[1])}</td></tr>`).join('');
+  }
+
+  function calcCusto() {
+    const caminhoes = num('c-caminhoes'), plano = num('c-plano'), vps = num('c-vps'), fotos = num('c-fotos'), dolar = num('c-dolar');
+    const modelo = $('c-modelo').value;
+    const preco = modelo === 'haiku' ? { in: 0.10, out: 0.50 } : { in: 2, out: 10 };
+    const porFoto = (3000 * preco.in + 300 * preco.out) / 1e6;
+    const ondas = modelo === 'haiku' ? 1.3 : 25;
+    const iaUsd = fotos * porFoto + ondas + 5;
+    const linhasDados = Math.ceil(caminhoes * 1.12);
+    const itens = [
+      ['VPS', vps],
+      ['Fotos e backup', 40],
+      ['IA (API do Claude)', iaUsd * dolar],
+      [`Dados móveis (${linhasDados} linhas)`, linhasDados * plano],
+      ['Internet reserva', 60],
+      ['Domínio .com.br', 40 / 12],
+      ['Reposição de crachás', 235],
+    ];
+    const total = itens.reduce((s, i) => s + i[1], 0);
+    $('k-total').textContent = brl(total);
+    $('k-ia').textContent = brl(iaUsd * dolar);
+    $('k-tab').innerHTML = itens.map((i) => `<tr><td>${i[0]}</td><td>${brl(i[1])}</td></tr>`).join('') +
+      `<tr class="total"><td>Total</td><td>${brl(total)}</td></tr>`;
+  }
+
+  $('qlp').addEventListener('input', calcQlp);
+  $('custo').addEventListener('input', calcCusto);
+  calcQlp();
+  calcCusto();
+
+  // Relógio e placar: um status muda a cada poucos segundos, como numa doca de verdade.
+  const relogio = $('relogio');
+  const tick = () => { const d = new Date(); relogio.textContent = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); };
+  tick(); setInterval(tick, 30000);
+  const ciclo = [
+    ['go', 'Descarregando', '7/12'], ['go', 'Descarregando', '10/12'], ['wait', 'Conferindo', '12/12'], ['ok', 'Liberada', '12/12'], ['go', 'Descarregando', '3/12'],
+  ];
+  let passo = 0;
+  const linhaB = document.querySelector('#placar tr:nth-child(2)');
+  setInterval(() => {
+    passo = (passo + 1) % ciclo.length;
+    const [cls, txt, torres] = ciclo[passo];
+    const flap = linhaB.querySelector('.flap');
+    flap.className = 'flap ' + cls + ' flipping';
+    flap.textContent = txt;
+    linhaB.children[2].textContent = torres;
+    setTimeout(() => flap.classList.remove('flipping'), 500);
+  }, 4000);
+
+  // Índice: marca a seção visível.
+  const links = Array.from(document.querySelectorAll('.toc a'));
+  const alvos = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) {
+          links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    alvos.forEach((s) => obs.observe(s));
+  }
+
+  // Tema: alterna e lembra a escolha neste navegador.
+  const raiz = document.documentElement;
+  try { const salvo = localStorage.getItem('demeter-tema'); if (salvo) raiz.setAttribute('data-theme', salvo); } catch (e) { /* sem armazenamento */ }
+  $('tema').addEventListener('click', () => {
+    const escuro = raiz.getAttribute('data-theme') === 'dark' ||
+      (!raiz.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+    const novo = escuro ? 'light' : 'dark';
+    raiz.setAttribute('data-theme', novo);
+    try { localStorage.setItem('demeter-tema', novo); } catch (e) { /* sem armazenamento */ }
+  });
+})();
+</script>
+</body>
+</html>
