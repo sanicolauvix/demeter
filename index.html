@@ -69,7 +69,6 @@ code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
 .toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 32px; max-height: calc(100vh - 48px); overflow-y: auto; }
 .toc a { display: block; text-decoration: none; color: var(--ink-3); font-size: 14px; padding: 5px 0 5px 12px; border-left: 2px solid var(--line); }
 .toc a:hover { color: var(--ink); }
-.toc a.destaque { color: var(--accent-ink); font-weight: 500; }
 .toc a.on { color: var(--ink); border-left-color: var(--accent); font-weight: 500; }
 .toc .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: var(--font-display); font-weight: 600; letter-spacing: 3px; font-size: 15px; color: var(--ink); }
 .toc .brand svg { width: 32px; height: 32px; }
@@ -264,7 +263,7 @@ footer a { color: var(--ink-2); }
   <nav class="toc" aria-label="Seções">
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
     <a href="#inicio">Início</a>
-    <a href="#simulador" class="destaque">Simulador do turno</a>
+    <a href="#simulador">Simulador do turno</a>
     <div class="grp">Ideia</div>
     <a href="#origem">Como nasceu</a>
     <a href="#problema">O problema</a>
@@ -308,7 +307,7 @@ footer a { color: var(--ink-2); }
         <svg id="cena" viewBox="0 0 1100 340" role="img" aria-label="Cena animada da operação Deméter">
           <defs>
             <path id="rota" d="M150 238 H330 Q350 238 360 220 L380 190 H560 Q580 190 590 210 L600 238 H880"/>
-            <symbol id="torre" viewBox="0 0 28 44">
+            <symbol id="ico-torre" viewBox="0 0 28 44">
               <rect x="2" y="2" width="24" height="34" rx="2" fill="var(--accent)"/>
               <g stroke="var(--surface)" stroke-width="1.5"><line x1="2" y1="10" x2="26" y2="10"/><line x1="2" y1="18" x2="26" y2="18"/><line x1="2" y1="26" x2="26" y2="26"/><line x1="14" y1="2" x2="14" y2="36"/></g>
               <rect x="0" y="36" width="28" height="4" rx="1" fill="var(--ink)"/>
@@ -358,10 +357,10 @@ footer a { color: var(--ink-2); }
             <animateTransform attributeName="transform" type="translate" values="0 0; 0 0; 220 0; 220 0" keyTimes="0; 0.85; 0.97; 1" dur="12s" repeatCount="indefinite"/>
             <text x="960" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Expedição</text>
           </g>
-          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="0s"><mpath href="#rota"/></animateMotion></use>
-          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="1.5s"><mpath href="#rota"/></animateMotion></use>
-          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="3s"><mpath href="#rota"/></animateMotion></use>
-          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="4.5s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="0s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="1.5s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="3s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="4.5s"><mpath href="#rota"/></animateMotion></use>
           <text x="550" y="34" text-anchor="middle" font-family="Rubik, sans-serif" font-size="16" fill="var(--ink-3)">Carreta → doca → câmara fria → linha → caminhão</text>
         </svg>
       </div>
@@ -1375,16 +1374,24 @@ footer a { color: var(--ink-2); }
   // Índice: marca a seção visível.
   const links = Array.from(document.querySelectorAll('.toc a'));
   const alvos = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  if ('IntersectionObserver' in window) {
-    const obs = new IntersectionObserver((entradas) => {
-      entradas.forEach((e) => {
-        if (e.isIntersecting) {
-          links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' });
-    alvos.forEach((s) => obs.observe(s));
-  }
+  // Marca a seção cujo topo passou da linha de leitura (35% da tela), pela posição real na página.
+  const marcar = () => {
+    const linha = window.innerHeight * 0.35;
+    let atual = alvos[0];
+    const ordem = alvos.slice().sort((x, y) => x.getBoundingClientRect().top - y.getBoundingClientRect().top);
+    ordem.forEach((sec) => { if (sec.getBoundingClientRect().top <= linha) atual = sec; });
+    if (window.scrollY < 40) atual = document.getElementById('inicio') || atual;
+    links.forEach((lk) => lk.classList.toggle('on', atual && lk.getAttribute('href') === '#' + atual.id));
+  };
+  let pedido = false;
+  window.addEventListener('scroll', () => {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(() => { pedido = false; marcar(); });
+  }, { passive: true });
+  window.addEventListener('resize', marcar);
+  window.addEventListener('pageshow', marcar);
+  marcar();
 
   // Tema: alterna e lembra a escolha neste navegador.
   const raiz = document.documentElement;
