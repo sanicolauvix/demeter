@@ -69,6 +69,7 @@ code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
 .toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 32px; max-height: calc(100vh - 48px); overflow-y: auto; }
 .toc a { display: block; text-decoration: none; color: var(--ink-3); font-size: 14px; padding: 5px 0 5px 12px; border-left: 2px solid var(--line); }
 .toc a:hover { color: var(--ink); }
+.toc a.destaque { color: var(--accent-ink); font-weight: 500; }
 .toc a.on { color: var(--ink); border-left-color: var(--accent); font-weight: 500; }
 .toc .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: var(--font-display); font-weight: 600; letter-spacing: 3px; font-size: 15px; color: var(--ink); }
 .toc .brand svg { width: 32px; height: 32px; }
@@ -224,10 +225,6 @@ ol.steps li b { color: var(--ink); font-weight: 600; }
 .home h1 { font-size: clamp(36px, 6.4vw, 78px); font-weight: 600; letter-spacing: -1px; line-height: 1.02; max-width: 15ch; }
 .home h1 em { font-style: normal; color: var(--accent-ink); }
 .home .lead { font-size: clamp(17px, 2vw, 21px); }
-.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.cta { text-decoration: none; font-weight: 500; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
-.cta.main { background: var(--board); color: var(--board-ink); border-color: var(--board); }
-.cta:hover { border-color: var(--accent); }
 .scene { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 8px; overflow-x: auto; }
 .scene svg { display: block; width: 100%; min-width: 680px; height: auto; }
 .scene-hint { display: none; font: 500 12px/1 var(--font-mono); color: var(--accent-ink); margin: 8px 4px 0; }
@@ -267,6 +264,7 @@ footer a { color: var(--ink-2); }
   <nav class="toc" aria-label="Seções">
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
     <a href="#inicio">Início</a>
+    <a href="#simulador" class="destaque">Simulador do turno</a>
     <div class="grp">Ideia</div>
     <a href="#origem">Como nasceu</a>
     <a href="#problema">O problema</a>
@@ -286,7 +284,6 @@ footer a { color: var(--ink-2); }
     <a href="#retorno">Retorno de rota</a>
     <a href="#pessoas">Turnos e pessoas</a>
     <a href="#acesso">Acesso e exceções</a>
-    <a href="#simulador">Simulador do turno</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
     <a href="#papel">Papel zero</a>
@@ -305,11 +302,6 @@ footer a { color: var(--ink-2); }
       </div>
       <h1>Tudo que sai, <em>volta certo</em>.</h1>
       <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora. Desenhado no chão da operação.</p>
-      <div class="ctas">
-        <a class="cta main" href="#fluxo">Ver a operação inteira</a>
-        <a class="cta" href="#paineis">Abrir os painéis</a>
-        <a class="cta" href="#simulador">Simular um turno</a>
-      </div>
 
       <div class="scene" aria-label="Animação da operação: carreta descarrega, dollys passam pela câmara fria e pela linha, caminhão sai para entrega">
         <svg id="cena" viewBox="0 0 1100 340" role="img" aria-label="Cena animada da operação Deméter">
