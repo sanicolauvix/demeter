@@ -165,6 +165,22 @@ ol.steps li b { color: var(--ink); font-weight: 600; }
 .check > li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
 .check ul { padding-left: 18px; margin: 0; color: var(--ink-2); font-size: 15px; display: flex; flex-direction: column; gap: 4px; }
 
+/* Painéis */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--board); border-color: var(--board); color: var(--board-ink); }
+.panel-desc { color: var(--ink-2); font-size: 15px; max-width: 70ch; }
+.board .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.board .tile { background: rgba(247, 241, 230, 0.07); border-radius: 8px; padding: 10px 12px; }
+.board .tile span { display: block; color: var(--board-dim); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.board .tile b { font-family: var(--font-display); font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.board .tile b.alerta { color: #F08A78; }
+.bar { height: 8px; background: rgba(247, 241, 230, 0.14); border-radius: 4px; overflow: hidden; min-width: 80px; }
+.bar i { display: block; height: 100%; background: #E3A15E; border-radius: 4px; transition: width 0.6s ease; }
+.bar i.ok { background: #6CC08E; }
+.bar i.bad { background: #F08A78; }
+.board .sub { color: var(--board-dim); font-size: 12px; }
+
 footer { max-width: 1180px; margin: 96px auto 0; border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--ink-3); font-size: 14px; }
 footer a { color: var(--ink-2); }
 .theme-btn { font: inherit; font-size: 13px; background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
@@ -193,6 +209,7 @@ footer a { color: var(--ink-2); }
     <a href="#problema">O problema</a>
     <a href="#principios">Princípios</a>
     <a href="#fluxo">Fluxo ponta a ponta</a>
+    <a href="#paineis">Painéis</a>
     <a href="#torre">Torre e crachá</a>
     <div class="grp">Operação</div>
     <a href="#recebimento">Recebimento</a>
@@ -288,6 +305,146 @@ footer a { color: var(--ink-2); }
             <a href="#expedicao"><rect x="20" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="87" y="168" font-size="14" font-weight="600" fill="var(--ink)">Carregamento</text><text x="87" y="186" font-size="11.5" fill="var(--ink-3)">assinatura</text></a>
           </g>
         </svg>
+      </div>
+    </section>
+
+    <section id="paineis">
+      <span class="eyebrow">Painéis</span>
+      <h2>A operação inteira, à vista de todos</h2>
+      <p class="lead">Cada painel roda numa TV ou no celular e se alimenta sozinho dos eventos registrados. Ninguém digita nada para o painel. Os dados abaixo são exemplos.</p>
+      <div class="tabs" role="tablist" aria-label="Painéis">
+        <button class="tab" role="tab" id="t-chegadas" aria-controls="p-chegadas" aria-selected="true" type="button">Chegadas</button>
+        <button class="tab" role="tab" id="t-partidas" aria-controls="p-partidas" aria-selected="false" type="button">Partidas</button>
+        <button class="tab" role="tab" id="t-camara" aria-controls="p-camara" aria-selected="false" type="button">Câmara</button>
+        <button class="tab" role="tab" id="t-linha" aria-controls="p-linha" aria-selected="false" type="button">Linha</button>
+        <button class="tab" role="tab" id="t-turno" aria-controls="p-turno" aria-selected="false" type="button">Turno</button>
+        <button class="tab" role="tab" id="t-retornos" aria-controls="p-retornos" aria-selected="false" type="button">Retornos</button>
+        <button class="tab" role="tab" id="t-onda" aria-controls="p-onda" aria-selected="false" type="button">Onda</button>
+      </div>
+
+      <div role="tabpanel" id="p-chegadas" aria-labelledby="t-chegadas">
+        <p class="panel-desc">TV da doca. Mostra as carretas do dia, as duas câmaras e se a doca está pronta para a próxima.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Câmara descarga 1</span><b>Vazia</b></div>
+            <div class="tile"><span>Câmara retorno 1</span><b>12/12 dollys</b></div>
+            <div class="tile"><span>Doca 1</span><b>Pronta</b></div>
+            <div class="tile"><span>Carretas hoje</span><b>2 de 3</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Prev.</th><th>Origem</th><th>Torres</th><th>Retorno</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>13:30</td><td>Fábrica A</td><td>12/12</td><td>12/12</td><td><span class="flap ok">Liberada</span></td></tr>
+              <tr><td>14:45</td><td>Fábrica B</td><td>12/12</td><td>9/12</td><td><span class="flap go">Conferindo</span></td></tr>
+              <tr><td>16:00</td><td>Fábrica C</td><td>0/10</td><td>7/10</td><td><span class="flap bad">Retorno incompleto</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-partidas" aria-labelledby="t-partidas" hidden>
+        <p class="panel-desc">TV das rampas. Cada rota com seu veículo, ocupação do baú e quantos dollys já subiram.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Rota</th><th>Rampa</th><th>Ocupação</th><th>Carregados</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>02</td><td>1</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12 posições</span></td><td>8/8</td><td><span class="flap ok">Partiu 03:20</span></td></tr>
+            <tr><td>04</td><td>3</td><td><div class="bar"><i style="width:92%"></i></div><span class="sub">11/12 posições</span></td><td><span data-cont="rota04">7</span>/11</td><td><span class="flap go">Carregando</span></td></tr>
+            <tr><td>07</td><td>2</td><td><div class="bar"><i style="width:50%"></i></div><span class="sub">6/12 posições</span></td><td>0/6</td><td><span class="flap wait">Conferindo</span></td></tr>
+            <tr><td>11</td><td>4</td><td><div class="bar"><i style="width:75%"></i></div><span class="sub">9/12 posições</span></td><td>0/9</td><td><span class="flap dim">Separando</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-camara" aria-labelledby="t-camara" hidden>
+        <p class="panel-desc">TV dentro da câmara de descarregamento. O conferente vê a NF fechando produto a produto, com o celular ou com os óculos.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="torres">7</span>/12 torres</b></div>
+            <div class="tile"><span>Validade</span><b>18/10</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">1</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Produto</th><th>NF (cestas)</th><th>Conferido</th><th>Situação</th></tr></thead>
+            <tbody>
+              <tr><td>Pão de forma 500 g</td><td>48</td><td>48</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bisnaguinha 300 g</td><td>32</td><td>30</td><td><span class="flap bad">Falta 2</span></td></tr>
+              <tr><td>Pão integral</td><td>24</td><td>24</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bolo de chocolate</td><td>16</td><td>6</td><td><span class="flap go">Conferindo</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-linha" aria-labelledby="t-linha" hidden>
+        <p class="panel-desc">Painel da linha de dollys. A IA olha os próximos dollys da fila e pede reposição antes de a posição zerar.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Posição</th><th>Produto</th><th>Estoque</th><th>Próximos precisam</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>L01</td><td>Pão de forma</td><td><div class="bar"><i class="ok" style="width:88%"></i></div><span class="sub">22 cestas</span></td><td>10</td><td><span class="flap ok">OK</span></td></tr>
+            <tr><td>L05</td><td>Bisnaguinha</td><td><div class="bar"><i style="width:24%"></i></div><span class="sub">6 cestas</span></td><td>8</td><td><span class="flap wait">Abastecer</span></td></tr>
+            <tr><td>L09</td><td>Bolo</td><td><div class="bar"><i class="bad" style="width:3%"></i></div><span class="sub">0 cestas</span></td><td>4</td><td><span class="flap bad">2 dollys aguardando</span></td></tr>
+            <tr><td>L12</td><td>Torrada</td><td><div class="bar"><i class="ok" style="width:60%"></i></div><span class="sub">15 cestas</span></td><td>3</td><td><span class="flap ok">OK</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
+        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real e onde remanejar gente.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
+            <div class="tile"><span>Rendimento do turno</span><b>94%</b></div>
+            <div class="tile"><span>Onda 3 · previsão</span><b>21:40</b></div>
+            <div class="tile"><span>Fim do turno</span><b class="alerta">21:20</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Operador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Operador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Operador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
+              <tr><td>Operador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td><span class="flap go">Doca</span></td></tr>
+              <tr><td>Conferente</td><td>Sincronização NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td><span class="flap ok">No ritmo</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Alerta: a onda 3 termina depois do fim do turno. Remanejar 1 pessoa para a linha agora evita passar pendência para o 3º turno.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-retornos" aria-labelledby="t-retornos" hidden>
+        <p class="panel-desc">Painel de retorno de rota. Cada caminhão precisa estar liberado antes do 3º turno.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Rotas retornadas</span><b>9 de 15</b></div>
+            <div class="tile"><span>Devolução do dia</span><b>2,4%</b></div>
+            <div class="tile"><span>Em triagem</span><b>14 itens</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">2</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Retorno</th><th>Devolvido</th><th>Cestas</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>13:10</td><td>6 un</td><td>48/48</td><td><span class="flap ok">Concluído</span></td></tr>
+              <tr><td>04</td><td>13:42</td><td>12 un</td><td>60/62</td><td><span class="flap bad">Divergência</span></td></tr>
+              <tr><td>07</td><td>14:05</td><td>9 un</td><td>40/40</td><td><span class="flap wait">Em triagem</span></td></tr>
+              <tr><td>09</td><td>prev. 15:00</td><td>4 un declar.</td><td>—</td><td><span class="flap dim">A caminho</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-onda" aria-labelledby="t-onda" hidden>
+        <p class="panel-desc">Tela de aprovação da onda. A IA propõe veículos e mostra onde não cabe; o administrador aceita ou altera antes de separar.</p>
+        <div class="board">
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Veículo</th><th>Posições</th><th>Peso</th><th>Sugestão da IA</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>ABC1D23</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12</span></td><td>1.900/3.500 kg</td><td>—</td></tr>
+              <tr><td>04</td><td>QRS4T56</td><td><div class="bar"><i class="bad" style="width:100%"></i></div><span class="sub">14/12</span></td><td>3.100/3.500 kg</td><td><span class="flap wait">Mover 2 clientes p/ rota 07</span></td></tr>
+              <tr><td>07</td><td>XYZ7G89</td><td><div class="bar"><i class="ok" style="width:50%"></i></div><span class="sub">6/12</span></td><td>1.200/3.500 kg</td><td><span class="flap go">Recebe 2 dollys</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Estado da onda: PROPOSTA → EM_REVISAO. Plano com veículo excedido não pode ser aprovado.</p>
+        </div>
       </div>
     </section>
 
@@ -413,6 +570,20 @@ footer a { color: var(--ink-2); }
         </tbody>
       </table></div>
       <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. O supervisor acompanha o painel e muda a dinâmica quando precisa.</p></div>
+
+      <p class="rule">Com mão de obra escassa e alta rotatividade, o sistema é o treinamento.</p>
+      <div class="prose"><p>Treinar alguém que sai em poucos meses custa mais que a tecnologia. O Deméter coloca o conhecimento no processo, não na memória de quem sabe: o celular diz onde ir, o que pegar e quantas cestas; a regra de ouro impede o erro grande; o painel mostra quem precisa de ajuda.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Ponto</th><th>Hoje</th><th>No Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Pessoa nova</td><td>Semanas aprendendo com quem já sabe</td><td>Produz no 1º dia, guiada pelo celular</td></tr>
+          <tr><td>Conhecimento</td><td>Na cabeça dos antigos; sai quando eles saem</td><td>No sistema; fica quando a pessoa sai</td></tr>
+          <tr><td>Modo aprendiz</td><td>—</td><td>Mais detalhe na tela e previsão de tempo maior nos primeiros dias</td></tr>
+          <tr><td>Polivalência</td><td>Ninguém sabe quem faz o quê</td><td>Matriz de habilidades: cada pessoa, cada tarefa, nível e tempo médio</td></tr>
+          <tr><td>Curva de aprendizado</td><td>Invisível</td><td>Tempo real por tarefa caindo dia a dia, por pessoa</td></tr>
+          <tr><td>Custo da rotatividade</td><td>Não medido</td><td>Dias até a pessoa atingir o ritmo, por função</td></tr>
+        </tbody>
+      </table></div>
 
       <h3>Calculadora de QLP</h3>
       <form class="calc" id="qlp" aria-label="Calculadora de quadro de pessoal" onsubmit="return false">
@@ -634,6 +805,38 @@ footer a { color: var(--ink-2); }
     linhaB.children[2].textContent = torres;
     setTimeout(() => flap.classList.remove('flipping'), 500);
   }, 4000);
+
+  // Painéis: abas acessíveis (clique e setas do teclado).
+  const abas = Array.from(document.querySelectorAll('.tab'));
+  const mostrar = (aba) => {
+    abas.forEach((a) => {
+      const ativa = a === aba;
+      a.setAttribute('aria-selected', String(ativa));
+      a.tabIndex = ativa ? 0 : -1;
+      document.getElementById(a.getAttribute('aria-controls')).hidden = !ativa;
+    });
+  };
+  abas.forEach((a, i) => {
+    a.tabIndex = i === 0 ? 0 : -1;
+    a.addEventListener('click', () => mostrar(a));
+    a.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const prox = abas[(i + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length];
+      prox.focus(); mostrar(prox);
+    });
+  });
+
+  // Painéis vivos: barras do turno andam e contadores sobem, voltando ao início em ciclo.
+  setInterval(() => {
+    document.querySelectorAll('[data-anda]').forEach((b) => {
+      const atual = parseFloat(b.style.width) || 0;
+      b.style.width = (atual >= 96 ? 8 : Math.min(atual + 4 + Math.random() * 6, 100)) + '%';
+    });
+    const torres = document.querySelector('[data-cont="torres"]');
+    if (torres) torres.textContent = String(Number(torres.textContent) >= 12 ? 7 : Number(torres.textContent) + 1);
+    const rota = document.querySelector('[data-cont="rota04"]');
+    if (rota) rota.textContent = String(Number(rota.textContent) >= 11 ? 7 : Number(rota.textContent) + 1);
+  }, 3000);
 
   // Índice: marca a seção visível.
   const links = Array.from(document.querySelectorAll('.toc a'));
