@@ -213,10 +213,11 @@ ol.steps li b { color: var(--ink); font-weight: 600; }
 .veredito b { font-family: var(--font-display); }
 
 /* Abertura de impacto */
-.home { max-width: 1180px; margin: 0 auto; padding-block: 28px 8px; display: flex; flex-direction: column; gap: 28px; }
+.home { padding-block: 32px 8px; scroll-margin-top: 0; display: flex; flex-direction: column; gap: 28px; }
 .home-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
 .home-top .hero-mark svg { width: 48px; height: 48px; }
 .home-top .hero-mark span { font-size: 26px; letter-spacing: 5px; }
+@media (min-width: 921px) { .home-top { display: none; } }
 .home-top nav { display: flex; flex-wrap: wrap; gap: 8px; }
 .home-top nav a { font-size: 14px; text-decoration: none; color: var(--ink-2); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
 .home-top nav a:hover { color: var(--ink); border-color: var(--accent); }
@@ -260,95 +261,12 @@ footer a { color: var(--ink-2); }
   </defs>
 </svg>
 
-<header class="home">
-  <div class="home-top">
-    <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
-    <nav aria-label="Atalhos">
-      <a href="#fluxo">Fluxo</a><a href="#paineis">Painéis</a><a href="#simulador">Simulador</a><a href="#origem">Como nasceu</a>
-    </nav>
-  </div>
-  <h1>Tudo que sai, <em>volta certo</em>.</h1>
-  <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora. Desenhado no chão da operação.</p>
-  <div class="ctas">
-    <a class="cta main" href="#fluxo">Ver a operação inteira</a>
-    <a class="cta" href="#paineis">Abrir os painéis</a>
-    <a class="cta" href="#simulador">Simular um turno</a>
-  </div>
 
-  <div class="scene" aria-label="Animação da operação: carreta descarrega, dollys passam pela câmara fria e pela linha, caminhão sai para entrega">
-    <svg id="cena" viewBox="0 0 1100 340" role="img" aria-label="Cena animada da operação Deméter">
-      <defs>
-        <path id="rota" d="M150 238 H330 Q350 238 360 220 L380 190 H560 Q580 190 590 210 L600 238 H880"/>
-        <symbol id="torre" viewBox="0 0 28 44">
-          <rect x="2" y="2" width="24" height="34" rx="2" fill="var(--accent)"/>
-          <g stroke="var(--surface)" stroke-width="1.5"><line x1="2" y1="10" x2="26" y2="10"/><line x1="2" y1="18" x2="26" y2="18"/><line x1="2" y1="26" x2="26" y2="26"/><line x1="14" y1="2" x2="14" y2="36"/></g>
-          <rect x="0" y="36" width="28" height="4" rx="1" fill="var(--ink)"/>
-          <circle cx="5" cy="42" r="2" fill="var(--ink)"/><circle cx="23" cy="42" r="2" fill="var(--ink)"/>
-        </symbol>
-      </defs>
-      <rect x="0" y="0" width="1100" height="340" fill="var(--surface)"/>
-      <line x1="0" y1="262" x2="1100" y2="262" stroke="var(--line)" stroke-width="2"/>
-      <g>
-        <rect x="16" y="150" width="150" height="92" rx="6" fill="var(--sunk)" stroke="var(--ink-3)"/>
-        <text x="91" y="200" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-3)">FÁBRICA</text>
-        <circle cx="46" cy="250" r="12" fill="var(--ink)"/><circle cx="76" cy="250" r="12" fill="var(--ink)"/><circle cx="140" cy="250" r="12" fill="var(--ink)"/>
-        <animateTransform attributeName="transform" type="translate" values="-180 0; 0 0; 0 0; 0 0" keyTimes="0; 0.15; 0.9; 1" dur="12s" repeatCount="indefinite"/>
-      </g>
-      <g>
-        <rect x="200" y="120" width="120" height="142" fill="var(--bg)" stroke="var(--line)"/>
-        <rect x="222" y="170" width="76" height="92" fill="var(--sunk)"/>
-        <text x="260" y="146" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Doca D3</text>
-        <circle cx="300" cy="196" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
-        <circle cx="300" cy="196" r="5" fill="var(--accent)"/>
-        <text x="260" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Recebimento · NFC</text>
-      </g>
-      <g>
-        <rect x="360" y="70" width="220" height="192" rx="8" fill="var(--info)" fill-opacity="0.12" stroke="var(--info)" stroke-width="1.5"/>
-        <text x="470" y="98" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Câmara fria</text>
-        <text x="470" y="124" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="20" fill="var(--info)"><tspan id="cena-temp">3,8</tspan> °C</text>
-        <g stroke="var(--info)" stroke-width="2" stroke-linecap="round" class="pisca"><line x1="540" y1="88" x2="540" y2="112"/><line x1="528" y1="100" x2="552" y2="100"/><line x1="531" y1="91" x2="549" y2="109"/><line x1="549" y1="91" x2="531" y2="109"/></g>
-        <text x="470" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Conferência · validade · baia</text>
-      </g>
-      <g>
-        <rect x="610" y="150" width="240" height="112" rx="8" fill="var(--bg)" stroke="var(--line)"/>
-        <text x="730" y="176" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Linha de dollys</text>
-        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" text-anchor="middle">
-          <rect x="626" y="190" width="44" height="14" rx="3" fill="var(--ok)" class="pisca"/><text x="648" y="222">L01</text>
-          <rect x="682" y="190" width="44" height="14" rx="3" fill="var(--warn)"/><text x="704" y="222">L05</text>
-          <rect x="738" y="190" width="44" height="14" rx="3" fill="var(--ok)"/><text x="760" y="222">L09</text>
-          <rect x="794" y="190" width="44" height="14" rx="3" fill="var(--ok)"/><text x="816" y="222">L12</text>
-        </g>
-        <text x="730" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Onda · separação guiada</text>
-      </g>
-      <g>
-        <rect x="900" y="160" width="120" height="82" rx="6" fill="var(--board)"/>
-        <text x="960" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--board-ink)">ROTA 04</text>
-        <path d="M1020 186 H1058 L1080 212 V242 H1020 Z" fill="var(--board)"/>
-        <rect x="1032" y="194" width="22" height="16" rx="2" fill="var(--board-dim)"/>
-        <circle cx="940" cy="250" r="12" fill="var(--ink)"/><circle cx="1050" cy="250" r="12" fill="var(--ink)"/>
-        <animateTransform attributeName="transform" type="translate" values="0 0; 0 0; 220 0; 220 0" keyTimes="0; 0.85; 0.97; 1" dur="12s" repeatCount="indefinite"/>
-        <text x="960" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Expedição</text>
-      </g>
-      <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="0s"><mpath href="#rota"/></animateMotion></use>
-      <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="1.5s"><mpath href="#rota"/></animateMotion></use>
-      <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="3s"><mpath href="#rota"/></animateMotion></use>
-      <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="4.5s"><mpath href="#rota"/></animateMotion></use>
-      <text x="550" y="34" text-anchor="middle" font-family="Rubik, sans-serif" font-size="16" fill="var(--ink-3)">Carreta → doca → câmara fria → linha → caminhão</text>
-    </svg>
-  </div>
-  <p class="scene-hint">arraste a cena para o lado →</p>
-
-  <div class="stats">
-    <div class="stat"><b>10</b><span>etapas, da compra ao caminhão</span></div>
-    <div class="stat"><b>7</b><span>painéis ao vivo nas TVs</span></div>
-    <div class="stat"><b>0</b><span>papel na operação</span></div>
-    <div class="stat"><b>R$ 9</b><span>o crachá NFC mais simples</span></div>
-  </div>
-</header>
 
 <div class="shell">
   <nav class="toc" aria-label="Seções">
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
+    <a href="#inicio">Início</a>
     <div class="grp">Ideia</div>
     <a href="#origem">Como nasceu</a>
     <a href="#problema">O problema</a>
@@ -378,6 +296,92 @@ footer a { color: var(--ink-2); }
   </nav>
 
   <main>
+    <section class="home" id="inicio" aria-label="Início">
+      <div class="home-top">
+        <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
+        <nav aria-label="Atalhos">
+          <a href="#fluxo">Fluxo</a><a href="#paineis">Painéis</a><a href="#simulador">Simulador</a><a href="#origem">Como nasceu</a>
+        </nav>
+      </div>
+      <h1>Tudo que sai, <em>volta certo</em>.</h1>
+      <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora. Desenhado no chão da operação.</p>
+      <div class="ctas">
+        <a class="cta main" href="#fluxo">Ver a operação inteira</a>
+        <a class="cta" href="#paineis">Abrir os painéis</a>
+        <a class="cta" href="#simulador">Simular um turno</a>
+      </div>
+
+      <div class="scene" aria-label="Animação da operação: carreta descarrega, dollys passam pela câmara fria e pela linha, caminhão sai para entrega">
+        <svg id="cena" viewBox="0 0 1100 340" role="img" aria-label="Cena animada da operação Deméter">
+          <defs>
+            <path id="rota" d="M150 238 H330 Q350 238 360 220 L380 190 H560 Q580 190 590 210 L600 238 H880"/>
+            <symbol id="torre" viewBox="0 0 28 44">
+              <rect x="2" y="2" width="24" height="34" rx="2" fill="var(--accent)"/>
+              <g stroke="var(--surface)" stroke-width="1.5"><line x1="2" y1="10" x2="26" y2="10"/><line x1="2" y1="18" x2="26" y2="18"/><line x1="2" y1="26" x2="26" y2="26"/><line x1="14" y1="2" x2="14" y2="36"/></g>
+              <rect x="0" y="36" width="28" height="4" rx="1" fill="var(--ink)"/>
+              <circle cx="5" cy="42" r="2" fill="var(--ink)"/><circle cx="23" cy="42" r="2" fill="var(--ink)"/>
+            </symbol>
+          </defs>
+          <rect x="0" y="0" width="1100" height="340" fill="var(--surface)"/>
+          <line x1="0" y1="262" x2="1100" y2="262" stroke="var(--line)" stroke-width="2"/>
+          <g>
+            <rect x="16" y="150" width="150" height="92" rx="6" fill="var(--sunk)" stroke="var(--ink-3)"/>
+            <text x="91" y="200" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-3)">FÁBRICA</text>
+            <circle cx="46" cy="250" r="12" fill="var(--ink)"/><circle cx="76" cy="250" r="12" fill="var(--ink)"/><circle cx="140" cy="250" r="12" fill="var(--ink)"/>
+            <animateTransform attributeName="transform" type="translate" values="-180 0; 0 0; 0 0; 0 0" keyTimes="0; 0.15; 0.9; 1" dur="12s" repeatCount="indefinite"/>
+          </g>
+          <g>
+            <rect x="200" y="120" width="120" height="142" fill="var(--bg)" stroke="var(--line)"/>
+            <rect x="222" y="170" width="76" height="92" fill="var(--sunk)"/>
+            <text x="260" y="146" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Doca D3</text>
+            <circle cx="300" cy="196" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
+            <circle cx="300" cy="196" r="5" fill="var(--accent)"/>
+            <text x="260" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Recebimento · NFC</text>
+          </g>
+          <g>
+            <rect x="360" y="70" width="220" height="192" rx="8" fill="var(--info)" fill-opacity="0.12" stroke="var(--info)" stroke-width="1.5"/>
+            <text x="470" y="98" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Câmara fria</text>
+            <text x="470" y="124" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="20" fill="var(--info)"><tspan id="cena-temp">3,8</tspan> °C</text>
+            <g stroke="var(--info)" stroke-width="2" stroke-linecap="round" class="pisca"><line x1="540" y1="88" x2="540" y2="112"/><line x1="528" y1="100" x2="552" y2="100"/><line x1="531" y1="91" x2="549" y2="109"/><line x1="549" y1="91" x2="531" y2="109"/></g>
+            <text x="470" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Conferência · validade · baia</text>
+          </g>
+          <g>
+            <rect x="610" y="150" width="240" height="112" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="730" y="176" text-anchor="middle" font-family="Rubik, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Linha de dollys</text>
+            <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" text-anchor="middle">
+              <rect x="626" y="190" width="44" height="14" rx="3" fill="var(--ok)" class="pisca"/><text x="648" y="222">L01</text>
+              <rect x="682" y="190" width="44" height="14" rx="3" fill="var(--warn)"/><text x="704" y="222">L05</text>
+              <rect x="738" y="190" width="44" height="14" rx="3" fill="var(--ok)"/><text x="760" y="222">L09</text>
+              <rect x="794" y="190" width="44" height="14" rx="3" fill="var(--ok)"/><text x="816" y="222">L12</text>
+            </g>
+            <text x="730" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Onda · separação guiada</text>
+          </g>
+          <g>
+            <rect x="900" y="160" width="120" height="82" rx="6" fill="var(--board)"/>
+            <text x="960" y="206" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--board-ink)">ROTA 04</text>
+            <path d="M1020 186 H1058 L1080 212 V242 H1020 Z" fill="var(--board)"/>
+            <rect x="1032" y="194" width="22" height="16" rx="2" fill="var(--board-dim)"/>
+            <circle cx="940" cy="250" r="12" fill="var(--ink)"/><circle cx="1050" cy="250" r="12" fill="var(--ink)"/>
+            <animateTransform attributeName="transform" type="translate" values="0 0; 0 0; 220 0; 220 0" keyTimes="0; 0.85; 0.97; 1" dur="12s" repeatCount="indefinite"/>
+            <text x="960" y="292" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)">Expedição</text>
+          </g>
+          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="0s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="1.5s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="3s"><mpath href="#rota"/></animateMotion></use>
+          <use href="#torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="6s" repeatCount="indefinite" begin="4.5s"><mpath href="#rota"/></animateMotion></use>
+          <text x="550" y="34" text-anchor="middle" font-family="Rubik, sans-serif" font-size="16" fill="var(--ink-3)">Carreta → doca → câmara fria → linha → caminhão</text>
+        </svg>
+      </div>
+      <p class="scene-hint">arraste a cena para o lado →</p>
+
+      <div class="stats">
+        <div class="stat"><b>10</b><span>etapas, da compra ao caminhão</span></div>
+        <div class="stat"><b>7</b><span>painéis ao vivo nas TVs</span></div>
+        <div class="stat"><b>0</b><span>papel na operação</span></div>
+        <div class="stat"><b>R$ 9</b><span>o crachá NFC mais simples</span></div>
+      </div>
+    </section>
+
     <!-- Abertura -->
     <section class="hero" id="topo" aria-label="Apresentação">
       <div>
