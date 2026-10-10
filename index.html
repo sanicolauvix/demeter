@@ -281,6 +281,7 @@ footer a { color: var(--ink-2); }
     <a href="#linha">Linha de dollys</a>
     <a href="#expedicao">Expedição</a>
     <a href="#retorno">Retorno de rota</a>
+    <a href="#avarias">Avarias</a>
     <a href="#pessoas">Turnos e pessoas</a>
     <a href="#acesso">Acesso e exceções</a>
     <div class="grp">Tecnologia</div>
@@ -812,6 +813,41 @@ footer a { color: var(--ink-2); }
         </tbody>
       </table></div>
       <div class="callout"><b>Configurar</b><p>O destino da troca de pão vencido ainda não está definido: volta à fábrica com crédito ou é descartada na distribuidora. O sistema deixa essa regra configurável por fábrica ou por produto.</p></div>
+    </section>
+
+    <section id="avarias">
+      <span class="eyebrow">Avarias</span>
+      <h2>O dono decide; o app controla cada unidade até o destino</h2>
+      <p class="lead">Avaria é prejuízo financeiro para a empresa e moral para a equipe: produto bom para consumo indo para o lixo, diante de quem ganha pouco, estimula quebrar regras. O lixo é sempre o último destino.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Modo de decisão</th><th>Como funciona</th><th>Exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Regra genérica</td><td>O dono cria a política: tipo, origem, validade e valor até um limite levam a um destino já aprovado</td><td>Embalagem amassada, na validade, até R$ 50 → venda interna</td></tr>
+          <tr><td>Caso a caso</td><td>Nenhuma regra serve ou passou do limite: fila do responsável</td><td>Palete de laticínio quebrado</td></tr>
+          <tr><td>Regra com confirmação</td><td>A regra sugere, uma pessoa confirma</td><td>Avaria de fábrica nova</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Controle total: o ciclo de cada avaria</h3>
+      <ol class="steps">
+        <li><span><b>Registrada:</b> foto, local, etapa, quem achou, quantidade, validade e valor. Sai do disponível na hora.</span></li>
+        <li><span><b>Em quarentena:</b> baia de avarias, contada no inventário como qualquer posição.</span></li>
+        <li><span><b>Aguardando decisão:</b> regra aplicada ou fila aberta, com prazo e escada supervisor → admin → gerente.</span></li>
+        <li><span><b>Decidida:</b> quem decidiu, por qual regra, e o destino.</span></li>
+        <li><span><b>Encerrada:</b> só com comprovante: NF de devolução ou de venda, recibo de doação ou foto do descarte.</span></li>
+      </ol>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Destino (ordem definida pelo dono)</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Devolução à fábrica</td><td>Quando ela repõe; regra no cadastro do fornecedor</td></tr>
+          <tr><td>Venda simbólica interna</td><td>Com NF; desconto em folha só com autorização escrita</td></tr>
+          <tr><td>Prêmio para a turma</td><td>Ligado a meta objetiva, como a queda de avarias no mês</td></tr>
+          <tr><td>Doação</td><td>Banco de alimentos ou entidade, dentro da validade</td></tr>
+          <tr><td>Compostagem ou biomassa</td><td>Para o que não serve para consumo</td></tr>
+          <tr><td>Lixo</td><td>Último recurso, com justificativa e aprovação</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">Quem registra a avaria não escolhe o destino. O benefício é da turma, e cresce quando a avaria cai.</p>
+      <div class="callout"><b>Validar antes de ligar</b><p>Venda interna e prêmio em produto passam pelo contador e pelo jurídico; produto com embalagem danificada, pela vigilância sanitária. O app nasce pronto e cada destino é ligado quando validado. Base: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15224.htm" target="_blank" rel="noopener">Lei 15.224/2025</a>.</p></div>
     </section>
 
     <section id="pessoas">
