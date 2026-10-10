@@ -243,6 +243,7 @@ footer a { color: var(--ink-2); }
     <a href="#paineis">Painéis</a>
     <a href="#torre">Torre e crachá</a>
     <div class="grp">Operação</div>
+    <a href="#docas">Docas e pátio</a>
     <a href="#recebimento">Recebimento</a>
     <a href="#estoque">Estoque e inventário</a>
     <a href="#onda">Onda</a>
@@ -491,6 +492,45 @@ footer a { color: var(--ink-2); }
       <div class="states" aria-label="Estados do crachá">
         <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">RECEBIDA</span><span class="arrow">→</span><span class="state">SINCRONIZADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">LIBERADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
       </div>
+    </section>
+
+    <section id="docas">
+      <span class="eyebrow">Docas e pátio</span>
+      <h2>Dezesseis docas, cada uma com função</h2>
+      <p class="lead">No armazém de referência, seis docas ficam de um lado, a administração no meio e dez do outro lado. Para o sistema, cada doca é um cadastro: que veículo aceita, para que serve e a que câmaras se liga.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 250" role="img" aria-label="Layout: lado A com 6 docas, administração no meio, lado B com 10 docas, pátio à frente">
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <rect x="20" y="20" width="720" height="130" rx="12" fill="var(--sunk)" stroke="var(--line)"/>
+            <text x="380" y="44" font-size="13" fill="var(--ink-3)">Prédio do armazém (câmaras)</text>
+            <rect x="36" y="80" width="210" height="58" rx="8" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="141" y="104" font-size="15" font-weight="600" fill="var(--ink)">Lado A · 6 docas</text>
+            <text x="141" y="124" font-size="12" fill="var(--ink-2)">D1 a D6</text>
+            <rect x="262" y="80" width="110" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="317" y="104" font-size="15" font-weight="600" fill="var(--ink)">Administração</text>
+            <text x="317" y="124" font-size="12" fill="var(--ink-2)">meio</text>
+            <rect x="388" y="80" width="336" height="58" rx="8" fill="var(--info)" fill-opacity="0.16" stroke="var(--info)" stroke-width="1.5"/>
+            <text x="556" y="104" font-size="15" font-weight="600" fill="var(--ink)">Lado B · 10 docas</text>
+            <text x="556" y="124" font-size="12" fill="var(--ink-2)">D7 a D16</text>
+            <rect x="20" y="176" width="720" height="56" rx="12" fill="none" stroke="var(--ink-3)" stroke-dasharray="5 4"/>
+            <text x="380" y="200" font-size="15" font-weight="600" fill="var(--ink)">Pátio</text>
+            <text x="380" y="219" font-size="12" fill="var(--ink-3)">carretas e caminhões toco</text>
+          </g>
+        </svg>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Campo</th><th>Exemplo</th><th>Para quê</th></tr></thead>
+        <tbody>
+          <tr><td>Número e lado</td><td>D3, lado A</td><td>Placar e orientação do motorista</td></tr>
+          <tr><td>Veículos aceitos</td><td>Carreta, toco ou ambos</td><td>Altura da plataforma e manobra</td></tr>
+          <tr><td>Função</td><td>Recebimento, expedição, retorno ou mista</td><td>O que pode ser agendado ali</td></tr>
+          <tr><td>Câmaras ligadas</td><td>Descarga 1 e retorno 1</td><td>Pré-condições do descarregamento</td></tr>
+          <tr><td>Temperatura</td><td>Fria ou seca</td><td>Frios só por doca e câmara fria</td></tr>
+          <tr><td>Horário por função</td><td>Carreta de dia, toco à noite</td><td>Docas mistas mudam de papel por turno</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>A agenda da carreta só oferece docas que aceitam carreta e fazem recebimento; a onda dá a cada rota uma doca de expedição compatível com o toco; o placar mostra doca e lado. Com 16 docas, o limite deixa de ser a doca e passa a ser câmaras e pessoas, e o simulador mostra essa disputa.</p></div>
+      <p class="note">A confirmar: qual lado recebe carreta e qual atende os tocos, quais docas são mistas e quais câmaras ficam junto de quais docas.</p>
     </section>
 
     <section id="recebimento">
