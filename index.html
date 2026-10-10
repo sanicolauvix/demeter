@@ -181,6 +181,37 @@ ol.steps li b { color: var(--ink); font-weight: 600; }
 .bar i.bad { background: #F08A78; }
 .board .sub { color: var(--board-dim); font-size: 12px; }
 
+/* Simulador do turno */
+.sim { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+@media (max-width: 860px) { .sim { grid-template-columns: minmax(0, 1fr); } }
+.ops { display: flex; flex-direction: column; gap: 8px; }
+.op-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px 32px; gap: 8px; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.op-row label { font-size: 14px; color: var(--ink); line-height: 1.3; }
+.op-row label small { display: block; color: var(--ink-3); font-size: 12px; }
+.op-row input { width: 100%; font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font-variant-numeric: tabular-nums; }
+.op-row button, .add-ops button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 8px; }
+.op-row button { width: 32px; height: 32px; font-size: 16px; line-height: 1; }
+.add-ops { display: flex; flex-wrap: wrap; gap: 6px; }
+.add-ops button { font-size: 13px; padding: 5px 10px; }
+.gantt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.g-scroll { overflow-x: auto; }
+.g-inner { min-width: 520px; display: flex; flex-direction: column; gap: 6px; }
+.g-axis, .g-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px; align-items: center; }
+.g-axis .ticks { position: relative; height: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.g-axis .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.g-row .nm { font-size: 13px; color: var(--ink); line-height: 1.25; }
+.g-row .nm small { display: block; color: var(--ink-3); font-family: var(--font-mono); font-size: 11px; }
+.track { position: relative; height: 26px; background: var(--sunk); border-radius: 6px; }
+.track .seg { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; background: var(--accent); }
+.track .seg.conf { background: var(--info); }
+.track .fim { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--bad); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.veredito { border-radius: 10px; padding: 12px 14px; font-size: 15px; border: 1px solid var(--line); }
+.veredito.ok { border-color: var(--ok); color: var(--ink); }
+.veredito.estoura { border-color: var(--bad); color: var(--ink); }
+.veredito b { font-family: var(--font-display); }
+
 footer { max-width: 1180px; margin: 96px auto 0; border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--ink-3); font-size: 14px; }
 footer a { color: var(--ink-2); }
 .theme-btn { font: inherit; font-size: 13px; background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
@@ -219,6 +250,7 @@ footer a { color: var(--ink-2); }
     <a href="#expedicao">Expedição</a>
     <a href="#retorno">Retorno de rota</a>
     <a href="#pessoas">Turnos e pessoas</a>
+    <a href="#simulador">Simulador do turno</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
     <a href="#papel">Papel zero</a>
@@ -611,6 +643,43 @@ footer a { color: var(--ink-2); }
       </form>
     </section>
 
+    <section id="simulador">
+      <span class="eyebrow">Simulador do turno</span>
+      <h2>Monte o turno e veja se cabe</h2>
+      <p class="lead">Escolha as operações, as quantidades e quantas pessoas há no turno. O simulador distribui as pessoas minuto a minuto, na ordem da lista, e mostra quando cada operação começa e termina.</p>
+      <div class="sim">
+        <div class="inputs">
+          <div class="field"><label for="s-inicio">Início do turno</label><input id="s-inicio" type="time" value="06:00"></div>
+          <div class="field"><label for="s-duracao">Duração (horas)</label><input id="s-duracao" type="number" min="1" max="12" step="0.25" value="7.33"></div>
+          <div class="field"><label for="s-op">Operadores</label><input id="s-op" type="number" min="1" max="40" step="1" value="7"></div>
+          <div class="field"><label for="s-conf">Conferentes</label><input id="s-conf" type="number" min="1" max="10" step="1" value="2"></div>
+          <div class="field"><label for="s-docas">Docas (1 a 3)</label><input id="s-docas" type="number" min="1" max="3" step="1" value="1"></div>
+          <div class="field"><label for="s-min">Minutos por dolly na linha</label><input id="s-min" type="number" min="1" step="0.5" value="8"></div>
+          <h3>Operações do turno</h3>
+          <div class="ops" id="s-ops" aria-live="polite"></div>
+          <div class="add-ops" aria-label="Adicionar operação">
+            <button type="button" data-add="carreta">+ Carreta</button>
+            <button type="button" data-add="abastecer">+ Abastecer linha</button>
+            <button type="button" data-add="separar">+ Separar onda</button>
+            <button type="button" data-add="conferir">+ Conferir onda</button>
+            <button type="button" data-add="carregar">+ Carregar rotas</button>
+            <button type="button" data-add="retorno">+ Retorno de rota</button>
+          </div>
+        </div>
+        <div class="gantt">
+          <div class="veredito" id="s-veredito" aria-live="polite"></div>
+          <div class="kpis">
+            <div class="kpi"><span>Fim previsto</span><b id="s-fim">—</b></div>
+            <div class="kpi"><span>Uso dos operadores</span><b id="s-uop">—</b></div>
+            <div class="kpi"><span>Uso dos conferentes</span><b id="s-uconf">—</b></div>
+          </div>
+          <div class="g-scroll"><div class="g-inner" id="s-gantt"></div></div>
+          <div class="legend"><span><i style="background:var(--accent)"></i>Operadores</span><span><i style="background:var(--info)"></i>Conferentes</span><span><i style="border-left:2px dashed var(--bad);border-radius:0;width:0;height:12px"></i>Fim do turno</span></div>
+          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); sincronização 3 min por torre (1 conferente); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="cenarios">
       <span class="eyebrow">Cenários</span>
       <h2>Cada etapa usa o melhor aparelho disponível</h2>
@@ -837,6 +906,144 @@ footer a { color: var(--ink-2); }
     const rota = document.querySelector('[data-cont="rota04"]');
     if (rota) rota.textContent = String(Number(rota.textContent) >= 11 ? 7 : Number(rota.textContent) + 1);
   }, 3000);
+
+  // Simulador do turno: agenda minuto a minuto, pessoas por função, prioridade pela ordem da lista.
+  const TIPOS = {
+    carreta: { nome: 'Carreta de pão', unidade: 'torres', padrao: 60 },
+    abastecer: { nome: 'Abastecer linha', unidade: 'torres', padrao: 30 },
+    separar: { nome: 'Separar onda', unidade: 'dollys', padrao: 75 },
+    conferir: { nome: 'Conferir onda', unidade: 'dollys', padrao: 75 },
+    carregar: { nome: 'Carregar rotas', unidade: 'dollys', padrao: 75 },
+    retorno: { nome: 'Retorno de rota', unidade: 'caminhões', padrao: 8 },
+  };
+  let ops = [
+    { tipo: 'carreta', qtd: 60 }, { tipo: 'carreta', qtd: 60 }, { tipo: 'abastecer', qtd: 30 },
+    { tipo: 'separar', qtd: 75 }, { tipo: 'conferir', qtd: 75 },
+  ];
+  const hhmm = (min) => { const m = ((Math.round(min) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+
+  function rotulos() {
+    const cont = {};
+    return ops.map((o) => { cont[o.tipo] = (cont[o.tipo] || 0) + 1; return `${TIPOS[o.tipo].nome} ${cont[o.tipo]}`; });
+  }
+
+  function montarTarefas(minDolly, docas) {
+    const nomes = rotulos();
+    const tarefas = [];
+    const naDoca = [];
+    let carretas = 0, ultimaSeparar = null, ultimaConferir = null;
+    ops.forEach((o, i) => {
+      const q = Math.max(0, o.qtd), n = nomes[i];
+      if (o.tipo === 'carreta') {
+        const doca = carretas % docas;
+        carretas += 1;
+        const anterior = naDoca[doca];
+        const deps = anterior ? [anterior.r, anterior.s] : [];
+        const rotulo = docas > 1 ? `${n} (doca ${doca + 1})` : n;
+        const d = { nome: rotulo + ' · descarga', papel: 'op', trabalho: 4 * q, max: 4, deps };
+        const r = { nome: rotulo + ' · carga do retorno', papel: 'op', trabalho: 4 * q, max: 4, deps: [d] };
+        const s = { nome: rotulo + ' · sincronização', papel: 'conf', trabalho: 3 * q, max: 1, deps: [d] };
+        tarefas.push(d, r, s); naDoca[doca] = { r, s };
+      } else if (o.tipo === 'abastecer') {
+        tarefas.push({ nome: n, papel: 'op', trabalho: 4 * q, max: 2, deps: [] });
+      } else if (o.tipo === 'separar') {
+        ultimaSeparar = { nome: n, papel: 'op', trabalho: minDolly * q, max: 6, deps: [] }; tarefas.push(ultimaSeparar);
+      } else if (o.tipo === 'conferir') {
+        ultimaConferir = { nome: n, papel: 'conf', trabalho: 2 * q, max: 2, deps: ultimaSeparar ? [ultimaSeparar] : [] }; tarefas.push(ultimaConferir);
+      } else if (o.tipo === 'carregar') {
+        tarefas.push({ nome: n, papel: 'op', trabalho: q, max: 4, deps: ultimaConferir ? [ultimaConferir] : [] });
+      } else if (o.tipo === 'retorno') {
+        tarefas.push({ nome: n, papel: 'conf', trabalho: 8 * q, max: 1, deps: [] });
+      }
+    });
+    return tarefas;
+  }
+
+  function simular() {
+    const [h, m] = ($('s-inicio').value || '06:00').split(':').map(Number);
+    const inicio = (h || 0) * 60 + (m || 0);
+    const duracao = Math.max(num('s-duracao'), 1) * 60;
+    const pessoas = { op: Math.max(1, Math.round(num('s-op'))), conf: Math.max(1, Math.round(num('s-conf'))) };
+    const docas = Math.min(3, Math.max(1, Math.round(num('s-docas')) || 1));
+    const tarefas = montarTarefas(Math.max(num('s-min'), 1), docas);
+    tarefas.forEach((t) => { t.resta = t.trabalho; t.ini = null; t.fim = t.trabalho <= 0 ? 0 : null; });
+    const usado = { op: 0, conf: 0 };
+    let t = 0;
+    while (tarefas.some((x) => x.fim === null) && t < 1440) {
+      const livre = { ...pessoas };
+      for (const x of tarefas) {
+        if (x.fim !== null || !x.deps.every((d) => d.fim !== null && d.fim <= t)) continue;
+        const n = Math.min(x.max, livre[x.papel], Math.ceil(x.resta));
+        if (n <= 0) continue;
+        livre[x.papel] -= n; usado[x.papel] += n;
+        if (x.ini === null) x.ini = t;
+        x.resta -= n;
+        if (x.resta <= 0) x.fim = t + 1;
+      }
+      t += 1;
+    }
+    const fimGeral = Math.max(0, ...tarefas.map((x) => x.fim ?? 1440));
+    desenhar(tarefas, inicio, duracao, fimGeral, pessoas, usado);
+  }
+
+  function desenhar(tarefas, inicio, duracao, fimGeral, pessoas, usado) {
+    const escala = Math.max(duracao, fimGeral);
+    const pct = (min) => (min / escala) * 100;
+    const passo = escala > 600 ? 120 : 60;
+    let ticks = '';
+    for (let k = 0; k <= escala; k += passo) ticks += `<span style="left:${pct(k)}%">${hhmm(inicio + k)}</span>`;
+    const linhaFim = `<div class="fim" style="left:${pct(duracao)}%" aria-hidden="true"></div>`;
+    $('s-gantt').innerHTML = `<div class="g-axis"><span></span><div class="ticks">${ticks}</div></div>` +
+      tarefas.filter((x) => x.trabalho > 0).map((x) => {
+        const ini = x.ini ?? 0, fim = x.fim ?? 1440;
+        return `<div class="g-row"><div class="nm">${x.nome}<small>${hhmm(inicio + ini)}–${hhmm(inicio + fim)}</small></div>` +
+          `<div class="track">${linhaFim}<div class="seg ${x.papel === 'conf' ? 'conf' : ''}" style="left:${pct(ini)}%;width:${Math.max(pct(fim - ini), 0.6)}%" title="${x.nome}"></div></div></div>`;
+      }).join('');
+    $('s-fim').textContent = hhmm(inicio + fimGeral);
+    const janela = Math.max(fimGeral, 1);
+    $('s-uop').textContent = Math.round((usado.op / (pessoas.op * janela)) * 100) + '%';
+    $('s-uconf').textContent = Math.round((usado.conf / (pessoas.conf * janela)) * 100) + '%';
+    const v = $('s-veredito');
+    if (fimGeral <= duracao) {
+      v.className = 'veredito ok';
+      v.innerHTML = `<b>Cabe no turno.</b> Termina às ${hhmm(inicio + fimGeral)}, com ${Math.round(duracao - fimGeral)} min de folga.`;
+    } else {
+      v.className = 'veredito estoura';
+      v.innerHTML = `<b>Não cabe no turno.</b> Passa ${Math.round(fimGeral - duracao)} min do fim (${hhmm(inicio + duracao)}). Aumente as pessoas, tire uma carreta ou passe a pendência para o turno seguinte, que pode recusar.`;
+    }
+  }
+
+  function listarOps() {
+    const nomes = rotulos();
+    $('s-ops').innerHTML = ops.map((o, i) => `
+      <div class="op-row">
+        <label for="s-q${i}">${nomes[i]}<small>${TIPOS[o.tipo].unidade}</small></label>
+        <input id="s-q${i}" type="number" min="0" step="1" value="${o.qtd}" data-i="${i}">
+        <button type="button" data-del="${i}" aria-label="Remover ${nomes[i]}">×</button>
+      </div>`).join('');
+    simular();
+  }
+
+  $('s-ops').addEventListener('input', (e) => {
+    const i = e.target.dataset.i;
+    if (i === undefined) return;
+    ops[Number(i)].qtd = Math.max(0, parseFloat(e.target.value) || 0);
+    simular();
+  });
+  $('s-ops').addEventListener('click', (e) => {
+    const i = e.target.dataset.del;
+    if (i === undefined) return;
+    ops.splice(Number(i), 1);
+    listarOps();
+  });
+  document.querySelector('.add-ops').addEventListener('click', (e) => {
+    const tipo = e.target.dataset.add;
+    if (!tipo) return;
+    ops.push({ tipo, qtd: TIPOS[tipo].padrao });
+    listarOps();
+  });
+  ['s-inicio', 's-duracao', 's-op', 's-conf', 's-docas', 's-min'].forEach((id) => $(id).addEventListener('input', simular));
+  listarOps();
 
   // Índice: marca a seção visível.
   const links = Array.from(document.querySelectorAll('.toc a'));
