@@ -1179,6 +1179,12 @@ footer a { color: var(--ink-2); }
     });
   });
 
+  // Sempre abre no Início: ignora a posição guardada e o item do endereço (#secao).
+  try { history.scrollRestoration = 'manual'; } catch (e) { /* navegador antigo */ }
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', () => window.scrollTo(0, 0));
+
   // Quem pede menos movimento vê a cena parada.
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('cena')?.pauseAnimations();
 
