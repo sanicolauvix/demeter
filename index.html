@@ -246,12 +246,15 @@ footer a { color: var(--ink-2); }
     <div class="grp">Operação</div>
     <a href="#docas">Docas e pátio</a>
     <a href="#recebimento">Recebimento</a>
+    <a href="#paletizados">Paletizados</a>
+    <a href="#camaras">Câmaras e temperatura</a>
     <a href="#estoque">Estoque e inventário</a>
     <a href="#onda">Onda</a>
     <a href="#linha">Linha de dollys</a>
     <a href="#expedicao">Expedição</a>
     <a href="#retorno">Retorno de rota</a>
     <a href="#pessoas">Turnos e pessoas</a>
+    <a href="#acesso">Acesso e exceções</a>
     <a href="#simulador">Simulador do turno</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
@@ -582,6 +585,54 @@ footer a { color: var(--ink-2); }
       </table></div>
     </section>
 
+    <section id="paletizados">
+      <span class="eyebrow">Paletizados</span>
+      <h2>Laticínios e secos em palete têm uma etapa a mais: rebater</h2>
+      <p class="lead">O palete de madeira chega misturado. Antes de guardar, ele é desmontado e remontado em paletes novos, por tipo e sabor. Refrigerados e secos seguem a mesma dinâmica, em câmaras diferentes.</p>
+      <ol class="steps">
+        <li><span>Palete chega misturado e envolto em stretch.</span></li>
+        <li><span>Conferência pelas caixas, cada uma com seu código de barras, contra a NF.</span></li>
+        <li><span><b>Rebater:</b> desmonta e remonta por tipo e sabor. No refrigerado, dentro da câmara fria, sem quebrar a cadeia de frio.</span></li>
+        <li><span>Stretch de novo; o palete novo registra produto, quantidade, validade e lote.</span></li>
+        <li><span>Pré-armazenamento no 3º nível do porta-palete, na própria câmara.</span></li>
+        <li><span>Abastecimento desce do 3º nível conforme a linha consome.</span></li>
+        <li><span>Linha de separação nos níveis 1 e 2, no mesmo modelo da linha de dollys.</span></li>
+      </ol>
+      <p class="rule">Identificar sempre no chão, nunca na altura.</p>
+      <div class="cards">
+        <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3". O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
+        <div class="card"><h3>Crachá de palete</h3><p>Reutilizável, preso por abraçadeira no bloco de madeira, fora do stretch. NFC para ler de perto e QR grande para ler com a câmera a 1–2 m.</p></div>
+      </div>
+      <p class="note">A confirmar: quem sobe e desce paletes do 3º nível, e se o palete de madeira volta ao fornecedor.</p>
+    </section>
+
+    <section id="camaras">
+      <span class="eyebrow">Câmaras e temperatura</span>
+      <h2>Cada câmara tem cadastro, sensor e alerta em cadeia</h2>
+      <div class="board" aria-label="Exemplo de painel das câmaras">
+        <div class="board-head"><b>Câmaras · agora</b><span>exemplo</span></div>
+        <div class="board-scroll"><table>
+          <thead><tr><th>Câmara</th><th>Temp.</th><th>Dentro</th><th>Maior tempo no frio</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Fria 1 · dollys</td><td><span data-temp="f1">3,8</span> °C</td><td>3</td><td>1h22 · próx. repouso 18 min</td><td><span class="flap ok">Na faixa</span></td></tr>
+            <tr><td>Fria 2 · laticínios</td><td>6,1 °C</td><td>1</td><td>0h40</td><td><span class="flap wait">Subindo</span></td></tr>
+            <tr><td>Seca 1 · paletizados</td><td>24 °C</td><td>4</td><td>—</td><td><span class="flap ok">Normal</span></td></tr>
+            <tr><td>Fria 3 · retorno</td><td>—</td><td>0</td><td>—</td><td><span class="flap bad">Sensor sem sinal</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Evento</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td>Temperatura subindo</td><td>Aviso ao supervisor</td></tr>
+          <tr><td>Fora da faixa por muito tempo</td><td>Alerta em cadeia; produtos da câmara bloqueados até a qualidade decidir</td></tr>
+          <tr><td>Porta aberta demais</td><td>Aviso</td></tr>
+          <tr><td>Sensor sem sinal</td><td>Alerta: pode ser queda de energia</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>O cadastro diz o tipo (fria, seca ou refrigeração desligada), a função, a estrutura (baias ou porta-palete com níveis), as docas ligadas e a faixa de temperatura. O histórico de temperatura é a prova da cadeia de frio para a vigilância sanitária.</p></div>
+    </section>
+
     <section id="estoque">
       <span class="eyebrow">Estoque e inventário</span>
       <h2>Vendas só enxergam o que pode ser vendido</h2>
@@ -716,6 +767,33 @@ footer a { color: var(--ink-2); }
           <p class="note">Tempos iniciais estimados. Na operação, a previsão é substituída pelos tempos reais de cada pessoa. Quadro para um turno; com três turnos, cada um precisa do seu supervisor e de um mínimo de pessoas.</p>
         </div>
       </form>
+    </section>
+
+    <section id="acesso">
+      <span class="eyebrow">Acesso e exceções</span>
+      <h2>A IA autoriza o rotineiro; o superior abre exceção e responde por ela</h2>
+      <p class="lead">Na câmara fria, a CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e usa o mesmo mecanismo de autorização para toda a operação.</p>
+      <ol class="steps">
+        <li><span>Funcionário chega à porta e pede a entrada no celular.</span></li>
+        <li><span>A câmera confere o EPI na imagem: japona, luva, bota, touca.</span></li>
+        <li><span>O sistema cruza EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
+        <li><span>Dentro, o relógio de frio corre: aviso aos 1h30, repouso obrigatório aos 1h40.</span></li>
+        <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
+      </ol>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Tipo de regra</th><th>Exemplos</th><th>Exceção</th></tr></thead>
+        <tbody>
+          <tr><td>Legal e de segurança</td><td>Repouso do art. 253, EPI, pessoa presa na câmara</td><td>Nunca: o sistema troca a pessoa, não fura a regra</td></tr>
+          <tr><td>Operacional</td><td>Prioridade, doca, onda, quem entra agora</td><td>Sim, aberta por um superior, que responde por ela</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><span class="big">5'</span><h3>Supervisor</h3><p>Primeiro a receber o alerta ou o pedido de exceção.</p></div>
+        <div class="card"><span class="big">10'</span><h3>Administrador</h3><p>Recebe se o supervisor não respondeu no prazo.</p></div>
+        <div class="card"><span class="big">15'</span><h3>Gerente</h3><p>Último nível da cadeia. Prazos configuráveis.</p></div>
+      </div>
+      <div class="callout"><b>Câmera e LGPD</b><p>Identificação pelo crachá ou celular, sem reconhecimento facial. A câmera só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
+      <p class="note">Fonte: <a href="https://www.aurum.com.br/blog/clt-comentado/art-253-clt/" target="_blank" rel="noopener">art. 253 da CLT comentado (Aurum)</a>.</p>
     </section>
 
     <section id="simulador">
@@ -979,6 +1057,8 @@ footer a { color: var(--ink-2); }
     });
     const torres = document.querySelector('[data-cont="torres"]');
     if (torres) torres.textContent = String(Number(torres.textContent) >= 12 ? 7 : Number(torres.textContent) + 1);
+    const temp = document.querySelector('[data-temp="f1"]');
+    if (temp) temp.textContent = (3.4 + Math.random() * 0.9).toFixed(1).replace('.', ',');
     const rota = document.querySelector('[data-cont="rota04"]');
     if (rota) rota.textContent = String(Number(rota.textContent) >= 11 ? 7 : Number(rota.textContent) + 1);
   }, 3000);
