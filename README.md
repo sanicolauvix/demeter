@@ -16,7 +16,7 @@ Este repositório guarda a ideia e o desenho da operação, não o código do si
 
 ## Autor
 
-Sebastião Alves Nicolau · [GitHub](https://github.com/sanicolauvix) · [LinkedIn](https://linkedin.com/in/sebastiao-alves-nicolau-421ab71bb)
+Sebastião Alves Nicolau · [GitHub](https://github.com/sanicolauvix)
 
 ## Licença
 
