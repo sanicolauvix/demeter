@@ -283,7 +283,7 @@ footer a { color: var(--ink-2); }
     <a href="#retorno">Retorno de rota</a>
     <a href="#avarias">Avarias</a>
     <a href="#pessoas">Turnos e pessoas</a>
-    <a href="#acesso">Acesso e exceções</a>
+    <a href="#acesso">Acesso às câmaras frias</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
     <a href="#integracao">Cadastros e integração</a>
@@ -954,6 +954,7 @@ footer a { color: var(--ink-2); }
           <div class="field"><label for="q-dias">Dias de operação por semana</label><input id="q-dias" type="number" min="1" max="7" step="1" value="6"></div>
           <div class="field"><label for="q-horas">Horas produtivas por pessoa</label><input id="q-horas" type="number" min="1" step="0.1" value="6.2"></div>
           <div class="field"><label for="q-cob">Cobertura (férias, faltas) %</label><input id="q-cob" type="number" min="0" step="1" value="12"></div>
+          <div class="field"><label for="q-frio">Trabalho dentro da câmara fria %</label><input id="q-frio" type="number" min="0" max="100" step="5" value="70"></div>
         </div>
         <div class="out" aria-live="polite">
           <div class="kpis">
@@ -971,16 +972,30 @@ footer a { color: var(--ink-2); }
     </section>
 
     <section id="acesso">
-      <span class="eyebrow">Acesso e exceções</span>
-      <h2>A IA autoriza o rotineiro; o superior abre exceção e responde por ela</h2>
-      <p class="lead">Na câmara fria, a CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e usa o mesmo mecanismo de autorização para toda a operação.</p>
+      <span class="eyebrow">Acesso às câmaras frias</span>
+      <h2>Estoque, pessoas e lucro, sem pagar com a saúde de quem trabalha</h2>
+      <p class="lead">Só entra na câmara fria quem está autorizado, no horário e com o descanso térmico em dia. A CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo no frio, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e o quadro de pessoal já nasce prevendo esse descanso.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Para entrar</th><th>Como o sistema confere</th></tr></thead>
+        <tbody>
+          <tr><td>Estar autorizado</td><td>Cadastro de pessoas: função e habilitação para câmara fria</td></tr>
+          <tr><td>Estar no horário</td><td>Escalado no turno e dentro do horário cadastrado da câmara</td></tr>
+          <tr><td>Estar com o descanso em dia</td><td>Relógio de frio de cada pessoa; repouso pendente bloqueia a entrada</td></tr>
+          <tr><td>Estar protegido</td><td>EPI conferido na porta: japona, luva, bota, touca</td></tr>
+          <tr><td>Ser necessário</td><td>A linha ou a câmara precisa de alguém agora</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>QLP com descanso térmico</b><p>A cada ciclo de 2 horas no frio, 20 minutos são de repouso. Para manter a mesma produção, as funções de câmara fria precisam de cerca de 20% a mais de pessoas, em rodízio: enquanto um descansa, outro entra. O QLP calcula isso sozinho, e o descanso nunca vira atraso nem desculpa para pular a pausa.</p></div>
+      <h3>Como funciona a entrada</h3>
       <ol class="steps">
         <li><span>Funcionário chega à porta e pede a entrada no celular.</span></li>
         <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
-        <li><span>O sistema cruza EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
+        <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
         <li><span>Dentro, o relógio de frio corre: aviso aos 1h30, repouso obrigatório aos 1h40.</span></li>
         <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
       </ol>
+      <h3>A mesma regra vale para toda a operação</h3>
+      <p class="note">A IA autoriza o rotineiro; o superior abre exceção e responde por ela. Lei e segurança não têm exceção.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Tipo de regra</th><th>Exemplos</th><th>Exceção</th></tr></thead>
         <tbody>
@@ -1254,6 +1269,10 @@ footer a { color: var(--ink-2); }
       ['Sincronização da NF', (3 * torresDia) / 60, 'conf'],
       ['Conferência de expedição', (2 * dollys) / 60, 'conf'],
     ];
+    // Descanso térmico (CLT art. 253): 20 min a cada 1h40 no frio = +20% sobre as horas trabalhadas na câmara.
+    const frio = Math.min(Math.max(num('q-frio'), 0), 100) / 100;
+    const hhFrio = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0) * frio;
+    linhas.push(['Descanso térmico (art. 253)', hhFrio * 0.2, 'op']);
     const hhOp = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0);
     const hhConf = linhas.filter((l) => l[2] === 'conf').reduce((s, l) => s + l[1], 0);
     $('r-hho').textContent = fmt(hhOp);
