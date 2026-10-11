@@ -275,7 +275,7 @@ footer a { color: var(--ink-2); }
     <a href="#docas">Docas e pátio</a>
     <a href="#recebimento">Recebimento</a>
     <a href="#paletizados">Paletizados</a>
-    <a href="#camaras">Câmaras e temperatura</a>
+    <a href="#camaras">Controle do frio</a>
     <a href="#estoque">Estoque e inventário</a>
     <a href="#onda">Onda</a>
     <a href="#linha">Linha de dollys e paletes</a>
@@ -283,7 +283,7 @@ footer a { color: var(--ink-2); }
     <a href="#retorno">Retorno de rota</a>
     <a href="#avarias">Avarias</a>
     <a href="#pessoas">Turnos e pessoas</a>
-    <a href="#acesso">Acesso às câmaras frias</a>
+    <a href="#acesso">Exceções e autorização</a>
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
     <a href="#integracao">Cadastros e integração</a>
@@ -589,22 +589,23 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
-        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real e onde remanejar gente.</p>
+        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente.</p>
         <div class="board">
           <div class="grid">
             <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
-            <div class="tile"><span>Rendimento do turno</span><b>94%</b></div>
+            <div class="tile"><span>No frio · em repouso</span><b>3 · 1</b></div>
             <div class="tile"><span>Onda 3 · previsão</span><b>21:40</b></div>
             <div class="tile"><span>Fim do turno</span><b class="alerta">21:20</b></div>
           </div>
           <div class="board-scroll"><table>
-            <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Status</th></tr></thead>
+            <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Relógio de frio</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>Operador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td><span class="flap ok">No ritmo</span></td></tr>
-              <tr><td>Operador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td><span class="flap ok">No ritmo</span></td></tr>
-              <tr><td>Operador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
-              <tr><td>Operador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td><span class="flap go">Doca</span></td></tr>
-              <tr><td>Conferente</td><td>Sincronização NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="82"><td>Operador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="47"><td>Operador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Operador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
+              <tr><td>Operador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
+              <tr data-frio="18"><td>Conferente</td><td>Sincronização NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="-12"><td>Operador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
             </tbody>
           </table></div>
           <p class="board-note">Alerta: a onda 3 termina depois do fim do turno. Remanejar 1 pessoa para a linha agora evita passar pendência para o 3º turno.</p>
@@ -772,8 +773,10 @@ footer a { color: var(--ink-2); }
     </section>
 
     <section id="camaras">
-      <span class="eyebrow">Câmaras e temperatura</span>
-      <h2>Cada câmara tem cadastro, sensor e alerta em cadeia</h2>
+      <span class="eyebrow">Controle do frio</span>
+      <h2>A temperatura de cada câmara e o tempo de cada pessoa no frio, no mesmo controle</h2>
+      <p class="lead">O frio cuida do produto e cobra do corpo. O Deméter junta as duas coisas: sensores nas câmaras, entrada autorizada e um relógio de frio para cada colaborador, tudo nos mesmos painéis e na mesma cadeia de alertas.</p>
+      <h3>Câmaras e temperatura</h3>
       <div class="board" aria-label="Exemplo de painel das câmaras">
         <div class="board-head"><b>Câmaras · agora</b><span>exemplo</span></div>
         <div class="board-scroll"><table>
@@ -796,6 +799,39 @@ footer a { color: var(--ink-2); }
         </tbody>
       </table></div>
       <div class="prose"><p>O cadastro diz o tipo (fria, seca ou refrigeração desligada), a função, a estrutura (baias ou porta-palete com níveis), as docas ligadas e a faixa de temperatura. O histórico de temperatura é a prova da cadeia de frio para a vigilância sanitária.</p></div>
+      <h3>Acesso e permanência: estoque, pessoas e lucro, sem pagar com a saúde de quem trabalha</h3>
+      <div class="prose"><p>Só entra na câmara fria quem está autorizado, no horário e com o descanso térmico em dia. A CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo no frio, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e o quadro de pessoal já nasce prevendo esse descanso.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Para entrar</th><th>Como o sistema confere</th></tr></thead>
+        <tbody>
+          <tr><td>Estar autorizado</td><td>Cadastro de pessoas: função e habilitação para câmara fria</td></tr>
+          <tr><td>Estar no horário</td><td>Escalado no turno e dentro do horário cadastrado da câmara</td></tr>
+          <tr><td>Estar com o descanso em dia</td><td>Relógio de frio de cada pessoa; repouso pendente bloqueia a entrada</td></tr>
+          <tr><td>Estar protegido</td><td>EPI conferido na porta: japona, luva, bota, touca</td></tr>
+          <tr><td>Ser necessário</td><td>A linha ou a câmara precisa de alguém agora</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>QLP com descanso térmico</b><p>A cada ciclo de 2 horas no frio, 20 minutos são de repouso. Para manter a mesma produção, as funções de câmara fria precisam de cerca de 20% a mais de pessoas, em rodízio: enquanto um descansa, outro entra. O QLP calcula isso sozinho, e o descanso nunca vira atraso nem desculpa para pular a pausa.</p></div>
+      <h3>Como funciona a entrada</h3>
+      <ol class="steps">
+        <li><span>Funcionário chega à porta e pede a entrada no celular.</span></li>
+        <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
+        <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
+        <li><span>Dentro, o relógio de frio corre: aviso aos 1h30, repouso obrigatório aos 1h40.</span></li>
+        <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
+      </ol>
+      <h3>Relógio de frio de cada colaborador</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Tempo no frio</th><th>O que acontece</th><th>Onde aparece</th></tr></thead>
+        <tbody>
+          <tr><td>Entrada</td><td>O relógio da pessoa começa a contar; a câmara soma mais um "dentro"</td><td>Painel do turno e painel da câmara</td></tr>
+          <tr><td>1h30</td><td>Aviso no celular da pessoa e do supervisor; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
+          <tr><td>1h40</td><td>Repouso obrigatório de 20 minutos, fora do frio, contado como trabalho</td><td>Painel do turno, em repouso</td></tr>
+          <tr><td>Fim do repouso</td><td>Relógio zera e a pessoa fica liberada para voltar</td><td>Painel do turno, liberado</td></tr>
+          <tr><td>Saiu sem registrar</td><td>Alerta: pode haver alguém preso na câmara</td><td>Alerta em cadeia, sem exceção</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">O painel <a href="#paineis">Turno</a>, o mesmo dos colaboradores, mostra ao vivo quem está no frio, há quanto tempo e quanto falta para o repouso. O histórico de cada pessoa prova que a pausa foi cumprida.</p>
     </section>
 
     <section id="estoque">
@@ -972,30 +1008,10 @@ footer a { color: var(--ink-2); }
     </section>
 
     <section id="acesso">
-      <span class="eyebrow">Acesso às câmaras frias</span>
-      <h2>Estoque, pessoas e lucro, sem pagar com a saúde de quem trabalha</h2>
-      <p class="lead">Só entra na câmara fria quem está autorizado, no horário e com o descanso térmico em dia. A CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo no frio, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e o quadro de pessoal já nasce prevendo esse descanso.</p>
-      <div class="tbl"><table class="t">
-        <thead><tr><th>Para entrar</th><th>Como o sistema confere</th></tr></thead>
-        <tbody>
-          <tr><td>Estar autorizado</td><td>Cadastro de pessoas: função e habilitação para câmara fria</td></tr>
-          <tr><td>Estar no horário</td><td>Escalado no turno e dentro do horário cadastrado da câmara</td></tr>
-          <tr><td>Estar com o descanso em dia</td><td>Relógio de frio de cada pessoa; repouso pendente bloqueia a entrada</td></tr>
-          <tr><td>Estar protegido</td><td>EPI conferido na porta: japona, luva, bota, touca</td></tr>
-          <tr><td>Ser necessário</td><td>A linha ou a câmara precisa de alguém agora</td></tr>
-        </tbody>
-      </table></div>
-      <div class="callout"><b>QLP com descanso térmico</b><p>A cada ciclo de 2 horas no frio, 20 minutos são de repouso. Para manter a mesma produção, as funções de câmara fria precisam de cerca de 20% a mais de pessoas, em rodízio: enquanto um descansa, outro entra. O QLP calcula isso sozinho, e o descanso nunca vira atraso nem desculpa para pular a pausa.</p></div>
-      <h3>Como funciona a entrada</h3>
-      <ol class="steps">
-        <li><span>Funcionário chega à porta e pede a entrada no celular.</span></li>
-        <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
-        <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
-        <li><span>Dentro, o relógio de frio corre: aviso aos 1h30, repouso obrigatório aos 1h40.</span></li>
-        <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
-      </ol>
-      <h3>A mesma regra vale para toda a operação</h3>
-      <p class="note">A IA autoriza o rotineiro; o superior abre exceção e responde por ela. Lei e segurança não têm exceção.</p>
+      <span class="eyebrow">Exceções e autorização</span>
+      <h2>A IA autoriza o rotineiro; o superior abre exceção e responde por ela</h2>
+      <p class="lead">O mesmo mecanismo que libera a entrada na câmara fria vale para toda a operação: o sistema autoriza o que é rotina, nega com o motivo, e qualquer exceção tem um responsável com nome.</p>
+      <p class="note">Lei e segurança não têm exceção.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Tipo de regra</th><th>Exemplos</th><th>Exceção</th></tr></thead>
         <tbody>
@@ -1357,6 +1373,27 @@ footer a { color: var(--ink-2); }
 
   // Quem pede menos movimento vê a cena parada.
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('cena')?.pauseAnimations();
+
+  // Relógio de frio no painel do turno: +1 minuto a cada 3 s; aos 100 min entra em repouso de 20 min (valores negativos).
+  const linhasFrio = Array.from(document.querySelectorAll('[data-frio]'));
+  const pintarFrio = () => {
+    linhasFrio.forEach((tr) => {
+      const m = Number(tr.dataset.frio), c = tr.querySelector('.frio-c');
+      if (!c) return;
+      if (m < 0) { c.innerHTML = '<span class="flap go">Repouso · volta em ' + (-m) + ' min</span>'; return; }
+      const hm = Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0');
+      c.innerHTML = m >= 90 ? '<span class="flap wait">' + hm + ' · repouso em ' + (100 - m) + ' min</span>' : '<span class="flap ok">' + hm + '</span>';
+    });
+  };
+  pintarFrio();
+  setInterval(() => {
+    linhasFrio.forEach((tr) => {
+      let m = Number(tr.dataset.frio) + 1;
+      if (m >= 100) m = -20;
+      tr.dataset.frio = String(m);
+    });
+    pintarFrio();
+  }, 3000);
 
   // Painéis vivos: barras do turno andam e contadores sobem, voltando ao início em ciclo.
   setInterval(() => {
