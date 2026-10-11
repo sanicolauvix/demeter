@@ -287,6 +287,7 @@ footer a { color: var(--ink-2); }
     <div class="grp">Tecnologia</div>
     <a href="#cenarios">Cenários</a>
     <a href="#integracao">Cadastros e integração</a>
+    <a href="#cameras">Câmeras com IA</a>
     <a href="#papel">Papel zero</a>
     <a href="#hardware">Hardware e custos</a>
     <a href="#desenvolvimento">Desenvolvimento</a>
@@ -992,18 +993,7 @@ footer a { color: var(--ink-2); }
         <div class="card"><span class="big">15'</span><h3>Gerente</h3><p>Último nível da cadeia. Prazos configuráveis.</p></div>
       </div>
       <div class="callout"><b>Câmera e LGPD</b><p>Identificação pelo crachá ou celular, sem reconhecimento facial. A câmera só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
-      <h3>Câmeras com IA: vigiar o processo, não a pessoa</h3>
-      <div class="tbl"><table class="t">
-        <thead><tr><th>Detecção</th><th>Funciona</th><th>Uso</th></tr></thead>
-        <tbody>
-          <tr><td>Câmera tapada, virada ou desligada</td><td>Muito bem</td><td>Alerta imediato: fim do ponto cego criado</td></tr>
-          <tr><td>Pessoa em área restrita ou fora do horário</td><td>Bem</td><td>Câmara fechada, doca à noite</td></tr>
-          <tr><td>Porta aberta, corredor bloqueado</td><td>Bem</td><td>Junto com o sensor de temperatura</td></tr>
-          <tr><td>Palete ou dolly fora do lugar</td><td>Bem</td><td>Vira tarefa de arrumação</td></tr>
-          <tr><td>"Atitude suspeita", consumo de produto</td><td>Mal: muitos falsos alarmes</td><td>Não serve como acusação</td></tr>
-        </tbody>
-      </table></div>
-      <div class="prose"><p>As perdas são encontradas pelo inventário cego (onde, quando, qual item) e só o trecho de vídeo da divergência vai para revisão de uma pessoa. A IA sinaliza, uma pessoa decide. E o registro de cada movimento acaba com o "foi ele": protege também o trabalhador honesto, que hoje leva a culpa junto.</p></div>
+      <p class="note">As câmeras com IA têm seção própria: <a href="#cameras">Câmeras com IA</a>.</p>
       <p class="note">Fonte: <a href="https://www.aurum.com.br/blog/clt-comentado/art-253-clt/" target="_blank" rel="noopener">art. 253 da CLT comentado (Aurum)</a>.</p>
     </section>
 
@@ -1099,6 +1089,44 @@ footer a { color: var(--ink-2); }
         </tbody>
       </table></div>
       <p class="note">API do Deméter com chave por empresa. O conector lê uma view do banco, a API do ERP ou, em último caso, um arquivo exportado. Se o ERP cair, os eventos esperam numa fila e a doca não para.</p>
+    </section>
+
+    <section id="cameras">
+      <span class="eyebrow">Câmeras com IA</span>
+      <h2>A câmera vigia o processo, não a pessoa</h2>
+      <p class="lead">Começa pela segurança: EPI, acesso à câmara fria, pontos cegos. Numa fase seguinte, a mesma câmera vira um sensor do Deméter: mede o que acontece de verdade, e a inteligência regenerativa transforma essa medida em correção.</p>
+      <h3>Fase 1: segurança e pontos cegos</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Detecção</th><th>Funciona</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Câmera tapada, virada ou desligada</td><td>Muito bem</td><td>Alerta imediato: fim do ponto cego criado</td></tr>
+          <tr><td>Pessoa em área restrita ou fora do horário</td><td>Bem</td><td>Câmara fechada, doca à noite</td></tr>
+          <tr><td>Porta aberta, corredor bloqueado</td><td>Bem</td><td>Junto com o sensor de temperatura</td></tr>
+          <tr><td>Palete ou dolly fora do lugar</td><td>Bem</td><td>Vira tarefa de arrumação</td></tr>
+          <tr><td>"Atitude suspeita", consumo de produto</td><td>Mal: muitos falsos alarmes</td><td>Não serve como acusação</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>As perdas são encontradas pelo inventário cego (onde, quando, qual item) e só o trecho de vídeo da divergência vai para revisão de uma pessoa. A IA sinaliza, uma pessoa decide. E o registro de cada movimento acaba com o "foi ele": protege também o trabalhador honesto, que hoje leva a culpa junto.</p></div>
+      <h3>Fase 2: inteligência regenerativa</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>A câmera mede</th><th>A IA compara com</th><th>Vira</th></tr></thead>
+        <tbody>
+          <tr><td>Torres e paletes que passam na doca e na rampa</td><td>NF e pedido</td><td>Contagem automática; divergência na hora</td></tr>
+          <tr><td>Tempo real de cada etapa, fila na doca, linha parada</td><td>Tempo previsto</td><td>Previsão de tempo e QLP corrigidos a cada turno</td></tr>
+          <tr><td>Ocupação de baias e porta-paletes</td><td>Estoque no sistema</td><td>Inventário visual contínuo e endereçamento melhor</td></tr>
+          <tr><td>Queda de caixa, palete tombado</td><td>Fluxo normal</td><td>Avaria aberta no ato, com o vídeo do momento</td></tr>
+          <tr><td>Ordem dos volumes no baú</td><td>Ordem de entrega da rota</td><td>Alerta antes de o caminhão sair</td></tr>
+          <tr><td>Caminhos e cruzamentos no armazém</td><td>Layout cadastrado</td><td>Mapa de calor do fluxo, sem identificar pessoas, para redesenhar o pátio</td></tr>
+        </tbody>
+      </table></div>
+      <ol class="steps">
+        <li><span><b>Mede:</b> a câmera registra o que aconteceu, sem depender de alguém anotar.</span></li>
+        <li><span><b>Compara:</b> a IA confronta com o previsto, o cadastrado e o histórico.</span></li>
+        <li><span><b>Sugere:</b> propõe o ajuste: tempo, quadro de pessoal, endereço, regra.</span></li>
+        <li><span><b>Pessoa aprova:</b> o responsável aceita ou recusa; nada muda sozinho.</span></li>
+        <li><span><b>Melhora:</b> a configuração muda, e o próximo turno já começa melhor.</span></li>
+      </ol>
+      <div class="callout"><b>Limites</b><p>Sem reconhecimento facial e sem nota por pessoa: a câmera mede o fluxo, não ranqueia trabalhador. Imagem guardada só quando há exceção, por prazo definido, com placa avisando o monitoramento (LGPD). A fase 2 começa quando a fase 1 estiver estável e a equipe confiar nela.</p></div>
     </section>
 
     <section id="papel">
