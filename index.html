@@ -270,7 +270,7 @@ footer a { color: var(--ink-2); }
     <a href="#principios">Princípios</a>
     <a href="#fluxo">Fluxo ponta a ponta</a>
     <a href="#paineis">Painéis</a>
-    <a href="#torre">Torre e crachá</a>
+    <a href="#torre">Torre, palete e crachá</a>
     <div class="grp">Operação</div>
     <a href="#docas">Docas e pátio</a>
     <a href="#recebimento">Recebimento</a>
@@ -648,12 +648,25 @@ footer a { color: var(--ink-2); }
 
     <section id="torre">
       <span class="eyebrow">Unidade de controle</span>
-      <h2>A torre ganha um crachá que a empresa reutiliza</h2>
+      <h2>A torre e o palete ganham um crachá que a empresa reutiliza</h2>
       <div class="cards">
         <div class="card"><span class="big">1</span><h3>Doly de ferro</h3><p>Base com quatro rodinhas. Volta para a fábrica.</p></div>
         <div class="card"><span class="big">32</span><h3>Cestas plásticas</h3><p>Padronizadas, com pelo menos duas cestas de cada produto.</p></div>
         <div class="card dark"><span class="big">NFC</span><h3>Crachá com ímã</h3><p>Etiqueta on-metal NTAG213 num estojo numerado. Fixado na chegada, retirado antes do retorno. R$ 9 a 37 cada.</p></div>
       </div>
+      <h3>Palete: o crachá vai no palete, não na paleteira</h3>
+      <p class="note">A paleteira só transporta e logo busca outro palete; quem fica parado no estoque e no porta-palete é o palete. Paleteira e empilhadeira levam só uma etiqueta fixa de patrimônio.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Ponto</th><th>Definição</th></tr></thead>
+        <tbody>
+          <tr><td>Onde</td><td>Bloco central da face que fica para o corredor, fora do filme stretch</td></tr>
+          <tr><td>Como prende</td><td>Estojo com presilha que abraça a tábua de cima, ou abraçadeira de nylon reutilizável. Na madeira o ímã não prende</td></tr>
+          <tr><td>Etiqueta</td><td>NFC comum NTAG213 (madeira não precisa de on-metal) e QR grande, lido a 1–2 m</td></tr>
+          <tr><td>Entra</td><td>No descarregamento, antes do rebate</td></tr>
+          <tr><td>Sai</td><td>Na rampa, se o palete vai ao cliente; ao esvaziar, se fica (configurável)</td></tr>
+          <tr><td>3º nível</td><td>Palete ligado à posição no chão, antes de a empilhadeira subir</td></tr>
+        </tbody>
+      </table></div>
       <p class="rule">A embalagem define o fluxo, não o produto.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Etapa</th><th>Pão (12 a 14 por cesta, à mostra)</th><th>Rap (24 por cesta, amontoado)</th></tr></thead>
@@ -663,7 +676,7 @@ footer a { color: var(--ink-2); }
           <tr><td>Separação e conferência, cenário 2</td><td>Códigos e foto</td><td>Dolly inteiro pesado e comparado com o peso esperado</td></tr>
         </tbody>
       </table></div>
-      <div class="prose"><p>Tudo que chega em dolly com cestas segue o mesmo caminho. O cadastro do produto diz quantas unidades cabem na cesta, quanto pesa cada uma e como contar. A balança vira mais um modo de captura: unidades = (peso bruto − tara do dolly e das cestas) ÷ peso unitário. Os paletizados serão outra família, com fluxo próprio.</p></div>
+      <div class="prose"><p>Tudo que chega em dolly com cestas segue o mesmo caminho. O cadastro do produto diz quantas unidades cabem na cesta, quanto pesa cada uma e como contar. A balança vira mais um modo de captura: unidades = (peso bruto − tara do dolly e das cestas) ÷ peso unitário. Os paletizados, refrigerados ou secos, são a outra família, com fluxo próprio.</p></div>
       <div class="states" aria-label="Estados do crachá">
         <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">RECEBIDA</span><span class="arrow">→</span><span class="state">SINCRONIZADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">LIBERADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
       </div>
@@ -750,7 +763,7 @@ footer a { color: var(--ink-2); }
       <p class="rule">Identificar sempre no chão, nunca na altura.</p>
       <div class="cards">
         <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3". O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
-        <div class="card"><h3>Crachá de palete</h3><p>Reutilizável, preso por abraçadeira no bloco de madeira, fora do stretch. NFC para ler de perto e QR grande para ler com a câmera a 1–2 m.</p></div>
+        <div class="card"><h3>Crachá de palete</h3><p>Reutilizável, preso por presilha ou abraçadeira reutilizável no bloco de madeira, fora do stretch. NFC para ler de perto e QR grande para ler com a câmera a 1–2 m.</p></div>
       </div>
       <p class="note">Decidido: empilhadeira a bateria sobe e desce o 3º nível, só com operador habilitado no cadastro. O palete PBR tem muitas avarias e só parte volta; a regra é configurada por fornecedor, e o avariado vai para a fila de avarias.</p>
     </section>
