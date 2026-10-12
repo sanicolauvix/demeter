@@ -240,6 +240,23 @@ ol.steps li b { color: var(--ink); font-weight: 600; }
 footer { max-width: 1180px; margin: 96px auto 0; border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--ink-3); font-size: 14px; }
 footer a { color: var(--ink-2); }
 .theme-btn { font: inherit; font-size: 13px; background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+
+/* Ouça antes: resumo em áudio pela voz do aparelho */
+.ouvir { margin: 18px 0 8px; max-width: 64ch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+.ouvir[hidden], .ouvir [hidden] { display: none !important; }
+.ouvir .obtn { width: 100%; display: flex; align-items: center; gap: 12px; background: var(--board); color: var(--board-ink); border: 0; border-radius: 10px; padding: 12px 14px; text-align: left; cursor: pointer; font: inherit; min-height: 56px; }
+.ouvir .oic { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--board); display: grid; place-items: center; font-size: 1.05rem; }
+.ouvir .obtn b { display: block; font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; }
+.ouvir .obtn small { color: var(--board-dim); font-size: .88rem; }
+.ouvir .orow { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.ouvir .obar { flex: 1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ouvir .obar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.ouvir .ochip { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; font: inherit; font-size: .85rem; min-height: 36px; }
+.ouvir .onow { margin: 10px 0 0; font-size: 1rem; color: var(--ink); min-height: 2.9em; }
+.ouvir details { margin-top: 10px; }
+.ouvir summary { cursor: pointer; color: var(--ink-3); font-size: .9rem; }
+.ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
+@media print { .ouvir { display: none; } }
 </style>
 </head>
 <body>
@@ -304,6 +321,12 @@ footer a { color: var(--ink-2); }
       </div>
       <h1>Tudo que sai, <em>volta certo</em>.</h1>
       <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora. Desenhado no chão da operação.</p>
+      <div class="ouvir" id="ouvir">
+        <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ler? Ouça antes</b><small id="oSub">O Deméter em uns 2 minutos</small></span></button>
+        <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
+        <p class="onow" id="oNow" hidden aria-live="polite"></p>
+        <details id="oDet"><summary>Prefere ler? Veja o resumo em texto</summary><div id="oText"></div></details>
+      </div>
 
       <div class="scene" aria-label="Animação da operação: dollys com cestas e paletes seguem caminhos próprios e se encontram no carregamento">
         <svg id="cena" viewBox="0 0 1100 470" role="img" aria-label="Cena animada: dois fluxos, dolly e cestas e paletizados, terminando no mesmo carregamento">
@@ -1597,5 +1620,71 @@ footer a { color: var(--ink-2); }
 })();
 </script>
 
+<script>
+/* Ouça antes: leitura em voz alta pelo próprio aparelho (Web Speech API) */
+(function(){
+  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bNFC\b/g,"ene efe cê"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/\bDeméter\b/g,"Deméter"]];
+  const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
+  const RESUMO = [
+    "Olá, aqui é o Sebastião. Isto é o Deméter.",
+    "É uma ideia aberta para organizar a logística de uma distribuidora de alimentos: pão, cereais, laticínios, massas. Da carreta que chega da fábrica até o caminhão que sai para entregar.",
+    "Ele não nasceu numa sala de reuniões. Nasceu no chão do depósito, enquanto eu empurrava torres de pão entre as câmaras frias, como ajudante do ajudante de carga.",
+    "Lá de baixo, sem crachá e sem nome, eu vi tudo: a conferência feita no olho, a cesta que some, o separador perdido entre os dollys, o pão que volta, e ninguém sabendo quem deve a quem.",
+    "A ideia é simples. Cada torre, cesta e palete ganha um crachá que a empresa reutiliza, e passa a ter dono, lugar e hora.",
+    "O estoque fica parado e é o dolly do cliente que anda pela linha. A IA propõe a separação, mas quem aprova é sempre uma pessoa. E nenhum papel circula na operação.",
+    "Tudo roda no celular Android que a equipe já usa, com etiquetas de poucos reais. Óculos, portais e robôs podem vir depois, sem mudar o processo.",
+    "Pela página você encontra o fluxo em dez etapas, os painéis que mostram a operação ao vivo, como num aeroporto, e calculadoras para ver quantas pessoas o turno precisa e quanto custa.",
+    "Se tiver pouco tempo, comece pelo Fluxo e depois brinque no Simulador.",
+    "O Deméter é uma ideia aberta: qualquer pessoa pode copiar e adaptar, citando a autoria. Obrigado por ouvir."
+  ];
+  const $=id=>document.getElementById(id);
+  const box=$("ouvir"); if (!box) return;
+  const play=$("oPlay"), ic=$("oIc"), title=$("oTitle"), sub=$("oSub"), row=$("oRow"), bar=$("oBar"), now=$("oNow");
+  $("oText").innerHTML = RESUMO.map(t=>"<p>"+t+"</p>").join("");
+  const synth = window.speechSynthesis;
+  if (!synth || typeof SpeechSynthesisUtterance==="undefined"){
+    play.hidden=true; $("oDet").open=true; $("oDet").querySelector("summary").textContent="Resumo do Deméter";
+    return;
+  }
+  let voice=null, idx=0, state="idle", gen=0;
+  const RATES=[1,1.2,1.4,1.6]; let ri=3;
+  try{ const r=+localStorage.getItem("vozRate"); if (RATES.includes(r)) ri=RATES.indexOf(r); }catch(e){}
+  const spB=$("oSpeed");
+  const spTxt=()=>{ spB.textContent=String(RATES[ri]).replace(".",",")+"×"; }; spTxt();
+  spB.addEventListener("click", ()=>{
+    ri=(ri+1)%RATES.length; spTxt();
+    try{ localStorage.setItem("vozRate", RATES[ri]); }catch(e){}
+    if (state==="playing"){ synth.cancel(); speak(); }
+  });
+  function pickVoice(){
+    const vs=synth.getVoices();
+    voice = vs.find(v=>/pt[-_]BR/i.test(v.lang) && /antonio|daniel|male|masculin/i.test(v.name))
+         || vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang)) || null;
+  }
+  pickVoice(); if (synth.onvoiceschanged!==undefined) synth.onvoiceschanged=pickVoice;
+  function ui(){
+    const on = state!=="idle";
+    row.hidden=!on; now.hidden=!on;
+    ic.textContent = state==="playing" ? "❚❚" : "▶";
+    title.textContent = state==="playing" ? "Ouvindo…" : state==="paused" ? "Pausado, toque para continuar" : "Sem tempo para ler? Ouça antes";
+    sub.textContent = state==="idle" ? "O Deméter em uns 2 minutos" : Math.min(idx+1,RESUMO.length)+" de "+RESUMO.length;
+    bar.style.width = (state==="idle"?0:(idx/RESUMO.length*100))+"%";
+  }
+  function speak(){
+    if (idx>=RESUMO.length){ state="idle"; idx=0; ui(); return; }
+    const my=++gen; const u=new SpeechSynthesisUtterance(falar(RESUMO[idx]));
+    u.lang="pt-BR"; if (voice) u.voice=voice; u.rate=RATES[ri];
+    u.onend=()=>{ if (my===gen && state==="playing"){ idx++; speak(); } };
+    u.onerror=e=>{ if (my===gen && e.error!=="interrupted" && e.error!=="canceled"){ state="idle"; ui(); $("oDet").open=true; } };
+    now.textContent=RESUMO[idx]; ui(); synth.speak(u);
+  }
+  play.addEventListener("click", ()=>{
+    if (state==="playing"){ state="paused"; synth.cancel(); ui(); }
+    else { state="playing"; synth.cancel(); speak(); }
+  });
+  $("oStop").addEventListener("click", ()=>{ state="idle"; idx=0; synth.cancel(); ui(); });
+  window.addEventListener("pagehide", ()=>synth.cancel());
+})();
+</script>
 </body>
 </html>
