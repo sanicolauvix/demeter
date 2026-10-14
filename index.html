@@ -288,7 +288,7 @@ footer a { color: var(--ink-2); }
     <a href="#fluxo">Fluxo ponta a ponta</a>
     <a href="#paineis">Painéis</a>
     <a href="#torre">Torre, palete e etiqueta</a>
-    <a href="#argos">Argos, o olho</a>
+    <a href="#argos">O olho que tudo vê</a>
     <a href="#transbordo">Transbordo</a>
     <a href="#pulso">Mãos livres</a>
     <div class="grp">Operação</div>
@@ -490,7 +490,7 @@ footer a { color: var(--ink-2); }
 
     <section id="principios">
       <span class="eyebrow">Princípios</span>
-      <h2>Nove regras guiam todo o desenho</h2>
+      <h2>Dez regras guiam todo o desenho</h2>
       <div class="tbl"><table class="t">
         <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
         <tbody>
@@ -501,6 +501,7 @@ footer a { color: var(--ink-2); }
           <tr><td>Processo independe do aparelho</td><td>Antena, câmera, balança ou pulso geram o mesmo evento</td></tr>
           <tr><td>Comercial não é da logística</td><td>Retorno, corte e troca vêm de quem tem autoridade</td></tr>
           <tr><td>Papel zero</td><td>Todo registro nasce no app e vira indicador e aprendizado</td></tr>
+          <tr><td>O registro não esquece</td><td>O Deméter mostra; o dono decide, e a decisão também fica registrada</td></tr>
           <tr><td>Regenerativo</td><td>Erros, tempos e produtividade de hoje viram correção para amanhã, em todas as áreas</td></tr>
           <tr><td>Projeto vivo</td><td>Nada é fechado: regras viram configuração, o desenho muda com a operação e falha encontrada é corrigida logo</td></tr>
         </tbody>
@@ -726,9 +727,15 @@ footer a { color: var(--ink-2); }
     </section>
 
     <section id="argos">
-      <span class="eyebrow">Argos, o olho que tudo vê</span>
+      <span class="eyebrow">O olho que tudo vê</span>
       <h2>O Deméter vê com vários sentidos, e nenhum depende de alguém lembrar de bipar</h2>
-      <p class="lead">Na mitologia, Argos era o gigante de cem olhos que nunca dormia. No Deméter, Argos é o conjunto de sentidos que lê a operação sozinho: cada um responde a uma pergunta, e juntos se confirmam.</p>
+      <p class="lead">Diz o ditado que o olho do dono é que engorda o boi. O Deméter é esse olho: em cada baia, em cada caixa, em cada unidade, em cada carga e descarga, em cada entrega e ao lado de cada colaborador. A empresa define as regras, e elas são seguidas à risca.</p>
+      <p class="rule">O produto segue. O erro para.</p>
+      <div class="prose">
+        <p>Mais do que registrar, ele antecipa: prevê a chegada da carreta, a falta antes de a posição zerar, o vencimento antes de o pão vencer, a pausa térmica antes do limite e a onda que não cabe no turno.</p>
+        <p>O Deméter gerencia, confere e controla. O que fazer com a informação é decisão do dono, e até a decisão de não fazer nada fica registrada.</p>
+        <p>Na mitologia, Argos era o gigante de cem olhos que nunca dormia. No Deméter, Argos é o conjunto de sentidos que lê a operação sozinho: cada um responde a uma pergunta, e juntos se confirmam.</p>
+      </div>
       <div class="cards">
         <div class="card"><h3>Onde está?</h3><p><b>RFID UHF.</b> Antena curta em cada baia e posição de linha, portais nas portas e docas. Sabe em qual baia está cada doly e cada cesta.</p></div>
         <div class="card"><h3>Em qual câmara?</h3><p><b>BLE.</b> Receptores baratos (ESP32) cobrem 20 a 50 m e dizem a zona de dollys e pessoas.</p></div>
@@ -746,6 +753,7 @@ footer a { color: var(--ink-2); }
           <tr><td>Portal de porta ou doca</td><td>Toda a passagem</td><td>Entrou, saiu, a que horas</td></tr>
           <tr><td>Gateway de teto</td><td>3 a 6 m, precisão de ~1 a 2 m</td><td>Achar o doly perdido no galpão</td></tr>
           <tr><td>BLE com receptor ESP32</td><td>20 a 50 m, precisão de zona</td><td>Em qual câmara estão dollys e pessoas</td></tr>
+          <tr><td>Antena no baú + GPS do caminhão</td><td>A porta do baú, em cada parada</td><td>O que desceu em cada cliente e o que voltou, com hora e local</td></tr>
         </tbody>
       </table></div>
       <h3>A mesma lógica em todos os níveis: palete, caixa, cesta, unidade</h3>
@@ -1769,7 +1777,7 @@ footer a { color: var(--ink-2); }
     "Ele não nasceu numa sala de reuniões. Nasceu no chão do depósito, enquanto eu empurrava torres de pão entre as câmaras frias, como ajudante do ajudante de carga.",
     "Lá de baixo, sem crachá e sem nome, eu vi tudo: a conferência feita no olho, a cesta que some, o separador perdido entre os dollys, o pão que volta, e ninguém sabendo quem deve a quem.",
     "A ideia é simples. Cada doly, cesta e palete ganha uma etiqueta RFID que a empresa reutiliza, e passa a ter dono, lugar e hora. Um doly é sempre um produto só, com trinta e duas cestas e uma validade.",
-    "Antenas, câmeras e balanças formam o Argos, o olho que tudo vê. Ninguém precisa bipar nada: quando uma cesta sai de um doly e entra no outro, o Deméter confere na hora. O erro morre onde nasce.",
+    "Diz o ditado que o olho do dono é que engorda o boi. O Deméter é esse olho, em cada baia, cada caixa, cada carga e cada entrega. O produto segue, o erro para. Antenas, câmeras e balanças formam o Argos, o olho que tudo vê. Ninguém precisa bipar nada: quando uma cesta sai de um doly e entra no outro, o Deméter confere na hora. O erro morre onde nasce.",
     "O estoque fica parado e é o dolly do cliente que anda pela linha. A IA propõe a separação, mas quem aprova é sempre uma pessoa. E nenhum papel circula na operação.",
     "As mãos ficam livres: o Deméter fala pelo relógio no pulso de cada um, e uma luz na baia mostra onde ir. Nenhuma etiqueta vai para o lixo.",
     "Pela página você encontra o fluxo em dez etapas, os painéis que mostram a operação ao vivo, como num aeroporto, e calculadoras para ver quantas pessoas o turno precisa e quanto custa.",
