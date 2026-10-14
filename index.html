@@ -584,7 +584,7 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-camara" aria-labelledby="t-camara" hidden>
-        <p class="panel-desc">TV dentro da câmara de descarregamento. A NF fecha sozinha: cada doly que nasce na doca é lido pelo portal, e o conferente só resolve as exceções.</p>
+        <p class="panel-desc">TV dentro da câmara de descarregamento. A NF fecha sozinha: cada doly que nasce na doca é lido pelo portal, e o colaborador da doca só resolve as exceções.</p>
         <div class="board">
           <div class="grid">
             <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="torres">7</span>/12 dollys</b></div>
@@ -618,7 +618,7 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
-        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente. Cada linha também vibra no pulso da própria pessoa.</p>
+        <p class="panel-desc">Painel do turno, para a gerência e o guardião do turno. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente. Cada linha também vibra no pulso da própria pessoa.</p>
         <div class="board">
           <div class="grid">
             <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
@@ -629,12 +629,12 @@ footer a { color: var(--ink-2); }
           <div class="board-scroll"><table>
             <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Relógio de frio</th><th>Status</th></tr></thead>
             <tbody>
-              <tr data-frio="82"><td>Operador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
-              <tr data-frio="47"><td>Operador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
-              <tr><td>Operador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
-              <tr><td>Operador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
-              <tr data-frio="18"><td>Conferente</td><td>Exceções · NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
-              <tr data-frio="-12"><td>Operador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
+              <tr data-frio="82"><td>Colaborador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="47"><td>Colaborador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Colaborador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
+              <tr><td>Colaborador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
+              <tr data-frio="18"><td>Colaborador 6</td><td>Exceções · NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="-12"><td>Colaborador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
             </tbody>
           </table></div>
           <p class="board-note">Alerta: a onda 3 termina depois do fim do turno. Remanejar 1 pessoa para a linha agora evita passar pendência para o 3º turno.</p>
@@ -663,7 +663,7 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-onda" aria-labelledby="t-onda" hidden>
-        <p class="panel-desc">Tela de aprovação da onda. A IA propõe veículos e mostra onde não cabe; o administrador aceita ou altera antes de separar.</p>
+        <p class="panel-desc">Tela de aprovação da onda. A IA propõe veículos e mostra onde não cabe; a gerência aceita ou altera antes de separar.</p>
         <div class="board">
           <div class="board-scroll"><table>
             <thead><tr><th>Rota</th><th>Veículo</th><th>Posições</th><th>Peso</th><th>Sugestão da IA</th></tr></thead>
@@ -831,7 +831,7 @@ footer a { color: var(--ink-2); }
             <tr><td>18:44</td><td>Separação</td><td>Doly X-501 · forma 12/12 <span class="flap ok">Próxima: baia 05</span></td></tr>
           </tbody>
         </table></div>
-        <p class="board-note">Sem resposta em 5 minutos, a tarefa sobe para o supervisor, como na cadeia de exceções.</p>
+        <p class="board-note">Sem resposta em 5 minutos, a tarefa vai para o guardião do turno e, depois, para a gerência.</p>
       </div>
       <div class="tbl"><table class="t">
         <thead><tr><th>Aparelho de pulso</th><th>Serve para</th><th>Limite</th></tr></thead>
@@ -844,7 +844,7 @@ footer a { color: var(--ink-2); }
       <div class="cards">
         <div class="card"><h3>Luz na baia</h3><p>Um LED em cada baia e posição acende onde encostar o próximo doly ou de onde tirar a próxima cesta, com o número de cestas (put-to-light e pick-to-light). Apaga quando a antena confirma.</p></div>
         <div class="card"><h3>Placar na TV</h3><p>A mesma mensagem do pulso, para todos: carreta chegando, doca pronta, rota carregando.</p></div>
-        <div class="card"><h3>Celular</h3><p>Fica para quem não está no chão frio: supervisor, exceções, motorista e entrega.</p></div>
+        <div class="card"><h3>Celular</h3><p>Fica para quem não está no chão frio: gerência, motorista e entrega.</p></div>
       </div>
     </section>
 
@@ -958,7 +958,7 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Evento</th><th>Ação</th></tr></thead>
         <tbody>
-          <tr><td>Temperatura subindo</td><td>Aviso ao supervisor</td></tr>
+          <tr><td>Temperatura subindo</td><td>Aviso ao guardião do turno</td></tr>
           <tr><td>Fora da faixa por muito tempo</td><td>Alerta em cadeia; produtos da câmara bloqueados até a qualidade decidir</td></tr>
           <tr><td>Porta aberta demais</td><td>Aviso</td></tr>
           <tr><td>Sensor sem sinal</td><td>Alerta: pode ser queda de energia</td></tr>
@@ -984,14 +984,14 @@ footer a { color: var(--ink-2); }
         <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
         <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
         <li><span>Dentro, o relógio de frio corre: o pulso vibra aos 1h30, e o repouso é obrigatório aos 1h40.</span></li>
-        <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
+        <li><span>Entrou sem autorização: alerta ao guardião do turno; sem resposta, sobe para a gerência.</span></li>
       </ol>
       <h3>Relógio de frio de cada colaborador</h3>
       <div class="tbl"><table class="t">
         <thead><tr><th>Tempo no frio</th><th>O que acontece</th><th>Onde aparece</th></tr></thead>
         <tbody>
           <tr><td>Entrada</td><td>O relógio da pessoa começa a contar; a câmara soma mais um "dentro"</td><td>Painel do turno e painel da câmara</td></tr>
-          <tr><td>1h30</td><td>Vibra no pulso da pessoa e do supervisor; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
+          <tr><td>1h30</td><td>Vibra no pulso da pessoa e do guardião do turno; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
           <tr><td>1h40</td><td>Repouso obrigatório de 20 minutos, fora do frio, contado como trabalho</td><td>Painel do turno, em repouso</td></tr>
           <tr><td>Fim do repouso</td><td>Relógio zera e a pessoa fica liberada para voltar</td><td>Painel do turno, liberado</td></tr>
           <tr><td>Não passou de volta pelo portal</td><td>Alerta: pode haver alguém preso na câmara</td><td>Alerta em cadeia, sem exceção</td></tr>
@@ -1057,17 +1057,17 @@ footer a { color: var(--ink-2); }
     <section id="retorno">
       <span class="eyebrow">Retorno de rota</span>
       <h2>O caminhão volta com devoluções, cestas, dollys e paletes</h2>
-      <p class="lead">A antena do baú já sabe o que desceu e o que voltou. A equipe de entrega registra no cliente o motivo e a foto de cada devolução; na doca, o portal confere o retorno e o conferente só cataloga e libera o caminhão antes do terceiro turno.</p>
+      <p class="lead">A antena do baú já sabe o que desceu e o que voltou. A equipe de entrega registra no cliente o motivo e a foto de cada devolução; na doca, o portal confere o retorno e o colaborador do dia só cataloga e libera o caminhão antes do terceiro turno.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Motivo</th><th>Destino padrão</th><th>Quem é avisado</th></tr></thead>
         <tbody>
           <tr><td>Cliente fechado</td><td>Estoque, se a validade permitir</td><td>Comercial</td></tr>
-          <tr><td>Pedido errado</td><td>Estoque</td><td>Supervisor</td></tr>
+          <tr><td>Pedido errado</td><td>Estoque</td><td>Gerência</td></tr>
           <tr><td>Recusa comercial</td><td>Estoque</td><td>Comercial</td></tr>
           <tr><td>Avaria no transporte</td><td>Avaria</td><td>Logística de entrega</td></tr>
           <tr><td>Vencido / troca</td><td>A configurar</td><td>Compras</td></tr>
           <tr><td>Validade curta</td><td>Sem data para venda</td><td>Comercial</td></tr>
-          <tr><td>Divergência</td><td>Bloqueado até apurar</td><td>Supervisor e motorista</td></tr>
+          <tr><td>Divergência</td><td>Bloqueado até apurar</td><td>Gerência e motorista</td></tr>
         </tbody>
       </table></div>
       <div class="callout"><b>Configurar</b><p>O destino da troca de pão vencido ainda não está definido: volta à fábrica com crédito ou é descartada na distribuidora. O sistema deixa essa regra configurável por fábrica ou por produto.</p></div>
@@ -1089,7 +1089,7 @@ footer a { color: var(--ink-2); }
       <ol class="steps">
         <li><span><b>Registrada:</b> foto, local, etapa, quem achou, quantidade, validade e valor. Sai do disponível na hora.</span></li>
         <li><span><b>Em quarentena:</b> baia de avarias, contada no inventário como qualquer posição.</span></li>
-        <li><span><b>Aguardando decisão:</b> regra aplicada ou fila aberta, com prazo e escada supervisor → admin → gerente.</span></li>
+        <li><span><b>Aguardando decisão:</b> regra aplicada ou fila aberta, com prazo e escada guardião do turno → gerência.</span></li>
         <li><span><b>Decidida:</b> quem decidiu, por qual regra, e o destino.</span></li>
         <li><span><b>Encerrada:</b> só com comprovante: NF de devolução ou de venda, recibo de doação ou foto do descarte.</span></li>
       </ol>
@@ -1119,7 +1119,22 @@ footer a { color: var(--ink-2); }
           <tr><td>3º</td><td>Carregamento</td><td>Pendências da onda, se aceitar; pode barrar</td></tr>
         </tbody>
       </table></div>
-      <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. O supervisor acompanha o painel e muda a dinâmica quando precisa.</p></div>
+      <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. A gerência acompanha o painel e muda a dinâmica quando precisa.</p></div>
+
+      <p class="rule">Multicolaboradores: todos treinados no mesmo nível de execução. Planejamento e controle são do Deméter e da gerência.</p>
+      <div class="prose"><p>O ser humano continua lá, em todas as etapas. O que deixa de existir é o colaborador que se acha chefe: não há conferente, fiscal nem encarregado, porque conferir e acompanhar passou a ser trabalho do olho. Cada pessoa é treinada para vários momentos da operação, e o Deméter escolhe a função do dia por habilidade, habilitação e rodízio, o que também tira as pessoas do frio e varia o esforço.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>Quem</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td>Gerência</td><td>A empresa</td><td>Define as regras, aprova ondas e decide as exceções</td></tr>
+          <tr><td>O olho</td><td>O Deméter</td><td>Planeja, distribui, confere, controla e avisa</td></tr>
+          <tr><td>Multicolaboradores</td><td>Todos iguais na execução</td><td>Recebimento, linha, rampa, retorno, conforme o dia</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><h3>Guardião do turno</h3><p>Uma função do dia, não um cargo: passa de um colaborador para outro. É quem atende primeiro a exceção que o sistema não resolve sozinho.</p></div>
+        <div class="card"><h3>Habilitação não é hierarquia</h3><p>Empilhadeira (NR-11), brigada e primeiros socorros, designado da CIPA (NR-5): ficam no cadastro de cada pessoa, e o Deméter só escala quem está habilitado.</p></div>
+      </div>
 
       <p class="rule">Com mão de obra escassa e alta rotatividade, o sistema é o treinamento.</p>
       <div class="prose"><p>Treinar alguém que sai em poucos meses custa mais que a tecnologia. O Deméter coloca o conhecimento no processo, não na memória de quem sabe: a luz e o pulso dizem onde ir, o que pegar e quantas cestas; o transbordo barra o erro na hora; o painel mostra quem precisa de ajuda.</p></div>
@@ -1160,35 +1175,33 @@ footer a { color: var(--ink-2); }
         </div>
         <div class="out" aria-live="polite">
           <div class="kpis">
-            <div class="kpi"><span>Horas de operadores/dia</span><b id="r-hho">30</b></div>
-            <div class="kpi"><span>Operadores no quadro</span><b id="r-op">7</b></div>
-            <div class="kpi"><span>Conferentes no quadro</span><b id="r-conf">2</b></div>
+            <div class="kpi"><span>Horas de trabalho/dia</span><b id="r-hho">30</b></div>
+            <div class="kpi"><span>Colaboradores no quadro</span><b id="r-op">9</b></div>
           </div>
           <div class="tbl"><table class="t">
             <thead><tr><th>Tarefa</th><th>Horas/dia</th></tr></thead>
             <tbody id="r-tab"></tbody>
           </table></div>
-          <p class="note">Tempos iniciais estimados. Na operação, a previsão é substituída pelos tempos reais de cada pessoa. Quadro para um turno; com três turnos, cada um precisa do seu supervisor e de um mínimo de pessoas.</p>
+          <p class="note">Tempos iniciais estimados. Na operação, a previsão é substituída pelos tempos reais de cada pessoa. Quadro para um turno; com três turnos, cada um precisa de um mínimo de pessoas e de um guardião do dia.</p>
         </div>
       </form>
     </section>
 
     <section id="acesso">
       <span class="eyebrow">Exceções e autorização</span>
-      <h2>A IA autoriza o rotineiro; o superior abre exceção e responde por ela</h2>
+      <h2>A IA autoriza o rotineiro; a gerência abre exceção e responde por ela</h2>
       <p class="lead">O mesmo mecanismo que libera a entrada na câmara fria vale para toda a operação: o sistema autoriza o que é rotina, nega com o motivo, e qualquer exceção tem um responsável com nome.</p>
       <p class="note">Lei e segurança não têm exceção.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Tipo de regra</th><th>Exemplos</th><th>Exceção</th></tr></thead>
         <tbody>
           <tr><td>Legal e de segurança</td><td>Repouso do art. 253, EPI, pessoa presa na câmara</td><td>Nunca: o sistema troca a pessoa, não fura a regra</td></tr>
-          <tr><td>Operacional</td><td>Prioridade, doca, onda, quem entra agora</td><td>Sim, aberta por um superior, que responde por ela</td></tr>
+          <tr><td>Operacional</td><td>Prioridade, doca, onda, quem entra agora</td><td>Sim, aberta pela gerência, que responde por ela</td></tr>
         </tbody>
       </table></div>
       <div class="cards">
-        <div class="card"><span class="big">5'</span><h3>Supervisor</h3><p>Primeiro a receber o alerta ou o pedido de exceção.</p></div>
-        <div class="card"><span class="big">10'</span><h3>Administrador</h3><p>Recebe se o supervisor não respondeu no prazo.</p></div>
-        <div class="card"><span class="big">15'</span><h3>Gerente</h3><p>Último nível da cadeia. Prazos configuráveis.</p></div>
+        <div class="card"><span class="big">5'</span><h3>Guardião do turno</h3><p>Um colaborador na função do dia. Primeiro a receber o alerta; resolve o que tem regra e chama a gerência no resto.</p></div>
+        <div class="card"><span class="big">15'</span><h3>Gerência</h3><p>Recebe se o guardião não respondeu no prazo, e decide toda exceção operacional. Prazos configuráveis.</p></div>
       </div>
       <div class="callout"><b>Vídeo e LGPD</b><p>Identificação pelo crachá RFID, sem reconhecimento facial. A câmera de vídeo só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
       <p class="note">As câmeras de vídeo têm seção própria: <a href="#cameras">Vídeo 360° com IA</a>.</p>
@@ -1203,8 +1216,7 @@ footer a { color: var(--ink-2); }
         <div class="inputs">
           <div class="field"><label for="s-inicio">Início do turno</label><input id="s-inicio" type="time" value="06:00"></div>
           <div class="field"><label for="s-duracao">Duração (horas)</label><input id="s-duracao" type="number" min="1" max="12" step="0.25" value="7.33"></div>
-          <div class="field"><label for="s-op">Operadores</label><input id="s-op" type="number" min="1" max="40" step="1" value="7"></div>
-          <div class="field"><label for="s-conf">Conferentes</label><input id="s-conf" type="number" min="1" max="10" step="1" value="2"></div>
+          <div class="field"><label for="s-op">Colaboradores</label><input id="s-op" type="number" min="1" max="50" step="1" value="9"></div>
           <div class="field"><label for="s-docas">Docas (1 a 3)</label><input id="s-docas" type="number" min="1" max="3" step="1" value="1"></div>
           <div class="field"><label for="s-min">Minutos por dolly na linha</label><input id="s-min" type="number" min="1" step="0.5" value="8"></div>
           <h3>Operações do turno</h3>
@@ -1222,12 +1234,11 @@ footer a { color: var(--ink-2); }
           <div class="veredito" id="s-veredito" aria-live="polite"></div>
           <div class="kpis">
             <div class="kpi"><span>Fim previsto</span><b id="s-fim">—</b></div>
-            <div class="kpi"><span>Uso dos operadores</span><b id="s-uop">—</b></div>
-            <div class="kpi"><span>Uso dos conferentes</span><b id="s-uconf">—</b></div>
+            <div class="kpi"><span>Uso dos colaboradores</span><b id="s-uop">—</b></div>
           </div>
           <div class="g-scroll"><div class="g-inner" id="s-gantt"></div></div>
-          <div class="legend"><span><i style="background:var(--accent)"></i>Operadores</span><span><i style="background:var(--info)"></i>Conferentes</span><span><i style="border-left:2px dashed var(--bad);border-radius:0;width:0;height:12px"></i>Fim do turno</span></div>
-          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); confirmação de produto e validade 3 min por torre (1 conferente); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
+          <div class="legend"><span><i style="background:var(--accent)"></i>Movimentação</span><span><i style="background:var(--info)"></i>Confirmação e exceções</span><span><i style="border-left:2px dashed var(--bad);border-radius:0;width:0;height:12px"></i>Fim do turno</span></div>
+          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); confirmação de produto e validade 3 min por torre (1 pessoa); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
         </div>
       </div>
     </section>
@@ -1269,13 +1280,13 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Cadastro</th><th>O que guarda</th><th>Quem altera</th></tr></thead>
         <tbody>
-          <tr><td>Docas</td><td>Lado, tipo (carreta, toco, mista), horários, câmara ligada</td><td>Administrador</td></tr>
-          <tr><td>Turnos e janelas</td><td>Horários, prioridades, janela livre por fornecedor</td><td>Administrador + compras</td></tr>
-          <tr><td>Capacidade</td><td>Torres por carreta, dollys por dia, rendimento</td><td>Calculado; supervisor ajusta</td></tr>
-          <tr><td>Câmaras</td><td>Quantas de descarga e de retorno, faixa de temperatura</td><td>Administrador</td></tr>
+          <tr><td>Docas</td><td>Lado, tipo (carreta, toco, mista), horários, câmara ligada</td><td>Gerência</td></tr>
+          <tr><td>Turnos e janelas</td><td>Horários, prioridades, janela livre por fornecedor</td><td>Gerência + compras</td></tr>
+          <tr><td>Capacidade</td><td>Torres por carreta, dollys por dia, rendimento</td><td>Calculado; gerência ajusta</td></tr>
+          <tr><td>Câmaras</td><td>Quantas de descarga e de retorno, faixa de temperatura</td><td>Gerência</td></tr>
           <tr><td>Fornecedores</td><td>O que volta (dolly, cesta, PBR) e regra de troca; origem dos dollys (empresa, fábrica ou os dois)</td><td>Compras</td></tr>
-          <tr><td>Avarias</td><td>Destinos possíveis e quem aprova cada um</td><td>Gerente</td></tr>
-          <tr><td>Equipamentos</td><td>Leitores e antenas RFID, câmeras, balanças, relógios, empilhadeiras a bateria, TVs, sensores</td><td>Administrador</td></tr>
+          <tr><td>Avarias</td><td>Destinos possíveis e quem aprova cada um</td><td>Gerência</td></tr>
+          <tr><td>Equipamentos</td><td>Leitores e antenas RFID, câmeras, balanças, relógios, empilhadeiras a bateria, TVs, sensores</td><td>Gerência</td></tr>
         </tbody>
       </table></div>
       <h3>Dolly no cliente</h3>
@@ -1465,7 +1476,7 @@ footer a { color: var(--ink-2); }
       ['Separação (linha)', (minDolly * dollys) / 60, 'op'],
       ['Rampa', dollys / 60, 'op'],
       ['Confirmação da NF e exceções', (3 * torresDia) / 60, 'conf'],
-      ['Conferência de expedição', (2 * dollys) / 60, 'conf'],
+      ['Exceções da expedição', (2 * dollys) / 60, 'conf'],
     ];
     // Descanso térmico (CLT art. 253): 20 min a cada 1h40 no frio = +20% sobre as horas trabalhadas na câmara.
     const frio = Math.min(Math.max(num('q-frio'), 0), 100) / 100;
@@ -1473,9 +1484,8 @@ footer a { color: var(--ink-2); }
     linhas.push(['Descanso térmico (art. 253)', hhFrio * 0.2, 'op']);
     const hhOp = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0);
     const hhConf = linhas.filter((l) => l[2] === 'conf').reduce((s, l) => s + l[1], 0);
-    $('r-hho').textContent = fmt(hhOp);
-    $('r-op').textContent = String(Math.ceil((hhOp / horas) * (1 + cob)));
-    $('r-conf').textContent = String(Math.max(1, Math.ceil((hhConf / horas) * (1 + cob))));
+    $('r-hho').textContent = fmt(hhOp + hhConf);
+    $('r-op').textContent = String(Math.ceil(((hhOp + hhConf) / horas) * (1 + cob)));
     $('r-tab').innerHTML = linhas.map((l) => `<tr><td>${l[0]}</td><td>${fmt(l[1])}</td></tr>`).join('');
   }
 
@@ -1649,19 +1659,19 @@ footer a { color: var(--ink-2); }
     const [h, m] = ($('s-inicio').value || '06:00').split(':').map(Number);
     const inicio = (h || 0) * 60 + (m || 0);
     const duracao = Math.max(num('s-duracao'), 1) * 60;
-    const pessoas = { op: Math.max(1, Math.round(num('s-op'))), conf: Math.max(1, Math.round(num('s-conf'))) };
+    const pessoas = { op: Math.max(1, Math.round(num('s-op'))) };
     const docas = Math.min(3, Math.max(1, Math.round(num('s-docas')) || 1));
     const tarefas = montarTarefas(Math.max(num('s-min'), 1), docas);
     tarefas.forEach((t) => { t.resta = t.trabalho; t.ini = null; t.fim = t.trabalho <= 0 ? 0 : null; });
     const usado = { op: 0, conf: 0 };
     let t = 0;
     while (tarefas.some((x) => x.fim === null) && t < 1440) {
-      const livre = { ...pessoas };
+      let livre = pessoas.op;
       for (const x of tarefas) {
         if (x.fim !== null || !x.deps.every((d) => d.fim !== null && d.fim <= t)) continue;
-        const n = Math.min(x.max, livre[x.papel], Math.ceil(x.resta));
+        const n = Math.min(x.max, livre, Math.ceil(x.resta));
         if (n <= 0) continue;
-        livre[x.papel] -= n; usado[x.papel] += n;
+        livre -= n; usado.op += n;
         if (x.ini === null) x.ini = t;
         x.resta -= n;
         if (x.resta <= 0) x.fim = t + 1;
@@ -1688,7 +1698,6 @@ footer a { color: var(--ink-2); }
     $('s-fim').textContent = hhmm(inicio + fimGeral);
     const janela = Math.max(fimGeral, 1);
     $('s-uop').textContent = Math.round((usado.op / (pessoas.op * janela)) * 100) + '%';
-    $('s-uconf').textContent = Math.round((usado.conf / (pessoas.conf * janela)) * 100) + '%';
     const v = $('s-veredito');
     if (fimGeral <= duracao) {
       v.className = 'veredito ok';
@@ -1728,7 +1737,7 @@ footer a { color: var(--ink-2); }
     ops.push({ tipo, qtd: TIPOS[tipo].padrao });
     listarOps();
   });
-  ['s-inicio', 's-duracao', 's-op', 's-conf', 's-docas', 's-min'].forEach((id) => $(id).addEventListener('input', simular));
+  ['s-inicio', 's-duracao', 's-op', 's-docas', 's-min'].forEach((id) => $(id).addEventListener('input', simular));
   listarOps();
 
   // Índice: marca a seção visível.
