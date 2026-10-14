@@ -333,7 +333,7 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div class="scene" aria-label="Animação da operação: dollys com cestas e paletes seguem caminhos próprios e se encontram no carregamento">
-        <svg id="cena" viewBox="0 0 1100 470" role="img" aria-label="Cena animada: dois fluxos, dolly e cestas e paletizados, terminando no mesmo carregamento">
+        <svg id="cena" viewBox="0 0 1100 620" role="img" aria-label="Cena animada: o olho que tudo vê, no alto, orienta descarga, abastecimento, separação, programação, inventário e colaboradores, enquanto dollys e paletizados seguem até o mesmo carregamento">
           <defs>
             <path id="rota-a" d="M150 228 C176 228 168 176 196 176 H812 C846 176 846 262 880 262 H904"/>
             <path id="rota-b" d="M150 248 C176 248 168 386 196 386 H812 C846 386 846 262 880 262 H904"/>
@@ -351,7 +351,57 @@ footer a { color: var(--ink-2); }
               <rect x="2" y="40" width="6" height="4" fill="var(--ink-3)"/><rect x="17" y="40" width="6" height="4" fill="var(--ink-3)"/><rect x="32" y="40" width="6" height="4" fill="var(--ink-3)"/>
             </symbol>
           </defs>
-          <rect x="0" y="0" width="1100" height="470" fill="var(--surface)"/>
+          <rect x="0" y="0" width="1100" height="620" fill="var(--surface)"/>
+          <!-- O olho que tudo vê: olha cada etapa e a acende, uma de cada vez -->
+          <g aria-hidden="true">
+            <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 5" stroke-opacity="0.55">
+              <line x1="550" y1="88" x2="150" y2="112"/>
+              <line x1="550" y1="88" x2="310" y2="112"/>
+              <line x1="550" y1="88" x2="470" y2="112"/>
+              <line x1="550" y1="88" x2="630" y2="112"/>
+              <line x1="550" y1="88" x2="790" y2="112"/>
+              <line x1="550" y1="88" x2="950" y2="112"/>
+            </g>
+            <path d="M462 60 C 494 18, 606 18, 638 60 C 606 102, 494 102, 462 60 Z" fill="var(--bg)" stroke="var(--accent)" stroke-width="3"/>
+            <g>
+              <circle cx="550" cy="60" r="20" fill="none" stroke="var(--accent)" stroke-width="3"/>
+              <circle cx="550" cy="60" r="9" fill="var(--accent)"/>
+              <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.1667;0.3333;0.5;0.6667;0.8333;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" values="-30 8;-18 10;-6 11;6 11;18 10;30 8;-30 8"/>
+            </g>
+            <text x="660" y="52" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)">O OLHO QUE TUDO VÊ</text>
+            <text x="660" y="70" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">vê, confere e orienta cada etapa</text>
+            <g>
+              <rect x="82" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="82" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="150" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarga</text>
+            </g>
+            <g>
+              <rect x="242" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="242" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="2s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="310" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Abastecimento</text>
+            </g>
+            <g>
+              <rect x="402" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="402" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="4s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="470" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Separação</text>
+            </g>
+            <g>
+              <rect x="562" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="562" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="630" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Programação</text>
+            </g>
+            <g>
+              <rect x="722" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="722" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="790" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Inventário</text>
+            </g>
+            <g>
+              <rect x="882" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="882" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="10s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="950" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Colaboradores</text>
+            </g>
+          </g>
+          <g transform="translate(0 150)">
           <text x="550" y="34" text-anchor="middle" font-family="Rubik, sans-serif" font-size="16" fill="var(--ink-3)">A embalagem define o caminho; o carregamento é um só</text>
 
           <!-- Faixa A: dolly e cestas -->
@@ -423,13 +473,14 @@ footer a { color: var(--ink-2); }
           <text x="975" y="312" text-anchor="middle" font-family="Rubik, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Carregamento</text>
           <text x="975" y="330" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-2)">rampa por rota</text>
 
-          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="0s"><mpath href="#rota-a"/></animateMotion></use>
-          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="1.75s"><mpath href="#rota-a"/></animateMotion></use>
-          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="3.5s"><mpath href="#rota-a"/></animateMotion></use>
-          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="5.25s"><mpath href="#rota-a"/></animateMotion></use>
-          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="0.8s"><mpath href="#rota-b"/></animateMotion></use>
-          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="3.8s"><mpath href="#rota-b"/></animateMotion></use>
-          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="6.8s"><mpath href="#rota-b"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-0s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-1.75s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-3.5s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-5.25s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-0.8s"><mpath href="#rota-b"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-3.8s"><mpath href="#rota-b"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-6.8s"><mpath href="#rota-b"/></animateMotion></use>
+          </g>
         </svg>
       </div>
       <p class="scene-hint">arraste a cena para o lado →</p>
