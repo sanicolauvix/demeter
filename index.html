@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" type="image/png" href="assets/demeter_icone_192.png">
 <title>Deméter</title>
-<meta name="description" content="Deméter: ecossistema de logística de alimentos com celular, crachá NFC e IA, do recebimento ao caminhão.">
+<meta name="description" content="Deméter: ecossistema de logística de alimentos com RFID, câmeras, relógio de pulso e IA, do recebimento ao caminhão.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -287,7 +287,10 @@ footer a { color: var(--ink-2); }
     <a href="#principios">Princípios</a>
     <a href="#fluxo">Fluxo ponta a ponta</a>
     <a href="#paineis">Painéis</a>
-    <a href="#torre">Torre, palete e crachá</a>
+    <a href="#torre">Torre, palete e etiqueta</a>
+    <a href="#argos">Argos, o olho</a>
+    <a href="#transbordo">Transbordo</a>
+    <a href="#pulso">Mãos livres</a>
     <div class="grp">Operação</div>
     <a href="#docas">Docas e pátio</a>
     <a href="#recebimento">Recebimento</a>
@@ -357,7 +360,7 @@ footer a { color: var(--ink-2); }
           <g>
             <rect x="196" y="72" width="140" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
             <text x="266" y="96" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarregamento</text>
-            <text x="266" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">em câmara</text>
+            <text x="266" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">doly nasce na doca</text>
             <circle cx="336" cy="72" r="5" fill="var(--accent)"/><circle cx="336" cy="72" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
           </g>
           <g>
@@ -369,7 +372,7 @@ footer a { color: var(--ink-2); }
           <g>
             <rect x="652" y="72" width="160" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
             <text x="732" y="96" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Linha de dollys</text>
-            <text x="732" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">abastecer e separar</text>
+            <text x="732" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">transbordo conferido</text>
             <rect x="664" y="124" width="28" height="7" rx="3" fill="var(--ok)" class="pisca"/><rect x="700" y="124" width="28" height="7" rx="3" fill="var(--warn)"/><rect x="736" y="124" width="28" height="7" rx="3" fill="var(--ok)"/><rect x="772" y="124" width="28" height="7" rx="3" fill="var(--ok)"/>
           </g>
 
@@ -377,7 +380,7 @@ footer a { color: var(--ink-2); }
           <g>
             <rect x="196" y="282" width="140" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
             <text x="266" y="306" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarregamento</text>
-            <text x="266" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">crachá do palete</text>
+            <text x="266" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">etiqueta RFID</text>
             <circle cx="336" cy="282" r="5" fill="var(--accent)"/><circle cx="336" cy="282" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
           </g>
           <g>
@@ -434,7 +437,7 @@ footer a { color: var(--ink-2); }
         <div class="stat"><b>10</b><span>etapas, da compra ao caminhão</span></div>
         <div class="stat"><b>7</b><span>painéis ao vivo nas TVs</span></div>
         <div class="stat"><b>0</b><span>papel na operação</span></div>
-        <div class="stat"><b>R$ 9</b><span>o crachá NFC mais simples</span></div>
+        <div class="stat"><b>0</b><span>bipe: o Argos lê sozinho</span></div>
       </div>
     </section>
 
@@ -459,7 +462,7 @@ footer a { color: var(--ink-2); }
             </tbody>
           </table>
         </div>
-        <p class="board-note">Exemplo ilustrativo. Ninguém digita no placar: ele mostra os eventos registrados pelos celulares.</p>
+        <p class="board-note">Exemplo ilustrativo. Ninguém digita no placar: ele mostra os eventos lidos pelas antenas e câmeras.</p>
       </div>
     </section>
 
@@ -481,20 +484,21 @@ footer a { color: var(--ink-2); }
         <div class="card"><h3>Conferência visual</h3><p>Torres chegam envoltas em filme stretch e são contadas no olho. O erro entra no estoque já no recebimento.</p></div>
         <div class="card"><h3>Separação sem rumo</h3><p>Separador e ajudante pegam uma carga e andam o depósito inteiro, cruzando com outros dollys num espaço pequeno.</p></div>
         <div class="card"><h3>Patrimônio sem saldo</h3><p>Dollys, cestas e paletes retornáveis entram e saem sem contagem. A perda é silenciosa e ninguém sabe quem deve a quem.</p></div>
-        <div class="card"><h3>O bipe no lugar da caneta</h3><p>Trocar a prancheta pelo coletor de código de barras digitaliza a anotação, não o processo. O coletor registra o que já aconteceu; o Deméter orienta o que vai acontecer.</p></div>
+        <div class="card"><h3>O bipe no lugar da caneta</h3><p>Trocar a prancheta pelo coletor de código de barras digitaliza a anotação, não o processo. O coletor registra só o que alguém lembrou de bipar; o Deméter lê sozinho e orienta o que vai acontecer.</p></div>
       </div>
     </section>
 
     <section id="principios">
       <span class="eyebrow">Princípios</span>
-      <h2>Oito regras guiam todo o desenho</h2>
+      <h2>Nove regras guiam todo o desenho</h2>
       <div class="tbl"><table class="t">
         <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
         <tbody>
           <tr><td>Tudo começa no recebimento</td><td>O que entra errado contamina o resto do fluxo</td></tr>
+          <tr><td>O erro morre onde nasce</td><td>Cada passagem se confere sozinha; o erro é barrado na hora e não segue com o produto</td></tr>
           <tr><td>Patrimônio é dinheiro</td><td>Dolly, cesta e palete têm saldo por fornecedor e por cliente, como conta corrente</td></tr>
           <tr><td>IA propõe, pessoa aprova</td><td>Ondas, veículos e exceções sempre têm um responsável</td></tr>
-          <tr><td>Processo independe do aparelho</td><td>Celular, óculos, portal ou robô geram o mesmo resultado</td></tr>
+          <tr><td>Processo independe do aparelho</td><td>Antena, câmera, balança ou pulso geram o mesmo evento</td></tr>
           <tr><td>Comercial não é da logística</td><td>Retorno, corte e troca vêm de quem tem autoridade</td></tr>
           <tr><td>Papel zero</td><td>Todo registro nasce no app e vira indicador e aprendizado</td></tr>
           <tr><td>Regenerativo</td><td>Erros, tempos e produtividade de hoje viram correção para amanhã, em todas as áreas</td></tr>
@@ -579,27 +583,28 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-camara" aria-labelledby="t-camara" hidden>
-        <p class="panel-desc">TV dentro da câmara de descarregamento. O conferente vê a NF fechando produto a produto, com o celular ou com os óculos.</p>
+        <p class="panel-desc">TV dentro da câmara de descarregamento. A NF fecha sozinha: cada doly que nasce na doca é lido pelo portal, e o conferente só resolve as exceções.</p>
         <div class="board">
           <div class="grid">
-            <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="torres">7</span>/12 torres</b></div>
+            <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="torres">7</span>/12 dollys</b></div>
             <div class="tile"><span>Validade</span><b>18/10</b></div>
             <div class="tile"><span>Divergências</span><b class="alerta">1</b></div>
           </div>
           <div class="board-scroll"><table>
-            <thead><tr><th>Produto</th><th>NF (cestas)</th><th>Conferido</th><th>Situação</th></tr></thead>
+            <thead><tr><th>Produto</th><th>NF (cestas)</th><th>Dollys esperados</th><th>Lidos</th><th>Situação</th></tr></thead>
             <tbody>
-              <tr><td>Pão de forma 500 g</td><td>48</td><td>48</td><td><span class="flap ok">OK</span></td></tr>
-              <tr><td>Bisnaguinha 300 g</td><td>32</td><td>30</td><td><span class="flap bad">Falta 2</span></td></tr>
-              <tr><td>Pão integral</td><td>24</td><td>24</td><td><span class="flap ok">OK</span></td></tr>
-              <tr><td>Bolo de chocolate</td><td>16</td><td>6</td><td><span class="flap go">Conferindo</span></td></tr>
+              <tr><td>Pão de forma 500 g</td><td>128</td><td>4</td><td>4</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bisnaguinha 300 g</td><td>96</td><td>3</td><td>2</td><td><span class="flap bad">Falta 1 doly</span></td></tr>
+              <tr><td>Pão integral</td><td>64</td><td>2</td><td>2</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bolo de chocolate</td><td>96</td><td>3</td><td>0</td><td><span class="flap go">Descarregando</span></td></tr>
             </tbody>
           </table></div>
+          <p class="board-note">1 doly = 1 produto = 32 cestas. Cestas da NF ÷ 32 = dollys esperados.</p>
         </div>
       </div>
 
       <div role="tabpanel" id="p-linha" aria-labelledby="t-linha" hidden>
-        <p class="panel-desc">Painel da linha de dollys. A IA olha os próximos dollys da fila e pede reposição antes de a posição zerar.</p>
+        <p class="panel-desc">Painel da linha de dollys. As antenas contam as cestas de cada posição; a IA olha os próximos dollys da fila e pede reposição antes de a posição zerar.</p>
         <div class="board"><div class="board-scroll"><table>
           <thead><tr><th>Posição</th><th>Produto</th><th>Estoque</th><th>Próximos precisam</th><th>Status</th></tr></thead>
           <tbody>
@@ -612,7 +617,7 @@ footer a { color: var(--ink-2); }
       </div>
 
       <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
-        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente.</p>
+        <p class="panel-desc">Painel do supervisor. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente. Cada linha também vibra no pulso da própria pessoa.</p>
         <div class="board">
           <div class="grid">
             <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
@@ -627,7 +632,7 @@ footer a { color: var(--ink-2); }
               <tr data-frio="47"><td>Operador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
               <tr><td>Operador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
               <tr><td>Operador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
-              <tr data-frio="18"><td>Conferente</td><td>Sincronização NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="18"><td>Conferente</td><td>Exceções · NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
               <tr data-frio="-12"><td>Operador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
             </tbody>
           </table></div>
@@ -674,21 +679,32 @@ footer a { color: var(--ink-2); }
 
     <section id="torre">
       <span class="eyebrow">Unidade de controle</span>
-      <h2>A torre e o palete ganham um crachá que a empresa reutiliza</h2>
+      <h2>Cada doly e cada palete ganham uma etiqueta RFID que a empresa reutiliza</h2>
       <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))">
         <div class="card"><span class="big">1</span><h3>Doly de ferro</h3><p>Base com quatro rodinhas. Volta para a fábrica.</p></div>
-        <div class="card"><span class="big">32</span><h3>Cestas plásticas</h3><p>Padronizadas, com pelo menos duas cestas de cada produto.</p></div>
+        <div class="card"><span class="big">32</span><h3>Cestas plásticas</h3><p>Todas do mesmo produto e da mesma validade: 1 doly = 1 produto.</p></div>
         <div class="card"><span class="big">1</span><h3>Palete</h3><p>PBR ou descartável, refrigerado ou seco. Rebatido e com filme stretch.</p></div>
-        <div class="card dark"><span class="big">NFC</span><h3>Crachá reutilizável</h3><p>No dolly, preso por ímã (on-metal NTAG213). No palete, por presilha na madeira. Fixado na chegada, retirado antes do retorno. R$ 9 a 37 cada.</p></div>
+        <div class="card dark"><span class="big">RFID</span><h3>Etiqueta reutilizável</h3><p>UHF, lida à distância, sem ninguém encostar. No doly, etiqueta própria para metal presa por ímã; no palete, por presilha. Fixada na doca, retirada antes do retorno. Nada descartável.</p></div>
       </div>
-      <h3>Palete: o crachá vai no palete, não na paleteira</h3>
+      <p class="rule">A conferência vira aritmética: cestas da NF ÷ 32 = dollys esperados de cada produto.</p>
+      <h3>A cesta: etiqueta de fábrica ou clip</h3>
+      <p class="note">As cestas voltam para a fábrica, então uma etiqueta colada iria embora com elas. O Deméter aceita os dois caminhos e a empresa escolhe no cadastro do fornecedor.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Caminho</th><th>Como funciona</th><th>Custo por mês</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td>Cesta etiquetada de fábrica</td><td>RFID moldado ou fixado na cesta pela fábrica; vive na cesta para sempre</td><td>Zero</td><td>Ideal. É o padrão mundial de embalagem retornável e exige a fábrica no ecossistema</td></tr>
+          <tr><td>Clip reutilizável</td><td>Preso na alça no abastecimento e retirado no carregamento ou no retorno</td><td>Só reposição de perdas</td><td>Ponte enquanto a fábrica não etiqueta</td></tr>
+          <tr><td>Adesivo descartável</td><td>Uma etiqueta por cesta que entra</td><td>Recorrente</td><td>Evitar: contraria o papel zero e o "tudo volta"</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Palete: a etiqueta vai no palete, não na paleteira</h3>
       <p class="note">A paleteira só transporta e logo busca outro palete; quem fica parado no estoque e no porta-palete é o palete. Paleteira e empilhadeira levam só uma etiqueta fixa de patrimônio.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Ponto</th><th>Definição</th></tr></thead>
         <tbody>
           <tr><td>Onde</td><td>Bloco central da face que fica para o corredor, fora do filme stretch</td></tr>
           <tr><td>Como prende</td><td>Estojo com presilha que abraça a tábua de cima, ou abraçadeira de nylon reutilizável. Na madeira o ímã não prende</td></tr>
-          <tr><td>Etiqueta</td><td>NFC comum NTAG213 (madeira não precisa de on-metal) e QR grande, lido a 1–2 m</td></tr>
+          <tr><td>Etiqueta</td><td>RFID UHF comum (madeira não precisa de etiqueta para metal) e QR grande como reserva visual</td></tr>
           <tr><td>Entra</td><td>No descarregamento, antes do rebate</td></tr>
           <tr><td>Sai</td><td>Na rampa, se o palete vai ao cliente; ao esvaziar, se fica (configurável)</td></tr>
           <tr><td>3º nível</td><td>Palete ligado à posição no chão, antes de a empilhadeira subir</td></tr>
@@ -698,14 +714,129 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Etapa</th><th>Pão (12 a 14 por cesta, à mostra)</th><th>Rap (24 por cesta, amontoado)</th></tr></thead>
         <tbody>
-          <tr><td>Recebimento</td><td>Dolly lacrado, rotina padrão</td><td>Igual ao pão</td></tr>
-          <tr><td>Separação e conferência, cenário 1</td><td>Contagem visual</td><td>Contagem manual, como o pão</td></tr>
-          <tr><td>Separação e conferência, cenário 2</td><td>Códigos e foto</td><td>Dolly inteiro pesado e comparado com o peso esperado</td></tr>
+          <tr><td>Recebimento</td><td>Doly lacrado, lido ao passar pela doca</td><td>Igual ao pão</td></tr>
+          <tr><td>Separação</td><td>Cada cesta lida ao mudar de doly (transbordo)</td><td>Igual ao pão</td></tr>
+          <tr><td>Unidades dentro da cesta</td><td>Padrão do cadastro, faces conferidas pela câmera</td><td>Dolly inteiro pesado e comparado com o peso esperado</td></tr>
         </tbody>
       </table></div>
-      <div class="prose"><p>Tudo que chega em dolly com cestas segue o mesmo caminho. O cadastro do produto diz quantas unidades cabem na cesta, quanto pesa cada uma e como contar. A balança vira mais um modo de captura: unidades = (peso bruto − tara do dolly e das cestas) ÷ peso unitário. Os paletizados, refrigerados ou secos, são a outra família, com fluxo próprio.</p></div>
-      <div class="states" aria-label="Estados do crachá">
-        <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">RECEBIDA</span><span class="arrow">→</span><span class="state">SINCRONIZADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">LIBERADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
+      <div class="prose"><p>Tudo que chega em dolly com cestas segue o mesmo caminho. O cadastro do produto diz quantas unidades cabem na cesta, quanto pesa cada uma e como contar. A balança é mais um sentido do Argos: unidades = (peso bruto − tara do dolly e das cestas) ÷ peso unitário. Os paletizados, refrigerados ou secos, são a outra família, com fluxo próprio.</p></div>
+      <div class="states" aria-label="Estados da etiqueta do doly">
+        <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">NA_DOCA</span><span class="arrow">→</span><span class="state">VINCULADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">ABERTA</span><span class="arrow">→</span><span class="state">RETIRADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
+      </div>
+    </section>
+
+    <section id="argos">
+      <span class="eyebrow">Argos, o olho que tudo vê</span>
+      <h2>O Deméter vê com vários sentidos, e nenhum depende de alguém lembrar de bipar</h2>
+      <p class="lead">Na mitologia, Argos era o gigante de cem olhos que nunca dormia. No Deméter, Argos é o conjunto de sentidos que lê a operação sozinho: cada um responde a uma pergunta, e juntos se confirmam.</p>
+      <div class="cards">
+        <div class="card"><h3>Onde está?</h3><p><b>RFID UHF.</b> Antena curta em cada baia e posição de linha, portais nas portas e docas. Sabe em qual baia está cada doly e cada cesta.</p></div>
+        <div class="card"><h3>Em qual câmara?</h3><p><b>BLE.</b> Receptores baratos (ESP32) cobrem 20 a 50 m e dizem a zona de dollys e pessoas.</p></div>
+        <div class="card"><h3>O que é e como está?</h3><p><b>Câmera com IA.</b> Reconhece o produto, conta camadas, lê a validade, vê avaria e baia livre.</p></div>
+        <div class="card"><h3>Quanto tem?</h3><p><b>Balança.</b> Confere o miolo do palete e o produto amontoado, que nenhuma câmera enxerga.</p></div>
+        <div class="card"><h3>Está no frio certo?</h3><p><b>Sensores.</b> Temperatura, umidade e porta aberta em cada câmara.</p></div>
+        <div class="card dark"><h3>Quem faz o quê, agora?</h3><p><b>A voz no pulso.</b> O Deméter avisa cada pessoa pelo relógio, e ela confirma com um toque.</p></div>
+      </div>
+      <h3>Como o RFID sabe a posição</h3>
+      <div class="prose"><p>Não é latitude e longitude: o GPS não entra no galpão. O armazém vira um mapa próprio, em metros, e as etiquetas fixas das baias servem de ponto de referência. Para o Deméter, saber a zona (qual baia) vale mais que a coordenada exata, e por isso cada baia tem a sua própria antena curta.</p><p>A etiqueta UHF passiva não aceita repetidor: ela funciona com a energia da antena que a lê. Cobrir uma área maior é pôr mais antenas e leitores em rede, todos falando com o mesmo servidor.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Leitura</th><th>Alcance numa câmara fria real</th><th>Uso no Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Antena curta de baia ou posição</td><td>~50 cm, só a própria baia</td><td>Doly na baia, cesta que entra e sai</td></tr>
+          <tr><td>Portal de porta ou doca</td><td>Toda a passagem</td><td>Entrou, saiu, a que horas</td></tr>
+          <tr><td>Gateway de teto</td><td>3 a 6 m, precisão de ~1 a 2 m</td><td>Achar o doly perdido no galpão</td></tr>
+          <tr><td>BLE com receptor ESP32</td><td>20 a 50 m, precisão de zona</td><td>Em qual câmara estão dollys e pessoas</td></tr>
+        </tbody>
+      </table></div>
+      <h3>A mesma lógica em todos os níveis: palete, caixa, cesta, unidade</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Nível</th><th>Identificação</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Palete</td><td>RFID reutilizável</td><td>Leitura ótima, uma etiqueta por palete</td></tr>
+          <tr><td>Caixa fechada</td><td>RFID, de preferência aplicado na fábrica</td><td>Padrão das grandes redes; o líquido dentro reduz o alcance</td></tr>
+          <tr><td>Cesta de pão</td><td>RFID de fábrica ou clip</td><td>Plástico e pão seco deixam o sinal passar bem</td></tr>
+          <tr><td>Unidade</td><td>Código 2D impresso (GS1 DataMatrix ou QR) lido pela câmera</td><td>Em iogurte, líquido e tampa de alumínio bloqueiam o RFID, e a etiqueta comeria a margem</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>O que um sentido sozinho não vê</b><p>Num palete de 12 caixas por camada e 8 camadas, a câmera enxerga 10 caixas por camada e 2 ficam escondidas no miolo: 16 caixas no palete inteiro que nenhuma câmera vê. Por isso o Argos cruza três sentidos: a visão confirma o produto e a forma, o peso confirma a quantidade, e o cadastro diz como o palete deveria ser.</p></div>
+    </section>
+
+    <section id="transbordo">
+      <span class="eyebrow">Transbordo</span>
+      <h2>Sumiu de um doly, apareceu no outro: a cesta é conferida na passagem</h2>
+      <p class="lead">Cada posição de montagem tem uma antena curta só dela, separada da vizinha por uma chapa de metal. As antenas leem dezenas de vezes por segundo e mandam a lista do que estão ouvindo. O Deméter compara as listas.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 270" role="img" aria-label="Transbordo: a cesta sai da posição A, do doly de abastecimento, e entra na posição B, do doly do cliente; a antena A deixa de ler a cesta e a antena B passa a ler">
+          <defs><marker id="seta-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <rect x="40" y="40" width="250" height="150" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="165" y="66" font-size="14" font-weight="600" fill="var(--ink)">Posição A · abastecimento</text>
+            <text x="165" y="86" font-size="12" fill="var(--ink-3)">doly E-203 · pão de forma · 21/10</text>
+            <text x="165" y="128" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="var(--ink)">32 → 31</text>
+            <text x="165" y="150" font-size="12" fill="var(--ink-2)">cestas lidas pela antena A</text>
+            <rect x="350" y="30" width="16" height="170" rx="3" fill="var(--ink-3)" fill-opacity="0.35"/>
+            <text x="358" y="222" font-size="11.5" fill="var(--ink-3)">chapa de metal</text>
+            <rect x="430" y="40" width="290" height="150" rx="12" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/>
+            <text x="575" y="66" font-size="14" font-weight="600" fill="var(--ink)">Posição B · doly do cliente</text>
+            <text x="575" y="86" font-size="12" fill="var(--ink-3)">doly X-501 · caminhão 07 · onda 3</text>
+            <text x="575" y="128" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="var(--ink)">0 → 1</text>
+            <text x="575" y="150" font-size="12" fill="var(--ink-2)">cestas lidas pela antena B</text>
+            <path d="M290 112 C 330 112, 330 18, 400 18 C 420 18, 430 60, 430 80" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#seta-t)"/>
+            <text x="398" y="12" font-size="12" font-weight="600" fill="var(--accent-ink)">cesta C-0007</text>
+            <text x="165" y="214" font-size="12" fill="var(--ink-3)">antena A: "C-0007 sumiu"</text>
+            <text x="575" y="214" font-size="12" fill="var(--ink-3)">antena B: "C-0007 apareceu"</text>
+            <text x="380" y="256" font-size="13" font-weight="600" fill="var(--ink)">Sumiu de A + apareceu em B + estável por 1 a 2 s = transbordo registrado</text>
+          </g>
+        </svg>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>O que acontece</th><th>O que as antenas veem</th><th>O Deméter faz</th></tr></thead>
+        <tbody>
+          <tr><td>Cesta certa no doly certo</td><td>Some de A, aparece em B</td><td>Registra e o pulso conta: "Forma 1/12"</td></tr>
+          <tr><td>Produto errado</td><td>Aparece em B uma cesta de outro produto</td><td>Luz vermelha e pulso vibra: "Cesta errada, devolver"</td></tr>
+          <tr><td>Quantidade a mais</td><td>13ª cesta de um pedido de 12</td><td>Alerta antes de o doly fechar</td></tr>
+          <tr><td>Fora do FEFO</td><td>Cesta veio de um doly que vence depois</td><td>Aviso: "Pegue da baia 01, vence antes"</td></tr>
+          <tr><td>Pegou e devolveu</td><td>Some de A e volta para A</td><td>Nada aconteceu</td></tr>
+          <tr><td>Sumiu e não apareceu</td><td>Some de A, ninguém lê em 10 s</td><td>Pergunta no pulso: "C-0007 está com você?"</td></tr>
+          <tr><td>Leitura piscou</td><td>Some e volta em menos de 1 s</td><td>Ignora: só vale o que fica estável</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">O erro morre onde nasce: a separação se confere sozinha, e o erro não segue com o produto.</p>
+      <div class="prose"><p>É o que a Toyota chama de <b>poka-yoke</b> (o processo torna o erro difícil: a luz acende na baia certa, o pulso diz produto e quantidade) e de <b>jidoka</b> (detectado o erro, para na hora, e o defeito não passa para a etapa seguinte). No padrão internacional de rastreio GS1 EPCIS, o transbordo é um evento de agregação: um item filho (a cesta) sai de um pai (o doly A) e entra em outro (o doly B).</p><p>Com etiqueta em cada cesta e antena na porta do baú, o rastreio vai da carreta da fábrica até o cliente e de volta: qual cesta, de qual NF, com qual validade, montada por quem, em qual caminhão, entregue onde.</p></div>
+      <div class="callout"><b>A leitura não é 100%</b><p>Uma etiqueta pode não responder num instante. Por isso a regra exige as duas pontas (sumiu e apareceu), lê muitas vezes por segundo e mostra a exceção no pulso para uma pessoa confirmar. Se uma antena para, o turno segue com confirmação manual, e o progresso fica no servidor.</p></div>
+    </section>
+
+    <section id="pulso">
+      <span class="eyebrow">Mãos livres</span>
+      <h2>O Deméter fala pelo pulso, e as mãos ficam para o trabalho</h2>
+      <p class="lead">No frio, de luva e com peso nas mãos, ninguém deveria segurar um celular. As antenas leem sozinhas; o relógio no pulso diz o que fazer, vibra no alerta e recebe a confirmação com um toque. Cada pessoa recebe só o que é dela.</p>
+      <div class="board" aria-label="Exemplo de conversa do Deméter pelo pulso numa chegada de carreta">
+        <div class="board-head"><b>Pulso · chegada da NF 12345</b><span>exemplo</span></div>
+        <div class="board-scroll"><table>
+          <thead><tr><th>Hora</th><th>Para</th><th>Mensagem</th></tr></thead>
+          <tbody>
+            <tr><td>13:40</td><td>Todos</td><td>Carreta prevista em 20 min · pão · 24 dollys</td></tr>
+            <tr><td>13:42</td><td>Retorno</td><td><span class="flap bad">Montar retorno</span> 24 dollys · U5 baias 01 a 24</td></tr>
+            <tr><td>13:55</td><td>Retorno</td><td>Retorno 24/24 <span class="flap ok">Doca liberada</span></td></tr>
+            <tr><td>14:02</td><td>Doca</td><td>Doly E-203 · pão de forma · validade 21/10? <span class="flap go">Toque para confirmar</span></td></tr>
+            <tr><td>14:30</td><td>Ajudante A</td><td><span class="flap wait">1h40 no frio</span> Pausa térmica de 20 min</td></tr>
+            <tr><td>18:44</td><td>Separação</td><td>Doly X-501 · forma 12/12 <span class="flap ok">Próxima: baia 05</span></td></tr>
+          </tbody>
+        </table></div>
+        <p class="board-note">Sem resposta em 5 minutos, a tarefa sobe para o supervisor, como na cadeia de exceções.</p>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Aparelho de pulso</th><th>Serve para</th><th>Limite</th></tr></thead>
+        <tbody>
+          <tr><td>Relógio Wear OS</td><td>Tarefa, alerta, relógio de frio e confirmação com um toque, pelas notificações do app</td><td>Não lê RFID; tela pequena para luva, então botões físicos ajudam; bateria cai no frio</td></tr>
+          <tr><td>Computador de pulso industrial</td><td>Tela maior, mãos livres, lê código de barras (ex.: <a href="https://www.zebra.com/ap/en/products/spec-sheets/mobile-computers/wearable/ws50.html" target="_blank" rel="noopener">Zebra WS50</a>)</td><td>Custo maior; opera de -10 °C a 50 °C</td></tr>
+          <tr><td>Leitor RFID de pulso ou luva</td><td>Saber também quem pegou cada cesta</td><td>Opcional: custo e bateria por pessoa</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><h3>Luz na baia</h3><p>Um LED em cada baia e posição acende onde encostar o próximo doly ou de onde tirar a próxima cesta, com o número de cestas (put-to-light e pick-to-light). Apaga quando a antena confirma.</p></div>
+        <div class="card"><h3>Placar na TV</h3><p>A mesma mensagem do pulso, para todos: carreta chegando, doca pronta, rota carregando.</p></div>
+        <div class="card"><h3>Celular</h3><p>Fica para quem não está no chão frio: supervisor, exceções, motorista e entrega.</p></div>
       </div>
     </section>
 
@@ -742,6 +873,7 @@ footer a { color: var(--ink-2); }
           <tr><td>Câmaras ligadas</td><td>Descarga 1 e retorno 1</td><td>Pré-condições do descarregamento</td></tr>
           <tr><td>Temperatura</td><td>Fria ou seca</td><td>Frios só por doca e câmara fria</td></tr>
           <tr><td>Horário por função</td><td>Carreta de dia, toco à noite</td><td>Docas mistas mudam de papel por turno</td></tr>
+          <tr><td>Portal RFID</td><td>Antenas na porta da doca</td><td>Doly que entra sem etiqueta ou etiqueta que sai na carreta vira alerta</td></tr>
         </tbody>
       </table></div>
       <p class="rule">A doca é definida antes de o veículo entrar no pátio.</p>
@@ -752,26 +884,29 @@ footer a { color: var(--ink-2); }
     <section id="recebimento">
       <span class="eyebrow">Recebimento</span>
       <h2>A carreta encontra uma câmara vazia e outra cheia</h2>
+      <p class="lead">O Deméter sabe da carga antes de ela chegar: a NF-e é baixada da SEFAZ assim que a fábrica emite, cruzada com a compra, e a previsão de chegada vem do rastreador ou do histórico da rota. Divergência entre pedido e NF aparece horas antes da carreta.</p>
       <div class="cards">
-        <div class="card"><h3>Câmara de descarregamento</h3><p>Precisa estar vazia para abrir. Tudo o que entra nela pertence àquela NF, então nada se identifica durante a descarga.</p></div>
-        <div class="card"><h3>Câmara de retorno</h3><p>Precisa estar cheia, com dollys, cestas e paletes iguais à ordem de retorno da compra. A logística executa; quem define é Compras.</p></div>
+        <div class="card"><h3>Câmara de descarregamento</h3><p>Precisa estar vazia para abrir. O Argos confere sozinho: baia sem etiqueta de doly é baia livre. Tudo o que entra nela pertence àquela NF.</p></div>
+        <div class="card"><h3>Câmara de retorno</h3><p>Precisa estar cheia, com dollys, cestas e paletes iguais à ordem de retorno da compra. Cada doly vazio encostado numa baia soma duas etiquetas, a da baia e a dele. A logística executa; quem define é Compras.</p></div>
       </div>
       <ol class="steps">
-        <li><span>Conferente escaneia a NF no celular e abre o descarregamento, vinculado à compra.</span></li>
-        <li><span>Ajudantes entram a pé, de dois em dois, e puxam as torres na mão até a câmara.</span></li>
-        <li><span><b>Em paralelo:</b> ajudantes carregam o retorno na carreta e o conferente sincroniza as torres (produtos, validade, baia).</span></li>
-        <li><span>NF conferida e retorno carregado: o motorista assina no celular.</span></li>
-        <li><span>Carreta liberada. O placar mostra <span class="state">Liberada</span>.</span></li>
+        <li><span><b>Faltam ~40 min:</b> o pulso do responsável recebe "montar retorno, baias 01 a 24", e a luz acende na próxima baia.</span></li>
+        <li><span><b>Retorno completo:</b> a doca é liberada sozinha. Sem retorno, a descarga fica bloqueada, e o placar mostra por quê.</span></li>
+        <li><span><b>Doly nasce na doca:</b> o ajudante prende a etiqueta reutilizável, e o portal liga o doly à NF, à hora e a quem descarregou.</span></li>
+        <li><span><b>Conteúdo:</b> a câmera da doca sugere o produto e lê a validade; o pulso confirma com um toque. 1 doly = 1 produto = 1 validade.</span></li>
+        <li><span><b>Em paralelo:</b> o retorno sobe na carreta. O portal avisa se alguma etiqueta da empresa estiver saindo junto.</span></li>
+        <li><span><b>NF fechada:</b> dollys lidos × dollys esperados; divergência com foto, na hora. O motorista assina e o placar mostra <span class="state">Liberada</span>.</span></li>
       </ol>
       <div class="tbl"><table class="t">
-        <thead><tr><th>Sincronização</th><th>Celular</th><th>Futurista</th></tr></thead>
+        <thead><tr><th>O que se registra</th><th>Quem lê</th><th>O que a pessoa faz</th></tr></thead>
         <tbody>
-          <tr><td>Torre</td><td>Encosta no crachá</td><td>Óculos leem o crachá</td></tr>
-          <tr><td>Produtos</td><td>Toque na lista da NF</td><td>IA reconhece, voz confirma</td></tr>
-          <tr><td>Validade</td><td>Toque ou foto da etiqueta</td><td>Leitura automática</td></tr>
-          <tr><td>Baia</td><td>NFC da baia</td><td>Placa lida pelos óculos</td></tr>
+          <tr><td>Doly</td><td>Portal da doca</td><td>Prende a etiqueta</td></tr>
+          <tr><td>Produto</td><td>NF-e + câmera</td><td>Confirma no pulso</td></tr>
+          <tr><td>Validade</td><td>Câmera lê a etiqueta da cesta</td><td>Confirma no pulso</td></tr>
+          <tr><td>Baia</td><td>Antena da baia (duas etiquetas)</td><td>Segue a luz</td></tr>
         </tbody>
       </table></div>
+      <p class="note">Baixar a NF-e da SEFAZ exige o certificado digital A1 da empresa: essa parte só existe com a empresa participando.</p>
     </section>
 
     <section id="paletizados">
@@ -780,17 +915,17 @@ footer a { color: var(--ink-2); }
       <p class="lead">O palete de madeira chega misturado. Antes de guardar, ele é desmontado e remontado em paletes novos, por tipo e sabor. Refrigerados e secos seguem a mesma dinâmica, em câmaras diferentes.</p>
       <ol class="steps">
         <li><span>Palete chega misturado e envolto em stretch.</span></li>
-        <li><span>Conferência pelas caixas, cada uma com seu código de barras, contra a NF.</span></li>
+        <li><span>Conferência pelas caixas contra a NF: RFID de fábrica quando houver, código de barras lido pela câmera quando não houver, e a balança confirmando o miolo que ninguém vê.</span></li>
         <li><span><b>Rebater:</b> desmonta e remonta por tipo e sabor. No refrigerado, dentro da câmara fria, sem quebrar a cadeia de frio.</span></li>
-        <li><span>Stretch de novo; o palete novo registra produto, quantidade, validade e lote.</span></li>
+        <li><span>Stretch de novo; o palete novo ganha a etiqueta RFID e registra produto, quantidade, validade e lote.</span></li>
         <li><span>Pré-armazenamento no 3º nível do porta-palete, na própria câmara.</span></li>
         <li><span>Abastecimento desce do 3º nível conforme a linha consome.</span></li>
         <li><span>Linha de separação nos níveis 1 e 2, no mesmo modelo da linha de dollys.</span></li>
       </ol>
       <p class="rule">Identificar sempre no chão, nunca na altura.</p>
       <div class="cards">
-        <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3". O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
-        <div class="card"><h3>Crachá de palete</h3><p>Reutilizável, preso por presilha ou abraçadeira reutilizável no bloco de madeira, fora do stretch. NFC para ler de perto e QR grande para ler com a câmera do celular a 1–2 m.</p></div>
+        <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3", com etiqueta RFID fixa. O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
+        <div class="card"><h3>Etiqueta de palete</h3><p>RFID reutilizável, presa por presilha ou abraçadeira no bloco de madeira, fora do stretch. O portal lê ao passar; o QR grande fica como reserva visual.</p></div>
       </div>
       <p class="note">Decidido: empilhadeira a bateria sobe e desce o 3º nível, só com operador habilitado no cadastro. O palete PBR tem muitas avarias e só parte volta; a regra é configurada por fornecedor, e o avariado vai para a fila de avarias.</p>
     </section>
@@ -827,7 +962,7 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Para entrar</th><th>Como o sistema confere</th></tr></thead>
         <tbody>
-          <tr><td>Estar autorizado</td><td>Crachá do colaborador encostado na porta ou no celular; função e habilitação no cadastro</td></tr>
+          <tr><td>Estar autorizado</td><td>Crachá RFID do colaborador lido pelo portal da porta; função e habilitação no cadastro</td></tr>
           <tr><td>Estar no horário</td><td>Escalado no turno e dentro do horário cadastrado da câmara</td></tr>
           <tr><td>Estar com o descanso em dia</td><td>Relógio de frio de cada pessoa; repouso pendente bloqueia a entrada</td></tr>
           <tr><td>Estar protegido</td><td>EPI conferido na porta: japona, luva, bota, touca</td></tr>
@@ -837,10 +972,10 @@ footer a { color: var(--ink-2); }
       <div class="callout"><b>QLP com descanso térmico</b><p>A cada ciclo de 2 horas no frio, 20 minutos são de repouso. Para manter a mesma produção, as funções de câmara fria precisam de cerca de 20% a mais de pessoas, em rodízio: enquanto um descansa, outro entra. O QLP calcula isso sozinho, e o descanso nunca vira atraso nem desculpa para pular a pausa.</p></div>
       <h3>Como funciona a entrada</h3>
       <ol class="steps">
-        <li><span>Funcionário chega à porta e pede a entrada no celular.</span></li>
+        <li><span>Funcionário chega à porta e o portal lê o crachá, sem tirar a luva.</span></li>
         <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
         <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
-        <li><span>Dentro, o relógio de frio corre: aviso aos 1h30, repouso obrigatório aos 1h40.</span></li>
+        <li><span>Dentro, o relógio de frio corre: o pulso vibra aos 1h30, e o repouso é obrigatório aos 1h40.</span></li>
         <li><span>Entrou sem autorização: alerta ao supervisor; sem resposta, sobe para o próximo da cadeia.</span></li>
       </ol>
       <h3>Relógio de frio de cada colaborador</h3>
@@ -848,10 +983,10 @@ footer a { color: var(--ink-2); }
         <thead><tr><th>Tempo no frio</th><th>O que acontece</th><th>Onde aparece</th></tr></thead>
         <tbody>
           <tr><td>Entrada</td><td>O relógio da pessoa começa a contar; a câmara soma mais um "dentro"</td><td>Painel do turno e painel da câmara</td></tr>
-          <tr><td>1h30</td><td>Aviso no celular da pessoa e do supervisor; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
+          <tr><td>1h30</td><td>Vibra no pulso da pessoa e do supervisor; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
           <tr><td>1h40</td><td>Repouso obrigatório de 20 minutos, fora do frio, contado como trabalho</td><td>Painel do turno, em repouso</td></tr>
           <tr><td>Fim do repouso</td><td>Relógio zera e a pessoa fica liberada para voltar</td><td>Painel do turno, liberado</td></tr>
-          <tr><td>Saiu sem registrar</td><td>Alerta: pode haver alguém preso na câmara</td><td>Alerta em cadeia, sem exceção</td></tr>
+          <tr><td>Não passou de volta pelo portal</td><td>Alerta: pode haver alguém preso na câmara</td><td>Alerta em cadeia, sem exceção</td></tr>
         </tbody>
       </table></div>
       <p class="note">O painel <a href="#paineis">Turno</a>, o mesmo dos colaboradores, mostra ao vivo quem está no frio, há quanto tempo e quanto falta para o repouso. O histórico de cada pessoa prova que a pausa foi cumprida.</p>
@@ -873,7 +1008,7 @@ footer a { color: var(--ink-2); }
         </tbody>
       </table></div>
       <div class="prose">
-        <p>O melhor momento para inventariar é logo antes de a carreta chegar, quando o estoque está no mínimo. Contagem cíclica diária da linha, câmara completa antes de cada carreta, patrimônio semanal e inventário geral mensal. A contagem é cega: o inventariante não vê o saldo do sistema.</p>
+        <p>Com o Argos, o inventário é contínuo: as antenas sabem o tempo todo que doly está em cada baia e quantas cestas há em cada posição. A contagem humana passa a conferir o Argos: cíclica diária da linha, câmara completa antes de cada carreta, patrimônio semanal e geral mensal. A contagem é cega: o inventariante não vê o saldo do sistema.</p><p>A validade gravada na entrada libera o FEFO (o primeiro a vencer é o primeiro a sair), o alerta dias antes de vencer e o bloqueio do vencido.</p>
       </div>
     </section>
 
@@ -891,11 +1026,11 @@ footer a { color: var(--ink-2); }
     <section id="linha">
       <span class="eyebrow">Linha de dollys e paletes</span>
       <h2>O estoque fica parado; o dolly ou o palete do cliente anda</h2>
-      <p class="lead">Abastecimento e separação acontecem ao mesmo tempo, o dia todo, nas duas linhas. A posição vazia é reabastecida pela validade mais curta, e o dolly ou o palete do cliente percorre as posições guiado pelo celular.</p>
+      <p class="lead">Abastecimento e separação acontecem ao mesmo tempo, o dia todo, nas duas linhas. A posição vazia é reabastecida pela validade mais curta, e o dolly ou o palete do cliente percorre as posições guiado pela luz em cada posição e pelo pulso.</p>
       <p class="rule">Nada entra na linha sem estoque para o pedido inteiro.</p>
       <div class="prose">
-        <p><b>Linha de dollys.</b> Cestas cheias vão embaixo, na primeira passada. As unidades picadas vêm numa segunda passada, por cima, em cestas mistas que enchem por ocupação. O dolly com picado fica na linha até ser encerrado. O crachá é vinculado ao pedido antes da primeira cesta e o acompanha até o caminhão.</p>
-        <p><b>Linha de paletes.</b> Fica nos níveis 1 e 2 do porta-palete, no mesmo modelo, e é reabastecida do 3º nível pela empilhadeira. O palete do cliente recebe o crachá antes da primeira caixa, é montado na linha e ganha filme stretch antes de seguir para a rampa.</p>
+        <p><b>Linha de dollys.</b> Cestas cheias vão embaixo, na primeira passada. As unidades picadas vêm numa segunda passada, por cima, em cestas mistas que enchem por ocupação. O dolly com picado fica na linha até ser encerrado. A etiqueta do doly do cliente é vinculada ao pedido antes da primeira cesta e o acompanha até o caminhão; cada cesta que entra é conferida no <a href="#transbordo">transbordo</a>.</p>
+        <p><b>Linha de paletes.</b> Fica nos níveis 1 e 2 do porta-palete, no mesmo modelo, e é reabastecida do 3º nível pela empilhadeira. O palete do cliente recebe a etiqueta antes da primeira caixa, é montado na linha e ganha filme stretch antes de seguir para a rampa.</p>
       </div>
     </section>
 
@@ -904,17 +1039,17 @@ footer a { color: var(--ink-2); }
       <h2>Duas conferências até a responsabilidade mudar de mãos</h2>
       <ol class="steps">
         <li><span><b>Pulmão.</b> Dollys e paletes de uma onda ficam misturados, mas cada um tem baia no sistema.</span></li>
-        <li><span><b>Conferidor.</b> Lê os códigos de barras e QR das cestas e unidades, valida o pedido e leva o dolly ou palete à rampa do veículo.</span></li>
+        <li><span><b>Portal da rampa.</b> O Argos lê o doly e as cestas ao passar e valida contra o pedido. Doly na rampa errada é barrado ali; o conferidor só trata a exceção.</span></li>
         <li><span><b>Rampa.</b> Só dollys e paletes da rota, alinhados do último cliente para o primeiro.</span></li>
-        <li><span><b>Caminhão.</b> A equipe de entrega encosta no crachá de cada dolly ou palete ao subir, confere e o motorista assina.</span></li>
+        <li><span><b>Caminhão.</b> A antena na porta do baú lê o que sobe e, na entrega, o que desce em cada cliente, com hora e GPS. O motorista assina.</span></li>
       </ol>
-      <div class="callout"><b>Cestas escondidas</b><p>As cestas do meio da pilha não aparecem. A linha garante o que entrou, registrado cesta a cesta; a conferência garante total, faces visíveis e picado no topo. Desmontar dolly é exceção.</p></div>
+      <div class="callout"><b>Cestas escondidas</b><p>As cestas do meio da pilha não aparecem para a câmera, mas respondem à antena: plástico e pão seco deixam o sinal passar. A linha garante o que entrou, cesta a cesta; a balança confere o que a etiqueta não alcança. Desmontar dolly é exceção.</p></div>
     </section>
 
     <section id="retorno">
       <span class="eyebrow">Retorno de rota</span>
       <h2>O caminhão volta com devoluções, cestas, dollys e paletes</h2>
-      <p class="lead">A equipe de entrega registra a devolução no cliente, com motivo e foto. Na doca, o conferente só confirma, cataloga e libera o caminhão antes do terceiro turno.</p>
+      <p class="lead">A antena do baú já sabe o que desceu e o que voltou. A equipe de entrega registra no cliente o motivo e a foto de cada devolução; na doca, o portal confere o retorno e o conferente só cataloga e libera o caminhão antes do terceiro turno.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Motivo</th><th>Destino padrão</th><th>Quem é avisado</th></tr></thead>
         <tbody>
@@ -979,13 +1114,13 @@ footer a { color: var(--ink-2); }
       <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. O supervisor acompanha o painel e muda a dinâmica quando precisa.</p></div>
 
       <p class="rule">Com mão de obra escassa e alta rotatividade, o sistema é o treinamento.</p>
-      <div class="prose"><p>Treinar alguém que sai em poucos meses custa mais que a tecnologia. O Deméter coloca o conhecimento no processo, não na memória de quem sabe: o celular diz onde ir, o que pegar e quantas cestas; a regra de ouro impede o erro grande; o painel mostra quem precisa de ajuda.</p></div>
+      <div class="prose"><p>Treinar alguém que sai em poucos meses custa mais que a tecnologia. O Deméter coloca o conhecimento no processo, não na memória de quem sabe: a luz e o pulso dizem onde ir, o que pegar e quantas cestas; o transbordo barra o erro na hora; o painel mostra quem precisa de ajuda.</p></div>
       <div class="tbl"><table class="t">
         <thead><tr><th>Ponto</th><th>Hoje</th><th>No Deméter</th></tr></thead>
         <tbody>
-          <tr><td>Pessoa nova</td><td>Semanas aprendendo com quem já sabe</td><td>Produz no 1º dia, guiada pelo celular</td></tr>
+          <tr><td>Pessoa nova</td><td>Semanas aprendendo com quem já sabe</td><td>Produz no 1º dia, guiada pela luz e pelo pulso</td></tr>
           <tr><td>Conhecimento</td><td>Na cabeça dos antigos; sai quando eles saem</td><td>No sistema; fica quando a pessoa sai</td></tr>
-          <tr><td>Modo aprendiz</td><td>—</td><td>Mais detalhe na tela e previsão de tempo maior nos primeiros dias</td></tr>
+          <tr><td>Modo aprendiz</td><td>—</td><td>Mais detalhe no pulso e previsão de tempo maior nos primeiros dias</td></tr>
           <tr><td>Polivalência</td><td>Ninguém sabe quem faz o quê</td><td>Matriz de habilidades: cada pessoa, cada tarefa, nível e tempo médio</td></tr>
           <tr><td>Curva de aprendizado</td><td>Invisível</td><td>Tempo real por tarefa caindo dia a dia, por pessoa</td></tr>
           <tr><td>Custo da rotatividade</td><td>Não medido</td><td>Dias até a pessoa atingir o ritmo, por função</td></tr>
@@ -1047,7 +1182,7 @@ footer a { color: var(--ink-2); }
         <div class="card"><span class="big">10'</span><h3>Administrador</h3><p>Recebe se o supervisor não respondeu no prazo.</p></div>
         <div class="card"><span class="big">15'</span><h3>Gerente</h3><p>Último nível da cadeia. Prazos configuráveis.</p></div>
       </div>
-      <div class="callout"><b>Vídeo e LGPD</b><p>Identificação pelo crachá ou celular, sem reconhecimento facial. A câmera de vídeo só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
+      <div class="callout"><b>Vídeo e LGPD</b><p>Identificação pelo crachá RFID, sem reconhecimento facial. A câmera de vídeo só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
       <p class="note">As câmeras de vídeo têm seção própria: <a href="#cameras">Vídeo 360° com IA</a>.</p>
       <p class="note">Fonte: <a href="https://www.aurum.com.br/blog/clt-comentado/art-253-clt/" target="_blank" rel="noopener">art. 253 da CLT comentado (Aurum)</a>.</p>
     </section>
@@ -1084,37 +1219,39 @@ footer a { color: var(--ink-2); }
           </div>
           <div class="g-scroll"><div class="g-inner" id="s-gantt"></div></div>
           <div class="legend"><span><i style="background:var(--accent)"></i>Operadores</span><span><i style="background:var(--info)"></i>Conferentes</span><span><i style="border-left:2px dashed var(--bad);border-radius:0;width:0;height:12px"></i>Fim do turno</span></div>
-          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); sincronização 3 min por torre (1 conferente); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
+          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); confirmação de produto e validade 3 min por torre (1 conferente); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
         </div>
       </div>
     </section>
 
     <section id="cenarios">
       <span class="eyebrow">Cenários</span>
-      <h2>Cada etapa usa o melhor aparelho disponível</h2>
+      <h2>Do olho humano ao olho do Argos</h2>
       <div class="tbl"><table class="t">
-        <thead><tr><th>Aspecto</th><th>Hoje</th><th>Celular</th><th>Futurista</th></tr></thead>
+        <thead><tr><th>Aspecto</th><th>Hoje</th><th>Deméter com Argos</th><th>Depois</th></tr></thead>
         <tbody>
-          <tr><td>Torre</td><td>Visual</td><td>Crachá NFC</td><td>Óculos leem crachá</td></tr>
-          <tr><td>Produtos</td><td>Olho e memória</td><td>Lista da NF</td><td>IA + voz</td></tr>
-          <tr><td>Validade</td><td>Sem registro</td><td>Toque ou foto</td><td>Leitura automática</td></tr>
-          <tr><td>Linha</td><td>Andando por carga</td><td>Celular guia</td><td>Robô + luz</td></tr>
-          <tr><td>Dolly</td><td>Visual</td><td>Leitura de códigos</td><td>Óculos ou portal</td></tr>
-          <tr><td>Produto amontoado</td><td>Contagem na mão</td><td>Contagem na mão</td><td>Dolly inteiro na balança</td></tr>
-          <tr><td>Custo</td><td>—</td><td>Muito baixo</td><td>Médio a alto</td></tr>
+          <tr><td>Doly</td><td>Visual</td><td>Portal lê ao passar</td><td>—</td></tr>
+          <tr><td>Produto</td><td>Olho e memória</td><td>NF-e + câmera; o pulso confirma</td><td>IA reconhece sozinha</td></tr>
+          <tr><td>Validade</td><td>Sem registro</td><td>Câmera lê; o pulso confirma</td><td>Leitura automática</td></tr>
+          <tr><td>Cesta</td><td>Some sem ninguém saber</td><td>Lida em cada transbordo</td><td>Cesta de fábrica, rastreada da fábrica ao cliente</td></tr>
+          <tr><td>Linha</td><td>Andando por carga</td><td>Luz na posição + pulso</td><td>Robô leva o doly</td></tr>
+          <tr><td>Produto amontoado</td><td>Contagem na mão</td><td>Doly inteiro na balança</td><td>—</td></tr>
+          <tr><td>Unidade</td><td>Contagem na mão</td><td>Código 2D lido pela câmera</td><td>—</td></tr>
+          <tr><td>Custo</td><td>—</td><td>Médio, sem consumo de etiqueta</td><td>Alto</td></tr>
         </tbody>
       </table></div>
-      <p class="rule">Um ecossistema só: celular, crachá, balança, sensor de temperatura e câmera de vídeo são todos sensores do Deméter.</p>
+      <p class="rule">Um ecossistema só: antena, câmera, balança, sensor e pulso são sentidos do mesmo Argos.</p>
       <div class="tbl"><table class="t">
         <thead><tr><th>Camada</th><th>Papel</th></tr></thead>
         <tbody>
-          <tr><td>Servidor local</td><td>Recebe o vídeo e roda a IA na empresa; mantém a operação sem internet</td></tr>
+          <tr><td>Antenas e leitores RFID</td><td>Em rede cabeada (PoE), que leva dados e energia e não depende de Wi-Fi dentro da câmara</td></tr>
+          <tr><td>Servidor local</td><td>Ouve as antenas, recebe o vídeo e roda a IA na empresa; transforma leituras em eventos; mantém a operação sem internet</td></tr>
           <tr><td>VPS na nuvem</td><td>Eventos e trechos curtos de vídeo; painéis, alertas e histórico de qualquer lugar</td></tr>
-          <tr><td>Administrador online</td><td>Painéis e alertas pelo navegador; vídeo ao vivo por conexão segura</td></tr>
+          <tr><td>Pulso, TVs e celulares</td><td>Recebem as tarefas e alertas de cada pessoa e devolvem as confirmações</td></tr>
           <tr><td>Controle de acesso</td><td>Cada perfil vê só o que lhe cabe; toda visualização de vídeo fica registrada</td></tr>
         </tbody>
       </table></div>
-      <div class="prose"><p>Qualquer aparelho gera o mesmo evento. Se os óculos ficam sem bateria, o conferente pega o celular e continua da torre em que parou, porque o progresso está no servidor. A empresa começa só com celular e liga os outros modos conforme compra os acessórios.</p></div>
+      <div class="prose"><p>Qualquer sentido gera o mesmo evento. Se uma antena para, o pulso pede a confirmação manual e o turno continua do ponto em que parou, porque o progresso está no servidor. A empresa pode começar por um trecho (o recebimento, por exemplo) e estender o Argos às outras câmaras quando a primeira estiver firme.</p></div>
     </section>
 
     <section id="integracao">
@@ -1130,17 +1267,19 @@ footer a { color: var(--ink-2); }
           <tr><td>Câmaras</td><td>Quantas de descarga e de retorno, faixa de temperatura</td><td>Administrador</td></tr>
           <tr><td>Fornecedores</td><td>O que volta (dolly, cesta, PBR) e regra de troca; origem dos dollys (empresa, fábrica ou os dois)</td><td>Compras</td></tr>
           <tr><td>Avarias</td><td>Destinos possíveis e quem aprova cada um</td><td>Gerente</td></tr>
-          <tr><td>Equipamentos</td><td>Empilhadeiras a bateria, celulares, TVs, sensores</td><td>Administrador</td></tr>
+          <tr><td>Equipamentos</td><td>Leitores e antenas RFID, câmeras, balanças, relógios, empilhadeiras a bateria, TVs, sensores</td><td>Administrador</td></tr>
         </tbody>
       </table></div>
       <h3>Dolly no cliente</h3>
-      <div class="prose"><p>O dolly vai até o cliente, então tem saldo por cliente, como uma conta corrente de patrimônio. Saiu na rampa, entregue com o celular encostado no crachá, coletado com a mesma leitura, de volta no retorno de rota. Passou do prazo configurado, vendedor e supervisor de rota são avisados.</p></div>
+      <div class="prose"><p>O dolly vai até o cliente, então tem saldo por cliente, como uma conta corrente de patrimônio. Saiu na rampa, desceu no cliente lido pela antena do baú, voltou lido do mesmo jeito, no retorno de rota. Passou do prazo configurado, vendedor e supervisor de rota são avisados.</p></div>
       <h3>Conexão com o sistema da empresa</h3>
       <div class="tbl"><table class="t">
         <thead><tr><th>Uso</th><th>Quando</th><th>O que passa</th></tr></thead>
         <tbody>
           <tr><td>Migração</td><td>Uma vez, na implantação</td><td>Produtos, clientes, rotas, fornecedores, saldos</td></tr>
           <tr><td>Conexão on-line</td><td>O tempo todo</td><td>Pedidos e compras entram; NF, retornos, avarias e saldos voltam</td></tr>
+          <tr><td>NF-e de entrada</td><td>Assim que a fábrica emite</td><td>XML da nota baixado da SEFAZ com o certificado A1 da empresa, antes de a carreta chegar</td></tr>
+          <tr><td>Rastreador da carreta</td><td>Durante a viagem</td><td>Previsão de chegada; sem ele, o horário de saída e o histórico da rota</td></tr>
         </tbody>
       </table></div>
       <p class="note">API do Deméter com chave por empresa. O conector lê uma view do banco, a API do ERP ou, em último caso, um arquivo exportado. Se o ERP cair, os eventos esperam numa fila e a doca não para.</p>
@@ -1149,7 +1288,7 @@ footer a { color: var(--ink-2); }
     <section id="cameras">
       <span class="eyebrow">Vídeo 360° com IA</span>
       <h2>O vídeo vigia o processo, não a pessoa</h2>
-      <p class="lead">Câmeras de vídeo 360° no teto cobrem docas, corredores, portas das câmaras e rampas com poucos aparelhos. Começam pela segurança: EPI, acesso à câmara fria, pontos cegos. Numa fase seguinte, o mesmo vídeo vira um sensor do Deméter: mede o que acontece de verdade, e a inteligência regenerativa transforma essa medida em correção.</p>
+      <p class="lead">Câmeras de vídeo 360° no teto cobrem docas, corredores, portas das câmaras e rampas com poucos aparelhos. Começam pela segurança: EPI, acesso à câmara fria, pontos cegos. Numa fase seguinte, o mesmo vídeo vira um dos olhos do Argos: mede o que acontece de verdade, confirma o que as antenas leram, e a inteligência regenerativa transforma essa medida em correção.</p>
       <h3>Fase 1: segurança e pontos cegos</h3>
       <div class="tbl"><table class="t">
         <thead><tr><th>Detecção</th><th>Funciona</th><th>Uso</th></tr></thead>
@@ -1190,10 +1329,10 @@ footer a { color: var(--ink-2); }
       <div class="tbl"><table class="t">
         <thead><tr><th>Papel de hoje</th><th>No Deméter</th></tr></thead>
         <tbody>
-          <tr><td>Conferência anotada da NF</td><td>Sincronização no celular, contra a NF-e</td></tr>
+          <tr><td>Conferência anotada da NF</td><td>Leitura automática contra a NF-e</td></tr>
           <tr><td>Comprovante da carreta</td><td>Assinatura na tela, enviada por WhatsApp ou e-mail</td></tr>
-          <tr><td>Romaneio de separação</td><td>Celular guiando posição por posição</td></tr>
-          <tr><td>Lista das cestas mistas</td><td>Conteúdo ligado ao crachá, consultado por NFC</td></tr>
+          <tr><td>Romaneio de separação</td><td>Luz e pulso guiando posição por posição</td></tr>
+          <tr><td>Lista das cestas mistas</td><td>Conteúdo ligado à etiqueta do doly, consultado em qualquer tela</td></tr>
           <tr><td>Canhoto de entrega</td><td>Assinatura e foto no celular</td></tr>
           <tr><td>Fichas de inventário</td><td>Contagem cega no app</td></tr>
           <tr><td>Relatórios impressos</td><td>Painéis e placar nas TVs</td></tr>
@@ -1204,34 +1343,32 @@ footer a { color: var(--ink-2); }
 
     <section id="hardware">
       <span class="eyebrow">Hardware e custos</span>
-      <h2>Começa com os celulares e crachás de poucos reais</h2>
+      <h2>Antenas, etiquetas que voltam e o pulso: nada que vire lixo</h2>
+      <p class="lead">Valores aproximados, para ordem de grandeza; cada item precisa de cotação. O que se repete por mês é pouco, porque nenhuma etiqueta é descartável.</p>
       <div class="tbl"><table class="t">
-        <thead><tr><th>Item</th><th>Referência</th><th>Qtd.</th><th>Valor unitário</th></tr></thead>
+        <thead><tr><th>Item</th><th>Para quê</th><th>Qtd.</th><th>Valor unitário</th></tr></thead>
         <tbody>
-          <tr><td>Celular do armazém</td><td><a href="https://www.hardware.com.br/?p=267535" target="_blank" rel="noopener">Galaxy XCover7</a> (robusto, IP68, luva)</td><td>12</td><td>~R$ 2.499</td></tr>
-          <tr><td>Celular da entrega</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a></td><td>17</td><td>~R$ 630</td></tr>
-          <tr><td>Etiqueta NFC on-metal</td><td><a href="https://store.gototags.com/on-metal-nfc-sticker-ntag213-30-mm-circle/" target="_blank" rel="noopener">NTAG213</a></td><td>~600</td><td>R$ 3–15</td></tr>
-          <tr><td>Ímã de neodímio</td><td><a href="https://magazineluiza.com.br/busca/kit+imas+redondo" target="_blank" rel="noopener">N35</a></td><td>~200</td><td>R$ 4–17</td></tr>
-          <tr><td>Access point Wi-Fi</td><td><a href="https://magazineluiza.com.br/busca/ubiquiti+ap/" target="_blank" rel="noopener">UniFi U6+</a></td><td>5–6</td><td>R$ 1.058–1.196</td></tr>
-          <tr><td>Impressora de placas</td><td><a href="https://www.kabum.com.br/produto/402918/impressora-de-etiquetas-elgin-termica-l42-pro-full-ethernet-usb-e-serial" target="_blank" rel="noopener">Elgin L42 Pro</a></td><td>1</td><td>R$ 1.736</td></tr>
+          <tr><td>Leitor RFID UHF fixo</td><td>4 a 8 antenas cada, em rede PoE</td><td>Por câmara</td><td>~R$ 6–15 mil</td></tr>
+          <tr><td>Antena UHF curta</td><td>Uma por baia ou posição de linha</td><td>Por baia</td><td>~R$ 600–1.500</td></tr>
+          <tr><td>Portal UHF</td><td>Portas das câmaras, docas e rampas</td><td>Por passagem</td><td>~R$ 8–25 mil</td></tr>
+          <tr><td>Gateway RFID de teto</td><td>Achar doly perdido no galpão</td><td>Opcional</td><td>A cotar</td></tr>
+          <tr><td>Etiqueta UHF para metal + ímã</td><td>Doly, reutilizável</td><td>1 por doly em giro</td><td>~R$ 5–30</td></tr>
+          <tr><td>Etiqueta ou clip UHF de cesta</td><td>Se a fábrica não etiquetar</td><td>1 por cesta em giro</td><td>A cotar</td></tr>
+          <tr><td>Crachá RFID do colaborador</td><td>Portal da câmara fria, quem fez o quê</td><td>1 por pessoa</td><td>A cotar</td></tr>
+          <tr><td>Relógio Wear OS</td><td>A voz do Deméter no pulso</td><td>1 por pessoa no turno</td><td>~R$ 800+</td></tr>
+          <tr><td>LED de baia (ESP32)</td><td>Luz que guia o abastecimento e a separação</td><td>Por baia</td><td>~R$ 40–70</td></tr>
+          <tr><td>Receptor BLE (ESP32)</td><td>Zona de dollys e pessoas</td><td>1 por câmara</td><td>~R$ 50–100</td></tr>
+          <tr><td>Sensor de temperatura e porta</td><td>Cadeia de frio</td><td>1 a 2 por câmara</td><td>~R$ 100</td></tr>
+          <tr><td>Câmera IP com IA</td><td>Doca, baias, portas e rampas</td><td>2 por câmara</td><td>~R$ 200–500</td></tr>
+          <tr><td>Balança de piso ou paleteira com balança</td><td>Miolo do palete e produto amontoado</td><td>1 por doca</td><td>~R$ 4–10 mil</td></tr>
+          <tr><td>Servidor local</td><td>Ouvir as antenas, IA e operação sem internet</td><td>1 + reserva</td><td>~R$ 1.500–3.500</td></tr>
+          <tr><td>Access point Wi-Fi</td><td><a href="https://magazineluiza.com.br/busca/ubiquiti+ap/" target="_blank" rel="noopener">UniFi U6+</a>, para pulso e celulares</td><td>5–6</td><td>R$ 1.058–1.196</td></tr>
+          <tr><td>Celular da entrega</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a>, para motorista e equipe de entrega</td><td>17</td><td>~R$ 630</td></tr>
+          <tr><td>Impressora de placas</td><td><a href="https://www.kabum.com.br/produto/402918/impressora-de-etiquetas-elgin-termica-l42-pro-full-ethernet-usb-e-serial" target="_blank" rel="noopener">Elgin L42 Pro</a>, placas das posições</td><td>1</td><td>R$ 1.736</td></tr>
           <tr><td>TV do placar</td><td>TV 43" + TV box</td><td>3–4</td><td>A cotar</td></tr>
-          <tr><td>Câmera de vídeo 360°</td><td>IP, para teto (fisheye), com gravação local</td><td>Por área</td><td>A cotar</td></tr>
-          <tr><td>Crachá do colaborador</td><td>Cartão NFC (NTAG ou Mifare), da operação</td><td>1 por pessoa</td><td>A cotar</td></tr>
-          <tr><td>Óculos (futuro)</td><td><a href="https://tecnoblog.net/noticias/ray-ban-meta-gen-2-chega-ao-brasil-saiba-o-preco/" target="_blank" rel="noopener">Ray-Ban Meta Gen 2</a></td><td>—</td><td>a partir de R$ 3.299</td></tr>
         </tbody>
       </table></div>
-      <h3>Aparelhos: o Deméter oferece opções, a empresa escolhe</h3>
-      <div class="tbl"><table class="t">
-        <thead><tr><th>Opção</th><th>Serve para</th><th>Limite</th></tr></thead>
-        <tbody>
-          <tr><td>Celular Android com NFC</td><td>Base de tudo: ler crachás, NF, QR, registrar eventos</td><td>Ocupa uma mão</td></tr>
-          <tr><td>Crachá do colaborador</td><td>Login no celular compartilhado, entrada na câmara fria, quem fez o quê</td><td>É da operação; não substitui o ponto eletrônico, que é do RH</td></tr>
-          <tr><td>Smartwatch</td><td>Alertas no pulso: relógio de frio, próxima tarefa, chamado do supervisor</td><td>Em geral não lê NFC por app; tela pequena para luva</td></tr>
-          <tr><td>Computador de pulso industrial</td><td>Mãos livres, lê NFC e código de barras (ex.: <a href="https://www.zebra.com/ap/en/products/spec-sheets/mobile-computers/wearable/ws50.html" target="_blank" rel="noopener">Zebra WS50</a>)</td><td>Opera de -10 °C a 50 °C; custo maior</td></tr>
-          <tr><td>Óculos</td><td>Conferência por voz e visão, no cenário futurista</td><td>Ainda caro e limitado</td></tr>
-        </tbody>
-      </table></div>
-      <p class="note">O processo é o mesmo em qualquer aparelho (princípio 4). O Deméter não impõe nada: cada opção é ligada ou desligada na configuração, por decisão de quem tem esse direito.</p>
+      <p class="note">Os aparelhos de pulso estão na seção <a href="#pulso">Mãos livres</a>. O processo é o mesmo com qualquer sentido (princípio 5): cada um é ligado ou desligado na configuração, por decisão de quem tem esse direito.</p>
 
       <h3>Calculadora de custo mensal</h3>
       <form class="calc" id="custo" aria-label="Calculadora de custo mensal" onsubmit="return false">
@@ -1268,18 +1405,19 @@ footer a { color: var(--ink-2); }
           <tr><td>Servidor</td><td>FastAPI</td><td>Regras, eventos, API para aparelhos e painéis</td></tr>
           <tr><td>Banco central</td><td>PostgreSQL</td><td>Fonte única da verdade com muitos aparelhos gravando</td></tr>
           <tr><td>Banco no aparelho</td><td>SQLite</td><td>Trabalhar sem sinal na câmara fria e sincronizar depois</td></tr>
+          <tr><td>Leitura RFID</td><td>Leitores UHF em rede (protocolo LLRP)</td><td>O servidor local ouve as antenas e transforma leituras em eventos</td></tr>
           <tr><td>Hospedagem</td><td>Oracle Cloud + servidor local</td><td>Acesso externo e operação sem internet</td></tr>
         </tbody>
       </table></div>
-      <div class="callout"><b>Maior risco técnico</b><p>O Flet não tem controle pronto para NFC nem para leitura de código de barras pela câmera do celular. Os dois entram como extensões Flutter e precisam ser provados primeiro, num app mínimo no Android.</p></div>
+      <div class="callout"><b>Maior risco técnico</b><p>Transformar milhares de leituras por segundo em eventos confiáveis: filtrar o ruído, decidir a zona e reconhecer o transbordo. Isso roda no servidor local, em Python, e precisa ser provado primeiro numa bancada com duas posições, antes de qualquer câmara. O app Flet no relógio é experimental: o pulso recebe as tarefas como notificações.</p></div>
       <ol class="steps">
-        <li><span>Prova técnica: NFC e código de barras no Flet Android.</span></li>
-        <li><span>Recebimento: compra, placar, descarga, sincronização, validade, baia.</span></li>
-        <li><span>Estoque e inventário.</span></li>
-        <li><span>Onda, abastecimento, linha de dollys e paletizados.</span></li>
-        <li><span>Expedição, carregamento e retorno de rota.</span></li>
-        <li><span>Pessoas, capacidade e QLP dinâmico.</span></li>
-        <li><span>IA que aprende tempos e pedidos, e cenário futurista.</span></li>
+        <li><span>Prova técnica: bancada de transbordo com um leitor UHF, duas antenas, um doly e 32 cestas etiquetadas.</span></li>
+        <li><span>Recebimento: NF-e da SEFAZ, retorno nas baias, doly nascendo na doca, validade, placar.</span></li>
+        <li><span>Estoque e inventário contínuo.</span></li>
+        <li><span>Onda, abastecimento, linha de dollys com transbordo, e paletizados.</span></li>
+        <li><span>Expedição, portal da rampa, antena do baú e retorno de rota.</span></li>
+        <li><span>Pessoas, pulso, relógio de frio e QLP dinâmico.</span></li>
+        <li><span>Câmeras com IA e o Argos completo.</span></li>
       </ol>
     </section>
 
@@ -1287,10 +1425,10 @@ footer a { color: var(--ink-2); }
       <span class="eyebrow">O que é necessário</span>
       <h2>Antes de qualquer código</h2>
       <ul class="check">
-        <li><h3>Dados da operação</h3><ul><li>Torres por carreta e carretas por dia</li><li>Dollys e paletes por dia e clientes por rota</li><li>Horários dos turnos</li><li>Baús dos veículos e posições de dolly e palete</li><li>Cadastro de produtos e validades</li><li>Origem dos pedidos e compras hoje</li></ul></li>
-        <li><h3>Decisões de negócio</h3><ul><li>Destino da troca de pão vencido</li><li>Regra de corte quando falta produto</li><li>Prazo de devolução do dolly no cliente</li><li>Quem aprova ondas e exceções</li><li>Destinos de avaria liberados pelo jurídico</li></ul></li>
-        <li><h3>Prova técnica</h3><ul><li>Celular Android com NFC</li><li>20 crachás de teste com ímã</li><li>Ler crachá e DANFE no app Flet</li><li>Gravar offline e sincronizar</li><li>Testar dentro da câmara fria</li></ul></li>
-        <li><h3>Pessoas e aprovações</h3><ul><li>Patrocinador do piloto</li><li>Compras e contabilidade</li><li>Responsável pela rede</li><li>LGPD: a equipe sabe como seus dados de produtividade, fotos e assinaturas são usados</li></ul></li>
+        <li><h3>Dados da operação</h3><ul><li>Torres por carreta e carretas por dia</li><li>Medidas da cesta, do doly e das baias</li><li>Dollys e paletes por dia e clientes por rota</li><li>Horários dos turnos</li><li>Baús dos veículos e posições de dolly e palete</li><li>Cadastro de produtos e validades</li><li>Origem dos pedidos e compras hoje</li></ul></li>
+        <li><h3>Decisões de negócio</h3><ul><li>Destino da troca de pão vencido</li><li>Regra de corte quando falta produto</li><li>Prazo de devolução do dolly no cliente</li><li>Quem aprova ondas e exceções</li><li>Destinos de avaria liberados pelo jurídico</li><li>Etiqueta na cesta: de fábrica ou clip</li></ul></li>
+        <li><h3>Prova técnica</h3><ul><li>Leitor UHF com duas antenas e chapa de separação</li><li>Um doly e 32 cestas etiquetadas</li><li>Reconhecer o transbordo cesta a cesta</li><li>Relógio Wear OS recebendo tarefas</li><li>Testar dentro da câmara fria: metal, umidade e frio</li></ul></li>
+        <li><h3>Pessoas e aprovações</h3><ul><li>Patrocinador do piloto</li><li>Fábrica parceira para as cestas etiquetadas</li><li>Compras e contabilidade</li><li>Responsável pela rede</li><li>LGPD: a equipe sabe como seus dados de produtividade, fotos e assinaturas são usados</li></ul></li>
       </ul>
     </section>
   </main>
@@ -1318,7 +1456,7 @@ footer a { color: var(--ink-2); }
       ['Abastecimento da linha', (4 * torresDia) / 60, 'op'],
       ['Separação (linha)', (minDolly * dollys) / 60, 'op'],
       ['Rampa', dollys / 60, 'op'],
-      ['Sincronização da NF', (3 * torresDia) / 60, 'conf'],
+      ['Confirmação da NF e exceções', (3 * torresDia) / 60, 'conf'],
       ['Conferência de expedição', (2 * dollys) / 60, 'conf'],
     ];
     // Descanso térmico (CLT art. 253): 20 min a cada 1h40 no frio = +20% sobre as horas trabalhadas na câmara.
@@ -1348,7 +1486,7 @@ footer a { color: var(--ink-2); }
       [`Dados móveis (${linhasDados} linhas)`, linhasDados * plano],
       ['Internet reserva', 60],
       ['Domínio .com.br', 40 / 12],
-      ['Reposição de crachás', 235],
+      ['Reposição de etiquetas e clips', 235],
     ];
     const total = itens.reduce((s, i) => s + i[1], 0);
     $('k-total').textContent = brl(total);
@@ -1482,7 +1620,7 @@ footer a { color: var(--ink-2); }
         const rotulo = docas > 1 ? `${n} (doca ${doca + 1})` : n;
         const d = { nome: rotulo + ' · descarga', papel: 'op', trabalho: 4 * q, max: 4, deps };
         const r = { nome: rotulo + ' · carga do retorno', papel: 'op', trabalho: 4 * q, max: 4, deps: [d] };
-        const s = { nome: rotulo + ' · sincronização', papel: 'conf', trabalho: 3 * q, max: 1, deps: [d] };
+        const s = { nome: rotulo + ' · confirmação', papel: 'conf', trabalho: 3 * q, max: 1, deps: [d] };
         tarefas.push(d, r, s); naDoca[doca] = { r, s };
       } else if (o.tipo === 'abastecer') {
         tarefas.push({ nome: n, papel: 'op', trabalho: 4 * q, max: 2, deps: [] });
@@ -1623,16 +1761,17 @@ footer a { color: var(--ink-2); }
 <script>
 /* Ouça antes: leitura em voz alta pelo próprio aparelho (Web Speech API) */
 (function(){
-  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bNFC\b/g,"ene efe cê"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/\bDeméter\b/g,"Deméter"]];
+  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bRFID\b/g,"erre efe i dê"],[/\bArgos\b/g,"Árgos"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/\bDeméter\b/g,"Deméter"]];
   const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
   const RESUMO = [
     "Olá, aqui é o Sebastião. Isto é o Deméter.",
     "É uma ideia aberta para organizar a logística de uma distribuidora de alimentos: pão, cereais, laticínios, massas. Da carreta que chega da fábrica até o caminhão que sai para entregar.",
     "Ele não nasceu numa sala de reuniões. Nasceu no chão do depósito, enquanto eu empurrava torres de pão entre as câmaras frias, como ajudante do ajudante de carga.",
     "Lá de baixo, sem crachá e sem nome, eu vi tudo: a conferência feita no olho, a cesta que some, o separador perdido entre os dollys, o pão que volta, e ninguém sabendo quem deve a quem.",
-    "A ideia é simples. Cada torre, cesta e palete ganha um crachá que a empresa reutiliza, e passa a ter dono, lugar e hora.",
+    "A ideia é simples. Cada doly, cesta e palete ganha uma etiqueta RFID que a empresa reutiliza, e passa a ter dono, lugar e hora. Um doly é sempre um produto só, com trinta e duas cestas e uma validade.",
+    "Antenas, câmeras e balanças formam o Argos, o olho que tudo vê. Ninguém precisa bipar nada: quando uma cesta sai de um doly e entra no outro, o Deméter confere na hora. O erro morre onde nasce.",
     "O estoque fica parado e é o dolly do cliente que anda pela linha. A IA propõe a separação, mas quem aprova é sempre uma pessoa. E nenhum papel circula na operação.",
-    "Tudo roda no celular Android que a equipe já usa, com etiquetas de poucos reais. Óculos, portais e robôs podem vir depois, sem mudar o processo.",
+    "As mãos ficam livres: o Deméter fala pelo relógio no pulso de cada um, e uma luz na baia mostra onde ir. Nenhuma etiqueta vai para o lixo.",
     "Pela página você encontra o fluxo em dez etapas, os painéis que mostram a operação ao vivo, como num aeroporto, e calculadoras para ver quantas pessoas o turno precisa e quanto custa.",
     "Se tiver pouco tempo, comece pelo Fluxo e depois brinque no Simulador.",
     "O Deméter é uma ideia aberta: qualquer pessoa pode copiar e adaptar, citando a autoria. Obrigado por ouvir."
