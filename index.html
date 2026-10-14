@@ -325,6 +325,7 @@ footer a { color: var(--ink-2); }
       <h1>Tudo que sai, <em>volta certo</em>.</h1>
       <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora.</p>
       <p class="rule">O produto segue. O erro para.</p>
+      <p class="lead"><a href="olho/">Veja o olho em ação: da descarga ao retorno, em animações e tirinhas →</a></p>
       <div class="ouvir" id="ouvir">
         <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ler? Ouça antes</b><small id="oSub">O Deméter em uns 2 minutos</small></span></button>
         <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
@@ -1879,13 +1880,11 @@ footer a { color: var(--ink-2); }
 <script>
 /* Ouça antes: leitura em voz alta pelo próprio aparelho (Web Speech API) */
 (function(){
-  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bRFID\b/g,"erre efe i dê"],[/\bArgos\b/g,"Árgos"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/\bDeméter\b/g,"Deméter"]];
+  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bRFID\b/g,"erre efe i dê"],[/\bArgos\b/g,"Árgos"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/Deméter/g,"Demeter"]];
   const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
   const RESUMO = [
-    "Olá, aqui é o Sebastião. Isto é o Deméter.",
+    "Olá. Este é o Deméter, o olho que tudo vê.",
     "É uma ideia aberta para organizar a logística de uma distribuidora de alimentos: pão, cereais, laticínios, massas. Da carreta que chega da fábrica até o caminhão que sai para entregar.",
-    "Ele não nasceu numa sala de reuniões. Nasceu no chão do depósito, enquanto eu empurrava torres de pão entre as câmaras frias, como ajudante do ajudante de carga.",
-    "Lá de baixo, sem crachá e sem nome, eu vi tudo: a conferência feita no olho, a cesta que some, o separador perdido entre os dollys, o pão que volta, e ninguém sabendo quem deve a quem.",
     "A ideia é simples. Cada doly, cesta e palete ganha uma etiqueta RFID que a empresa reutiliza, e passa a ter dono, lugar e hora. Um doly é sempre um produto só, com trinta e duas cestas e uma validade.",
     "Diz o ditado que o olho do dono é que engorda o boi. O Deméter é esse olho, em cada baia, cada caixa, cada carga e cada entrega. O produto segue, o erro para. Antenas, câmeras e balanças formam o Argos, o olho que tudo vê. Ninguém precisa bipar nada: quando uma cesta sai de um doly e entra no outro, o Deméter confere na hora. O erro morre onde nasce.",
     "O estoque fica parado e é o dolly do cliente que anda pela linha. A IA propõe a separação, mas quem aprova é sempre uma pessoa. E nenhum papel circula na operação.",
