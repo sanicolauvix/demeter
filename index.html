@@ -264,6 +264,27 @@ footer a { color: var(--ink-2); }
 .ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
 @media print { .ouvir { display: none; } }
 
+/* Abertura no estilo do anúncio: escura de propósito, igual nos dois temas */
+.anuncio { background: #1A120D; color: #F3E9DA; border-radius: 24px; padding: clamp(28px, 6vw, 72px); display: flex; flex-direction: column; gap: clamp(22px, 3.5vw, 36px); }
+.an-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: var(--font-mono); font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 4px; color: #A8957E; }
+.an-top .vivo { color: #E3A15E; }
+.an-olho { width: min(100%, 460px); height: auto; align-self: center; }
+.anuncio h1 { font-size: clamp(38px, 6.6vw, 80px); font-weight: 600; letter-spacing: -1.5px; line-height: 1.02; max-width: 16ch; color: #F3E9DA; }
+.anuncio h1 span { display: block; color: #E3A15E; margin-top: 10px; }
+.an-conta { border: 2px solid #45352A; border-radius: 18px; padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 8px; max-width: 760px; }
+.an-conta b { font-family: var(--font-mono); font-weight: 400; font-size: 14px; letter-spacing: 4px; color: #A8957E; }
+.an-conta p { font-size: clamp(17px, 2vw, 22px); color: #D2C1AA; }
+.an-conta strong { font-family: var(--font-display); font-weight: 600; font-size: clamp(44px, 7vw, 76px); line-height: 1; }
+.an-conta small { font-size: 0.42em; color: #A8957E; font-weight: 400; }
+.an-sabe { font-size: clamp(20px, 2.4vw, 28px); color: #D2C1AA; }
+.an-lista { font-family: var(--font-display); font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.25; margin-top: -12px; }
+.an-pe { border-top: 2px solid #45352A; padding-top: 24px; }
+.an-marca { display: flex; align-items: center; gap: 14px; }
+.an-marca svg { width: 56px; height: 56px; flex: none; }
+.an-marca svg { --ink: #F3E9DA; }
+.an-marca b { display: block; font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: 7px; }
+.an-marca small { color: #A8957E; font-size: 16px; }
+
 /* Home: chamadas, cartões que levam às tirinhas, olho do CRONOS */
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: 17px; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
@@ -352,9 +373,21 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
         <nav aria-label="Atalhos"><a href="olho/">O olho em ação</a><a href="#ganhos">Ganhos</a><a href="#custos">Custos</a><a href="#piloto">Piloto</a></nav>
       </div>
-      <h1>O olho do dono, <em>em cada volume</em>.</h1>
-      <p class="lead">O Deméter é o olho que tudo vê numa distribuidora de alimentos. Da carreta que sai da fábrica ao caminhão que volta da rota, cada volume tem dono, lugar e hora, e cada erro é pego onde nasce.</p>
-      <p class="rule">O produto segue. O erro para.</p>
+      <div class="anuncio">
+        <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
+        <svg class="an-olho" viewBox="0 0 560 220" aria-hidden="true">
+          <path d="M20 110 C 120 10, 440 10, 540 110 C 440 210, 120 210, 20 110 Z" fill="none" stroke="#E3A15E" stroke-width="5"/>
+          <circle cx="280" cy="110" r="74" fill="none" stroke="#F3E9DA" stroke-width="3" stroke-opacity="0.35"/>
+          <circle cx="280" cy="110" r="50" fill="none" stroke="#E3A15E" stroke-width="5"/>
+          <circle cx="280" cy="110" r="20" fill="#E3A15E"><animate attributeName="r" values="20;24;20" dur="2.4s" repeatCount="indefinite"/></circle>
+          <g stroke="#F3E9DA" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"><line x1="280" y1="22" x2="280" y2="44"/><line x1="280" y1="176" x2="280" y2="198"/><line x1="192" y1="110" x2="214" y2="110"/><line x1="346" y1="110" x2="368" y2="110"/></g>
+        </svg>
+        <h1>Quanto a sua operação perdeu ontem?<span>Ninguém sabe.</span></h1>
+        <div class="an-conta"><b>FAÇA A CONTA</b><p>Numa operação de R$ 500 mil por dia, cada 1% que escapa é</p><strong>R$ 130 mil<small> por mês</small></strong></div>
+        <p class="an-sabe">Existe um olho que sabe.</p>
+        <p class="an-lista">Em cada baia.<br>Em cada volume.<br>Em cada carga.<br>Em cada entrega.</p>
+        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div></div>
+      </div>
       <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#custos">Quanto custa</a></div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
