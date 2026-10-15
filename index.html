@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" type="image/png" href="assets/demeter_icone_192.png">
 <title>Deméter · O olho que tudo vê</title>
-<meta name="description" content="Deméter: o olho que tudo vê numa distribuidora de alimentos. Da fábrica à volta da rota, cada volume com dono, lugar e hora. O produto segue. O erro para.">
+<meta name="description" content="Deméter: o olho que tudo vê numa distribuidora de alimentos, com IA generativa. Da fábrica à volta da rota, cada volume com dono, lugar e hora. O produto segue. O erro para.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Deméter · O olho que tudo vê">
 <meta property="og:description" content="Da fábrica à volta da rota, cada volume com dono, lugar e hora. O produto segue. O erro para.">
@@ -264,6 +264,13 @@ footer a { color: var(--ink-2); }
 .ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
 @media print { .ouvir { display: none; } }
 
+.chat { display: flex; flex-direction: column; gap: 10px; max-width: 720px; }
+.chat p { padding: 12px 16px; border-radius: 16px; font-size: 16px; color: var(--ink); max-width: 85%; }
+.chat p b { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); font-weight: 500; margin-bottom: 4px; }
+.chat .eu { background: var(--sunk); align-self: flex-start; border-bottom-left-radius: 4px; }
+.chat .ia { background: var(--board); color: var(--board-ink); align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat .ia b { color: #E3A15E; }
+
 /* Abertura no estilo do anúncio: escura de propósito, igual nos dois temas */
 .anuncio { background: #1A120D; color: #F3E9DA; border-radius: 24px; padding: clamp(28px, 6vw, 72px); display: flex; flex-direction: column; gap: clamp(22px, 3.5vw, 36px); }
 .an-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: var(--font-mono); font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 4px; color: #A8957E; }
@@ -350,16 +357,20 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
     <a href="#inicio">Início</a>
     <a class="out" href="olho/">O olho em ação →</a>
-    <div class="grp">Por quê</div>
+    <div class="grp">Apresentação</div>
+    <a href="#oque">O que é o Deméter</a>
     <a href="#problema">O problema</a>
-    <a href="#olho">O olho que tudo vê</a>
-    <a href="#ganhos">O que o dono ganha</a>
-    <div class="grp">Como</div>
+    <div class="grp">As fases</div>
     <a href="#operacao">Operação contínua</a>
     <a href="#paralelo">Em paralelo</a>
     <a href="#cronos">Fora do galpão</a>
+    <div class="grp">Tecnologia</div>
+    <a href="#olho">Como o olho vê</a>
+    <a href="#ia">IA generativa</a>
+    <a href="#arquitetura">Arquitetura</a>
+    <div class="grp">Pessoas e números</div>
     <a href="#pessoas">Pessoas</a>
-    <div class="grp">Números</div>
+    <a href="#ganhos">O que o dono ganha</a>
     <a href="#custos">Quanto custa</a>
     <a href="#riscos">Riscos, sem rodeio</a>
     <a href="#piloto">O piloto</a>
@@ -371,7 +382,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="home" id="inicio" aria-label="Início">
       <div class="home-top">
         <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
-        <nav aria-label="Atalhos"><a href="olho/">O olho em ação</a><a href="#ganhos">Ganhos</a><a href="#custos">Custos</a><a href="#piloto">Piloto</a></nav>
+        <nav aria-label="Atalhos"><a href="olho/">O olho em ação</a><a href="#operacao">Fases</a><a href="#ia">IA generativa</a><a href="#custos">Custos</a></nav>
       </div>
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
@@ -388,7 +399,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <p class="an-lista">Em cada baia.<br>Em cada volume.<br>Em cada carga.<br>Em cada entrega.</p>
         <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div></div>
       </div>
-      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#custos">Quanto custa</a></div>
+      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#ia">A IA generativa</a></div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
   <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
@@ -555,6 +566,16 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       </div>
     </section>
 
+    <section id="oque">
+      <span class="eyebrow">Apresentação</span>
+      <h2>O que é o Deméter</h2>
+      <p class="lead">Um sistema que vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Ele gerencia, confere e controla; quem decide é o dono.</p>
+      <div class="cards">
+        <div class="card"><h3>Vê</h3><p>Etiquetas, antenas, câmeras, sensores, balanças e GPS: tudo o que se move vira um evento com dono, lugar e hora.</p></div>
+        <div class="card"><h3>Entende</h3><p>Uma IA generativa transforma os eventos em conversa, alerta com motivo, proposta de trabalho e resumo para o dono.</p></div>
+        <div class="card"><h3>Para o erro</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O produto segue. O erro para.</p></div>
+      </div>
+    </section>
     <section id="problema">
       <span class="eyebrow">O problema</span>
       <h2>Hoje, a operação roda no olho e na memória</h2>
@@ -566,35 +587,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card"><h3>Jornada no papel</h3><p>Ponto, frio, pausas e jornada do motorista anotados à mão. É risco trabalhista acumulando em silêncio.</p></div>
       </div>
     </section>
-
-    <section id="olho">
-      <span class="eyebrow">A solução</span>
-      <h2>O olho que tudo vê</h2>
-      <p class="lead">Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega, ao mesmo tempo, o tempo todo.</p>
-      <div class="cards">
-        <div class="card"><h3>Etiquetas RFID</h3><p>Nos montados e nos volumes. Antenas nas portas e nas baias leem sem ninguém bipar nada.</p></div>
-        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: quem entrou na câmara com EPI, o que saiu da doca, a avaria na hora.</p></div>
-        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de produto de peso variável.</p></div>
-        <div class="card"><h3>Relógio no pulso</h3><p>O olho conversa com cada colaborador. Mãos livres para o trabalho.</p></div>
-        <div class="card"><h3>GPS e CRONOS</h3><p>Fora do galpão, o rastreador e as cercas eletrônicas. O CRONOS cuida da jornada do motorista.</p></div>
-        <div class="card dark"><h3>Uma só verdade</h3><p>Tudo vira evento num único registro. Painéis, alertas e o resultado do patrão saem dele.</p></div>
-      </div>
-    </section>
-
-    <section id="ganhos">
-      <span class="eyebrow">O que o dono ganha</span>
-      <h2>O erro para antes de virar prejuízo</h2>
-      <div class="cards">
-        <div class="card"><span class="big">1% a 3%</span><h3>do faturamento</h3><p>é o que costuma virar perda num perecível. Cortar de 30% a 50% dessa perda já paga o sistema.</p></div>
-        <div class="card"><span class="big">na hora</span><h3>o erro aparece</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O erro morre onde nasce.</p></div>
-        <div class="card"><span class="big">7 dias</span><h3>antes de vencer</h3><p>Vendas é avisada a tempo da promoção. O que vence primeiro sai primeiro.</p></div>
-        <div class="card"><span class="big">6h40</span><h3>de espera somada</h3><p>Exemplo de um dia: o tempo perdido nos clientes vira número, com nome de quem segura o caminhão.</p></div>
-        <div class="card"><span class="big">0</span><h3>vazio esquecido</h3><p>Dolys e paletes no cliente, na rota e na câmara, contados. O patrimônio volta ou é cobrado.</p></div>
-        <div class="card dark"><span class="big">o dia</span><h3>na mão do patrão</h3><p>Faturamento, margem, perdas e custo por entrega, com a origem de cada perda.</p></div>
-      </div>
-      <p class="note">Números de exemplo e faixas típicas do setor. O ganho real se mede no piloto, comparando o antes e o depois.</p>
-    </section>
-
     <section id="operacao">
       <span class="eyebrow">Como funciona</span>
       <h2>Da fábrica à volta da rota, em oito etapas</h2>
@@ -610,7 +602,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <a class="card etapa-card" href="olho/#retorno"><span class="eyebrow">08</span><h3>Retorno</h3><p>Confirma o que voltou, pede o motivo de cada devolução e manda cada item ao seu destino.</p><span class="ver">Ver a tirinha →</span></a>
       </div>
     </section>
-
     <section id="paralelo">
       <span class="eyebrow">Em paralelo</span>
       <h2>O que acontece em qualquer etapa</h2>
@@ -620,7 +611,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <a class="card etapa-card" href="olho/#empresa"><h3>Olho ↔ empresa</h3><p>Avisa compras antes de faltar e vendas antes de vencer. Entrega ao patrão o resultado do dia.</p><span class="ver">Ver a tirinha →</span></a>
       </div>
     </section>
-
     <section id="cronos">
       <span class="eyebrow">Fora do galpão</span>
       <h2>Na estrada, o CRONOS olha pelo Deméter</h2>
@@ -634,7 +624,53 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       </div>
       <div class="cta"><a class="btn" href="olho/#puxada">Ver a puxada →</a><a class="btn" href="olho/#rota">Ver a rota →</a></div>
     </section>
-
+    <section id="olho">
+      <span class="eyebrow">Tecnologia</span>
+      <h2>Como o olho vê: os sentidos do Deméter</h2>
+      <p class="lead">Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega, ao mesmo tempo, o tempo todo.</p>
+      <div class="cards">
+        <div class="card"><h3>Etiquetas RFID</h3><p>Nos montados e nos volumes. Antenas nas portas e nas baias leem sem ninguém bipar nada.</p></div>
+        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: quem entrou na câmara com EPI, o que saiu da doca, a avaria na hora.</p></div>
+        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de produto de peso variável.</p></div>
+        <div class="card"><h3>Relógio no pulso</h3><p>O olho conversa com cada colaborador. Mãos livres para o trabalho.</p></div>
+        <div class="card"><h3>GPS e CRONOS</h3><p>Fora do galpão, o rastreador e as cercas eletrônicas. O CRONOS cuida da jornada do motorista.</p></div>
+        <div class="card dark"><h3>Uma só verdade</h3><p>Tudo vira evento num único registro. Painéis, alertas e o resultado do patrão saem dele.</p></div>
+      </div>
+    </section>
+    <section id="ia">
+      <span class="eyebrow">Tecnologia · IA generativa</span>
+      <h2>Por trás do olho, uma IA generativa que conversa, explica e propõe</h2>
+      <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela não substitui o dono nem o colaborador: propõe, explica e registra. A decisão continua sendo de uma pessoa.</p>
+      <div class="chat" aria-label="Exemplo de conversa pelo relógio">
+        <p class="eu"><b>Colaborador · baia 12</b>Achei 30, o sistema diz 32.</p>
+        <p class="ia"><b>Olho</b>Li a baia agora: 30 volumes. Registrei a falta de 2 do lote 2410 e avisei o imediato. A última leitura com 32 foi às 14:05, no abastecimento.</p>
+        <p class="eu"><b>Patrão · fim do dia</b>Quanto perdi com espera em cliente este mês?</p>
+        <p class="ia"><b>Olho</b>41 horas de caminhão parado, 62% delas em três clientes. O 0412 lidera: 14 esperas acima de 30 minutos. Sugiro agendar a entrega dele.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><h3>Conversa pelo relógio</h3><p>O colaborador fala do jeito dele, por voz ou toque. O olho entende e responde curto, de mãos livres.</p></div>
+        <div class="card"><h3>Alerta com motivo</h3><p>Todo aviso vem com o porquê: "baú a 9 °C, o limite é 7". Ninguém precisa adivinhar.</p></div>
+        <div class="card"><h3>Propõe, a pessoa aprova</h3><p>Monta a onda, distribui o turno, sugere o destino da avaria. Quem aprova é sempre uma pessoa.</p></div>
+        <div class="card"><h3>Lê o que chega</h3><p>Nota fiscal da SEFAZ, checklist, foto da avaria: a IA lê, confere e descreve o que viu.</p></div>
+        <div class="card"><h3>Responde ao patrão</h3><p>Pergunta em português, resposta com número: perdas, esperas, vencimentos, resultado do dia.</p></div>
+        <div class="card"><h3>Ensina, não pune</h3><p>O erro vira uma lição curta para quem errou e uma melhoria no processo. Quem faz bem feito aparece no registro.</p></div>
+      </div>
+      <div class="callout"><b>Feito com IA generativa</b><p>O próprio Deméter foi desenhado em parceria com IA generativa: o fluxo, as animações, as tirinhas e este site. A experiência de chão de quem conhece a operação, somada a uma IA como parceira de equipe.</p></div>
+    </section>
+    <section id="arquitetura">
+      <span class="eyebrow">Tecnologia · arquitetura</span>
+      <h2>Quatro camadas, um único registro</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>O que faz</th><th>Com o quê</th></tr></thead>
+        <tbody>
+          <tr><td>Sentidos</td><td>Veem tudo o que entra, anda e sai</td><td>RFID UHF, antenas nas portas e baias, câmeras com IA, sensores de temperatura, balanças, GPS</td></tr>
+          <tr><td>Registro</td><td>Guarda cada evento: o quê, onde, quando, quem</td><td>Registro único de eventos no padrão GS1 (EPCIS)</td></tr>
+          <tr><td>Cérebro</td><td>Entende, explica, propõe e resume</td><td>IA generativa com regras da operação; decisão sempre humana</td></tr>
+          <tr><td>Conversa</td><td>Leva a informação a quem precisa</td><td>Relógio no pulso, luz na baia, TVs do galpão, painel do patrão</td></tr>
+          <tr><td>Integrações</td><td>Liga o Deméter ao resto da empresa</td><td>NF-e da SEFAZ, ERP de compras e vendas, CRONOS na estrada</td></tr>
+        </tbody>
+      </table></div>
+    </section>
     <section id="pessoas">
       <span class="eyebrow">Pessoas</span>
       <h2>Multicolaboradores, uma gerência e nenhuma prancheta</h2>
@@ -645,7 +681,19 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card dark"><h3>Decidir cabe ao dono</h3><p>O Deméter gerencia, confere e controla. O que o dono deixar sem decisão, fica registrado.</p></div>
       </div>
     </section>
-
+    <section id="ganhos">
+      <span class="eyebrow">O que o dono ganha</span>
+      <h2>O erro para antes de virar prejuízo</h2>
+      <div class="cards">
+        <div class="card"><span class="big">1% a 3%</span><h3>do faturamento</h3><p>é o que costuma virar perda num perecível. Cortar de 30% a 50% dessa perda já paga o sistema.</p></div>
+        <div class="card"><span class="big">na hora</span><h3>o erro aparece</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O erro morre onde nasce.</p></div>
+        <div class="card"><span class="big">7 dias</span><h3>antes de vencer</h3><p>Vendas é avisada a tempo da promoção. O que vence primeiro sai primeiro.</p></div>
+        <div class="card"><span class="big">6h40</span><h3>de espera somada</h3><p>Exemplo de um dia: o tempo perdido nos clientes vira número, com nome de quem segura o caminhão.</p></div>
+        <div class="card"><span class="big">0</span><h3>vazio esquecido</h3><p>Dolys e paletes no cliente, na rota e na câmara, contados. O patrimônio volta ou é cobrado.</p></div>
+        <div class="card dark"><span class="big">o dia</span><h3>na mão do patrão</h3><p>Faturamento, margem, perdas e custo por entrega, com a origem de cada perda.</p></div>
+      </div>
+      <p class="note">Números de exemplo e faixas típicas do setor. O ganho real se mede no piloto, comparando o antes e o depois.</p>
+    </section>
     <section id="custos">
       <span class="eyebrow">Quanto custa</span>
       <h2>Começa pequeno, cresce com o resultado</h2>
@@ -660,7 +708,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       </table></div>
       <p class="note">Ordem de grandeza para uma distribuidora de porte médio (cerca de 18 caminhões). Precisa de cotação e dos números reais da operação.</p>
     </section>
-
     <section id="riscos">
       <span class="eyebrow">Sem rodeio</span>
       <h2>Os riscos, e como cada um é tratado</h2>
@@ -673,7 +720,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <li><b>Mudança de cultura</b><span>Sem o dono comprar a ideia, nada anda.</span><em>Piloto curto, com números do antes e do depois.</em></li>
       </ul>
     </section>
-
     <section id="piloto">
       <span class="eyebrow">O caminho</span>
       <h2>Um piloto de 90 dias, medindo o antes e o depois</h2>
@@ -685,7 +731,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <li><span><b>Comparar e decidir.</b> Com os números na mão, o dono decide se cresce.</span></li>
       </ol>
     </section>
-
     <section id="contato">
       <span class="eyebrow">Contato</span>
       <h2>Quer o olho na sua operação?</h2>
@@ -729,8 +774,8 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 (function(){
   const PRONUNCIA = [[/\bRFID\b/g,"erre efe i dê"],[/\bEPI\b/g,"é pê i"],[/\bCRONOS\b/g,"Crônos"],[/\bSOS\b/g,"esse ó esse"],[/Deméter/g,"Demeter"],[/\bchecklist\b/gi,"chéquilist"]];
   const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
-  const RESUMO = ["Olá. Este é o Deméter, o olho que tudo vê.", "Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega. O produto segue, o erro para.", "Como ele vê? Etiquetas RFID nos montados e nos volumes, antenas nas portas e nas baias, câmeras, balanças e sensores. Ninguém bipa nada. O olho fala com cada colaborador pelo relógio no pulso, de mãos livres. E o dono acompanha o olho.", "Antes da descarga vem a puxada, e fora do galpão quem vigia é o olho do CRONOS, que passa tudo para o Deméter. Pelo rastreador da carreta, ele acompanha a espera na fábrica, a estrada, o descanso e a chegada ao CD, e a câmara de descarga já fica pronta. O motorista da puxada não bate ponto na empresa: o CRONOS controla a jornada e gera o diário de bordo eletrônico e a folha de ponto, como manda a lei do caminhoneiro.", "Na descarga, o olho vê a carreta chegar, confere a câmara vazia, faz o checklist e autoriza. Cada montado é lido na entrada, com lote e vencimento, e já ganha o seu lugar no estoque. E os vazios voltam para a fábrica na mesma carreta.", "Na onda, o olho acompanha as vendas hora a hora e monta as cargas até o ponto de corte.", "No abastecimento, ele chama quem está livre e diz de onde tirar e onde colocar. Na câmara fria, só entra com EPI, e o tempo de frio é contado. O montado é aberto e cada volume ganha a sua etiqueta: o controle desce de nível.", "Na separação, a luz guia o separador. O que precisa virar unidade já foi preparado em paralelo, e ninguém para. O queijo, que vem sem preço, é pesado peça a peça. Os secos vão para a rampa; os refrigerados esperam numa câmara.", "No carregamento, o olho identifica o caminhão, confere a rampa, faz o checklist de temperatura e autoriza. A antena da porta confere cada montado que sobe. Carga encerrada, veículo lacrado.", "Na rota, o olho do CRONOS sai do galpão junto com o caminhão e passa tudo para o Deméter. O GPS e as cercas eletrônicas mostram a saída do CD, o tempo em trânsito, a chegada e a espera em cada cliente.", "O motorista da rota bate o ponto na empresa, e na estrada o olho separa direção, espera e pausa. No fim do dia, o tempo perdido vira número: onde, quanto e com qual cliente.", "No retorno, o olho confirma o que voltou. O colaborador informa o motivo de cada devolução, e cada item vai para o seu destino. As etiquetas dos vazios são desvinculadas, para não virar estoque fantasma.", "E tem o que corre em paralelo, em qualquer fase. O colaborador avisa o olho: uma avaria, com a origem, se foi o montado, o volume ou a unidade, e o imediato do turno decide o destino. Um pedido de troca, uma divergência, um SOS, uma sugestão.", "O olho nunca dorme. Faz o inventário, inclusive dos vazios, e vigia temperatura, vencimento, tempo de frio, equipamentos e até ele mesmo.", "E conversa com a empresa: avisa compras antes de faltar, avisa vendas antes de vencer, para dar tempo da promoção, e entrega ao patrão o resultado financeiro do dia, com a origem de cada perda.", "Não tem conferente, fiscal ou coordenador. São multicolaboradores, todos no mesmo nível, e uma gerência. O erro não é para punir: é para corrigir e treinar. E quem faz bem feito é remunerado por isso.", "A função do Deméter é gerenciar, conferir e controlar. Decidir cabe ao dono. E o que ele deixar sem decisão, fica registrado.", "É possível? É. A tecnologia já existe. O caminho é um piloto: uma doca, uma câmara e o retorno dos vazios, medindo o antes e o depois.", "O Deméter. O olho que tudo vê. O produto segue, o erro para. Obrigado por ouvir."];
-  const ETAPA = ["descarga", "descarga", "descarga", "puxada", "descarga", "onda", "abastecimento", "separacao", "carregamento", "rota", "rota", "retorno", "colab", "vigia", "empresa", "empresa", "empresa", "empresa", "descarga"];  // qual etapa a página mostra em cada trecho do áudio
+  const RESUMO = ["Olá. Este é o Deméter, o olho que tudo vê.", "Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega. O produto segue, o erro para.", "Como ele vê? Etiquetas RFID nos montados e nos volumes, antenas nas portas e nas baias, câmeras, balanças e sensores. Ninguém bipa nada. O olho fala com cada colaborador pelo relógio no pulso, de mãos livres. E o dono acompanha o olho.", "Antes da descarga vem a puxada, e fora do galpão quem vigia é o olho do CRONOS, que passa tudo para o Deméter. Pelo rastreador da carreta, ele acompanha a espera na fábrica, a estrada, o descanso e a chegada ao CD, e a câmara de descarga já fica pronta. O motorista da puxada não bate ponto na empresa: o CRONOS controla a jornada e gera o diário de bordo eletrônico e a folha de ponto, como manda a lei do caminhoneiro.", "Na descarga, o olho vê a carreta chegar, confere a câmara vazia, faz o checklist e autoriza. Cada montado é lido na entrada, com lote e vencimento, e já ganha o seu lugar no estoque. E os vazios voltam para a fábrica na mesma carreta.", "Na onda, o olho acompanha as vendas hora a hora e monta as cargas até o ponto de corte.", "No abastecimento, ele chama quem está livre e diz de onde tirar e onde colocar. Na câmara fria, só entra com EPI, e o tempo de frio é contado. O montado é aberto e cada volume ganha a sua etiqueta: o controle desce de nível.", "Na separação, a luz guia o separador. O que precisa virar unidade já foi preparado em paralelo, e ninguém para. O queijo, que vem sem preço, é pesado peça a peça. Os secos vão para a rampa; os refrigerados esperam numa câmara.", "No carregamento, o olho identifica o caminhão, confere a rampa, faz o checklist de temperatura e autoriza. A antena da porta confere cada montado que sobe. Carga encerrada, veículo lacrado.", "Na rota, o olho do CRONOS sai do galpão junto com o caminhão e passa tudo para o Deméter. O GPS e as cercas eletrônicas mostram a saída do CD, o tempo em trânsito, a chegada e a espera em cada cliente.", "O motorista da rota bate o ponto na empresa, e na estrada o olho separa direção, espera e pausa. No fim do dia, o tempo perdido vira número: onde, quanto e com qual cliente.", "No retorno, o olho confirma o que voltou. O colaborador informa o motivo de cada devolução, e cada item vai para o seu destino. As etiquetas dos vazios são desvinculadas, para não virar estoque fantasma.", "E tem o que corre em paralelo, em qualquer fase. O colaborador avisa o olho: uma avaria, com a origem, se foi o montado, o volume ou a unidade, e o imediato do turno decide o destino. Um pedido de troca, uma divergência, um SOS, uma sugestão.", "O olho nunca dorme. Faz o inventário, inclusive dos vazios, e vigia temperatura, vencimento, tempo de frio, equipamentos e até ele mesmo.", "E conversa com a empresa: avisa compras antes de faltar, avisa vendas antes de vencer, para dar tempo da promoção, e entrega ao patrão o resultado financeiro do dia, com a origem de cada perda.", "Por trás do olho está uma IA generativa. Ela conversa com cada colaborador pelo relógio, explica o motivo de cada alerta, propõe a onda e o turno, lê notas e fotos, e responde às perguntas do patrão em português. Ela propõe; quem decide é sempre uma pessoa.", "Não tem conferente, fiscal ou coordenador. São multicolaboradores, todos no mesmo nível, e uma gerência. O erro não é para punir: é para corrigir e treinar. E quem faz bem feito é remunerado por isso.", "A função do Deméter é gerenciar, conferir e controlar. Decidir cabe ao dono. E o que ele deixar sem decisão, fica registrado.", "É possível? É. A tecnologia já existe. O caminho é um piloto: uma doca, uma câmara e o retorno dos vazios, medindo o antes e o depois.", "O Deméter. O olho que tudo vê. O produto segue, o erro para. Obrigado por ouvir."];
+  const ETAPA = ["descarga", "descarga", "descarga", "puxada", "descarga", "onda", "abastecimento", "separacao", "carregamento", "rota", "rota", "retorno", "colab", "vigia", "empresa", "empresa", "empresa", "empresa", "empresa", "descarga"];  // qual etapa a página mostra em cada trecho do áudio
   const $=id=>document.getElementById(id);
   const box=$("ouvir"); if (!box) return;
   const play=$("oPlay"), ic=$("oIc"), title=$("oTitle"), sub=$("oSub"), row=$("oRow"), bar=$("oBar"), now=$("oNow");
