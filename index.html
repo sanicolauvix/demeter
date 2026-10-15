@@ -394,6 +394,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .selos { display: flex; flex-wrap: wrap; gap: 6px; }
 .selos span { font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; color: #F3E9DA; border: 1px solid #45352A; border-radius: 999px; padding: 4px 10px; }
 .an-marca b { letter-spacing: 0; font-size: 22px; }
+.selos.claro span { color: var(--ink); border-color: var(--line); background: var(--surface); font-size: 13px; padding: 6px 12px; }
 /* Menu sempre na lateral; só some no celular */
 @media (max-width: 920px) { .shell { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; } .toc { display: block; } .mnav { display: none; } footer { display: none; } }
 @media (max-width: 640px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } .mnav { display: flex; } footer { display: flex; } }
@@ -496,11 +497,12 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="oque" hidden>
       <span class="eyebrow">Apresentação · 1 de 4</span>
       <h2>O que é o Deméter</h2>
-      <p class="lead">O Deméter vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Cada volume com dono, lugar e hora. Ele gerencia; quem decide é o dono.</p>
+      <p class="lead">O Deméter é fruto da imaginação de um desenvolvedor que não quer parar no tempo. É um projeto que junta tecnologias que já existem, estão disponíveis no mercado e têm um custo-benefício muito bom.</p>
+      <div class="selos claro"><span>RFID UHF</span><span>Câmeras com IA</span><span>Sensores IoT de temperatura</span><span>Balanças integradas</span><span>Relógios inteligentes</span><span>GPS e cercas eletrônicas</span><span>NF-e da SEFAZ</span><span>IA generativa</span></div>
       <div class="cards">
-        <div class="card"><h3>Vê</h3><p>Etiquetas, antenas, câmeras, sensores, balanças e GPS: tudo o que se move vira um evento com dono, lugar e hora.</p></div>
-        <div class="card"><h3>Entende</h3><p>Uma IA generativa transforma os eventos em conversa, alerta com motivo, proposta de trabalho e resumo para o dono.</p></div>
-        <div class="card dark"><h3>Para o erro</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O produto segue. O erro para.</p></div>
+        <div class="card"><h3>Nasceu numa distribuidora de alimentos</h3><p>Foi pensado no chão da operação: câmaras frias, puxada, onda, rota e retorno, com os problemas de verdade de quem vive isso todo dia.</p></div>
+        <div class="card"><h3>Serve para qualquer operação</h3><p>Atacado, indústria, farmacêutica, varejo, e-commerce, armazém geral: onde há volume que entra, anda e sai, o olho se adapta.</p></div>
+        <div class="card dark"><h3>Pronto para sair do papel</h3><p>O autor tem capacidade para desenvolver o Deméter e espera uma grande oportunidade para torná-lo realidade.</p></div>
       </div>
       <div class="stats">
         <div class="stat"><b>8</b><span>fases da operação contínua</span></div>
