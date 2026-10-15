@@ -264,6 +264,13 @@ footer a { color: var(--ink-2); }
 .ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
 @media print { .ouvir { display: none; } }
 
+.sub3 { font-size: clamp(22px, 2.6vw, 28px); margin-top: 16px; }
+.fases { display: flex; flex-wrap: wrap; gap: 8px; }
+.fase { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-family: var(--font-display); font-weight: 500; font-size: 16px; }
+.fase span { font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
+.fase:hover { border-color: var(--accent); }
+.fase.par { border-style: dashed; }
+
 .chat { display: flex; flex-direction: column; gap: 10px; max-width: 720px; }
 .chat p { padding: 12px 16px; border-radius: 16px; font-size: 16px; color: var(--ink); max-width: 85%; }
 .chat p b { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-3); font-weight: 500; margin-bottom: 4px; }
@@ -355,34 +362,16 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 <div class="shell">
   <nav class="toc" aria-label="Seções">
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
-    <a href="#inicio">Início</a>
+    <a href="#inicio">Home</a>
+    <a href="#apresentacao">Apresentação</a>
     <a class="out" href="olho/">O olho em ação →</a>
-    <div class="grp">Apresentação</div>
-    <a href="#oque">O que é o Deméter</a>
-    <a href="#problema">O problema</a>
-    <div class="grp">As fases</div>
-    <a href="#operacao">Operação contínua</a>
-    <a href="#paralelo">Em paralelo</a>
-    <a href="#cronos">Fora do galpão</a>
-    <div class="grp">Tecnologia</div>
-    <a href="#olho">Como o olho vê</a>
-    <a href="#ia">IA generativa</a>
-    <a href="#arquitetura">Arquitetura</a>
-    <div class="grp">Pessoas e números</div>
-    <a href="#pessoas">Pessoas</a>
-    <a href="#ganhos">O que o dono ganha</a>
-    <a href="#custos">Quanto custa</a>
-    <a href="#riscos">Riscos, sem rodeio</a>
-    <a href="#piloto">O piloto</a>
-    <div class="grp">Contato</div>
-    <a href="#contato">Quero o olho aqui</a>
   </nav>
 
   <main>
     <section class="home" id="inicio" aria-label="Início">
       <div class="home-top">
         <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
-        <nav aria-label="Atalhos"><a href="olho/">O olho em ação</a><a href="#operacao">Fases</a><a href="#ia">IA generativa</a><a href="#custos">Custos</a></nav>
+        <nav aria-label="Atalhos"><a href="#apresentacao">Apresentação</a><a href="olho/">O olho em ação</a></nav>
       </div>
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
@@ -399,7 +388,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <p class="an-lista">Em cada baia.<br>Em cada volume.<br>Em cada carga.<br>Em cada entrega.</p>
         <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div></div>
       </div>
-      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#ia">A IA generativa</a></div>
+      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#apresentacao">Apresentação</a></div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
   <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
@@ -566,81 +555,28 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       </div>
     </section>
 
-    <section id="oque">
+    <section id="apresentacao">
       <span class="eyebrow">Apresentação</span>
-      <h2>O que é o Deméter</h2>
-      <p class="lead">Um sistema que vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Ele gerencia, confere e controla; quem decide é o dono.</p>
+      <h2>Deméter, o olho que tudo vê</h2>
+      <p class="lead">O Deméter vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Cada volume com dono, lugar e hora. Ele gerencia; quem decide é o dono.</p>
+
+      <h3 class="sub3">As fases</h3>
+      <p class="prose">Uma operação contínua em oito fases, e três trilhas que correm em paralelo, em qualquer fase. Fora do galpão, na puxada e na rota, o CRONOS olha pelo Deméter. Toque numa fase para ver a tirinha.</p>
+      <div class="fases"><a class="fase" href="olho/#puxada"><span>01</span>Puxada</a><a class="fase" href="olho/#descarga"><span>02</span>Descarga</a><a class="fase" href="olho/#onda"><span>03</span>Onda</a><a class="fase" href="olho/#abastecimento"><span>04</span>Abastecimento</a><a class="fase" href="olho/#separacao"><span>05</span>Separação</a><a class="fase" href="olho/#carregamento"><span>06</span>Carregamento</a><a class="fase" href="olho/#rota"><span>07</span>Rota</a><a class="fase" href="olho/#retorno"><span>08</span>Retorno</a></div>
+      <div class="fases"><a class="fase par" href="olho/#colab">Colaborador → olho</a><a class="fase par" href="olho/#vigia">Olho sempre ligado</a><a class="fase par" href="olho/#empresa">Olho ↔ empresa</a></div>
+
+      <h3 class="sub3">A tecnologia</h3>
       <div class="cards">
-        <div class="card"><h3>Vê</h3><p>Etiquetas, antenas, câmeras, sensores, balanças e GPS: tudo o que se move vira um evento com dono, lugar e hora.</p></div>
-        <div class="card"><h3>Entende</h3><p>Uma IA generativa transforma os eventos em conversa, alerta com motivo, proposta de trabalho e resumo para o dono.</p></div>
-        <div class="card"><h3>Para o erro</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O produto segue. O erro para.</p></div>
-      </div>
-    </section>
-    <section id="problema">
-      <span class="eyebrow">O problema</span>
-      <h2>Hoje, a operação roda no olho e na memória</h2>
-      <p class="lead">Quem conhece uma distribuidora por dentro sabe: o erro não aparece onde nasce. Ele aparece no fim, quando já virou perda.</p>
-      <div class="cards c2">
-        <div class="card"><h3>Conferência no olho</h3><p>A conferência depende da atenção de quem está cansado. O erro passa, e só é visto no cliente.</p></div>
-        <div class="card"><h3>Perda sem origem</h3><p>Avaria, vencimento, falta. A perda aparece no balanço, mas ninguém sabe em qual etapa nasceu.</p></div>
-        <div class="card"><h3>Tempo invisível</h3><p>Fila na doca, espera no cliente, caminhão parado. Horas que custam caro e não aparecem em lugar nenhum.</p></div>
-        <div class="card"><h3>Jornada no papel</h3><p>Ponto, frio, pausas e jornada do motorista anotados à mão. É risco trabalhista acumulando em silêncio.</p></div>
-      </div>
-    </section>
-    <section id="operacao">
-      <span class="eyebrow">Como funciona</span>
-      <h2>Da fábrica à volta da rota, em oito etapas</h2>
-      <p class="lead">Cada etapa tem uma animação e uma tirinha que conta o processo. Toque para ver.</p>
-      <div class="cards">
-        <a class="card etapa-card" href="olho/#puxada"><span class="eyebrow">01</span><h3>Puxada</h3><p>A carreta vem da fábrica. Pelo rastreador, o CRONOS acompanha a estrada e a jornada, e a descarga começa pronta.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#descarga"><span class="eyebrow">02</span><h3>Descarga</h3><p>Câmara vazia, checklist, autorização. Cada montado entra com lote, vencimento e lugar no estoque.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#onda"><span class="eyebrow">03</span><h3>Onda</h3><p>O olho acompanha as vendas hora a hora e monta as cargas até o ponto de corte.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#abastecimento"><span class="eyebrow">04</span><h3>Abastecimento</h3><p>Chama quem está livre, diz de onde tirar e onde pôr. Na câmara fria, só com EPI e tempo de frio contado.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#separacao"><span class="eyebrow">05</span><h3>Separação</h3><p>A luz guia o separador. Unidades preparadas em paralelo; queijo pesado peça a peça.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#carregamento"><span class="eyebrow">06</span><h3>Carregamento</h3><p>Confere a rampa, faz o checklist de temperatura, autoriza. A antena da porta confere cada montado. Lacre.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#rota"><span class="eyebrow">07</span><h3>Rota</h3><p>GPS e cercas: saída, trânsito, chegada e espera em cada cliente. O tempo perdido vira número.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#retorno"><span class="eyebrow">08</span><h3>Retorno</h3><p>Confirma o que voltou, pede o motivo de cada devolução e manda cada item ao seu destino.</p><span class="ver">Ver a tirinha →</span></a>
-      </div>
-    </section>
-    <section id="paralelo">
-      <span class="eyebrow">Em paralelo</span>
-      <h2>O que acontece em qualquer etapa</h2>
-      <div class="cards">
-        <a class="card etapa-card" href="olho/#colab"><h3>Colaborador → olho</h3><p>Avaria com origem, alteração pontual, divergência, SOS e sugestão de melhoria, pelo relógio.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#vigia"><h3>Olho sempre ligado</h3><p>Inventário, vazios, temperatura, vencimento, tempo de frio, equipamentos e o próprio olho.</p><span class="ver">Ver a tirinha →</span></a>
-        <a class="card etapa-card" href="olho/#empresa"><h3>Olho ↔ empresa</h3><p>Avisa compras antes de faltar e vendas antes de vencer. Entrega ao patrão o resultado do dia.</p><span class="ver">Ver a tirinha →</span></a>
-      </div>
-    </section>
-    <section id="cronos">
-      <span class="eyebrow">Fora do galpão</span>
-      <h2>Na estrada, o CRONOS olha pelo Deméter</h2>
-      <div class="duo">
-        <svg viewBox="0 0 220 120" role="img" aria-label="O olho do Deméter com a marca do CRONOS na íris"><path d="M20.0 60 C 36.0 2.3999999999999986, 184.0 2.3999999999999986, 200.0 60 C 184.0 117.6, 36.0 117.6, 20.0 60 Z" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.5"/><circle cx="110" cy="60" r="35.2" fill="#FFFFFF" stroke="var(--accent)" stroke-width="1.5"/><path d="M93.2 78.6 A25.1 25.1 0 1 1 134.8 63.5" fill="none" stroke="#2F6496" stroke-width="6.5" stroke-linecap="round"/><path d="M135.1 60.9 A25.1 25.1 0 0 1 99.0 82.6" fill="none" stroke="#F0891F" stroke-width="6.5"/><path d="M89.8 74.2 L106.1 74.7 L91.9 90.4 Z" fill="#F0891F"/><path d="M110.0 46.2 V60.0 H122.5" fill="none" stroke="#2F6496" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="prose">
-          <p>Na puxada e na rota, quem vigia é o olho do CRONOS. Pelo rastreador e pelas cercas eletrônicas, ele vê a saída, o trânsito, a chegada, a espera para carregar e para descarregar, e passa tudo para o Deméter.</p>
-          <p>O motorista da rota bate o ponto na empresa. O da puxada não: para ele, o rastreador vira o ponto, e o CRONOS controla a jornada e gera o diário de bordo eletrônico e a folha de ponto, dentro da lei do caminhoneiro.</p>
-          <p>O CRONOS não é promessa: é o módulo de jornada que já roda há anos em transportadoras.</p>
-        </div>
-      </div>
-      <div class="cta"><a class="btn" href="olho/#puxada">Ver a puxada →</a><a class="btn" href="olho/#rota">Ver a rota →</a></div>
-    </section>
-    <section id="olho">
-      <span class="eyebrow">Tecnologia</span>
-      <h2>Como o olho vê: os sentidos do Deméter</h2>
-      <p class="lead">Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega, ao mesmo tempo, o tempo todo.</p>
-      <div class="cards">
-        <div class="card"><h3>Etiquetas RFID</h3><p>Nos montados e nos volumes. Antenas nas portas e nas baias leem sem ninguém bipar nada.</p></div>
-        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: quem entrou na câmara com EPI, o que saiu da doca, a avaria na hora.</p></div>
-        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de produto de peso variável.</p></div>
+        <div class="card"><h3>RFID UHF</h3><p>Etiquetas nos montados e nos volumes; antenas nas portas e nas baias. Ninguém bipa nada.</p></div>
+        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: EPI na câmara fria, o que saiu da doca, a avaria na hora.</p></div>
+        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de peso variável.</p></div>
         <div class="card"><h3>Relógio no pulso</h3><p>O olho conversa com cada colaborador. Mãos livres para o trabalho.</p></div>
-        <div class="card"><h3>GPS e CRONOS</h3><p>Fora do galpão, o rastreador e as cercas eletrônicas. O CRONOS cuida da jornada do motorista.</p></div>
-        <div class="card dark"><h3>Uma só verdade</h3><p>Tudo vira evento num único registro. Painéis, alertas e o resultado do patrão saem dele.</p></div>
+        <div class="card"><h3>GPS e CRONOS</h3><p>Rastreador e cercas eletrônicas na estrada; jornada, diário de bordo e folha de ponto.</p></div>
+        <div class="card"><h3>Registro único</h3><p>Cada evento no padrão GS1 (EPCIS). Painéis, alertas e o resultado do patrão saem dele.</p></div>
       </div>
-    </section>
-    <section id="ia">
-      <span class="eyebrow">Tecnologia · IA generativa</span>
-      <h2>Por trás do olho, uma IA generativa que conversa, explica e propõe</h2>
-      <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela não substitui o dono nem o colaborador: propõe, explica e registra. A decisão continua sendo de uma pessoa.</p>
+
+      <h3 class="sub3">A IA generativa</h3>
+      <p class="prose">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
       <div class="chat" aria-label="Exemplo de conversa pelo relógio">
         <p class="eu"><b>Colaborador · baia 12</b>Achei 30, o sistema diz 32.</p>
         <p class="ia"><b>Olho</b>Li a baia agora: 30 volumes. Registrei a falta de 2 do lote 2410 e avisei o imediato. A última leitura com 32 foi às 14:05, no abastecimento.</p>
@@ -656,86 +592,8 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card"><h3>Ensina, não pune</h3><p>O erro vira uma lição curta para quem errou e uma melhoria no processo. Quem faz bem feito aparece no registro.</p></div>
       </div>
       <div class="callout"><b>Feito com IA generativa</b><p>O próprio Deméter foi desenhado em parceria com IA generativa: o fluxo, as animações, as tirinhas e este site. A experiência de chão de quem conhece a operação, somada a uma IA como parceira de equipe.</p></div>
-    </section>
-    <section id="arquitetura">
-      <span class="eyebrow">Tecnologia · arquitetura</span>
-      <h2>Quatro camadas, um único registro</h2>
-      <div class="tbl"><table class="t">
-        <thead><tr><th>Camada</th><th>O que faz</th><th>Com o quê</th></tr></thead>
-        <tbody>
-          <tr><td>Sentidos</td><td>Veem tudo o que entra, anda e sai</td><td>RFID UHF, antenas nas portas e baias, câmeras com IA, sensores de temperatura, balanças, GPS</td></tr>
-          <tr><td>Registro</td><td>Guarda cada evento: o quê, onde, quando, quem</td><td>Registro único de eventos no padrão GS1 (EPCIS)</td></tr>
-          <tr><td>Cérebro</td><td>Entende, explica, propõe e resume</td><td>IA generativa com regras da operação; decisão sempre humana</td></tr>
-          <tr><td>Conversa</td><td>Leva a informação a quem precisa</td><td>Relógio no pulso, luz na baia, TVs do galpão, painel do patrão</td></tr>
-          <tr><td>Integrações</td><td>Liga o Deméter ao resto da empresa</td><td>NF-e da SEFAZ, ERP de compras e vendas, CRONOS na estrada</td></tr>
-        </tbody>
-      </table></div>
-    </section>
-    <section id="pessoas">
-      <span class="eyebrow">Pessoas</span>
-      <h2>Multicolaboradores, uma gerência e nenhuma prancheta</h2>
-      <div class="cards c2">
-        <div class="card"><h3>Todos no mesmo nível</h3><p>Sem conferente, fiscal ou coordenador. Colaboradores treinados para executar qualquer etapa; o olho distribui o trabalho.</p></div>
-        <div class="card"><h3>O erro não é para punir</h3><p>É para corrigir e treinar. O registro mostra onde o processo falhou, não quem culpar.</p></div>
-        <div class="card"><h3>Remunerado pelo bem feito</h3><p>Quem faz bem feito aparece no registro, e é reconhecido por isso.</p></div>
-        <div class="card dark"><h3>Decidir cabe ao dono</h3><p>O Deméter gerencia, confere e controla. O que o dono deixar sem decisão, fica registrado.</p></div>
-      </div>
-    </section>
-    <section id="ganhos">
-      <span class="eyebrow">O que o dono ganha</span>
-      <h2>O erro para antes de virar prejuízo</h2>
-      <div class="cards">
-        <div class="card"><span class="big">1% a 3%</span><h3>do faturamento</h3><p>é o que costuma virar perda num perecível. Cortar de 30% a 50% dessa perda já paga o sistema.</p></div>
-        <div class="card"><span class="big">na hora</span><h3>o erro aparece</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O erro morre onde nasce.</p></div>
-        <div class="card"><span class="big">7 dias</span><h3>antes de vencer</h3><p>Vendas é avisada a tempo da promoção. O que vence primeiro sai primeiro.</p></div>
-        <div class="card"><span class="big">6h40</span><h3>de espera somada</h3><p>Exemplo de um dia: o tempo perdido nos clientes vira número, com nome de quem segura o caminhão.</p></div>
-        <div class="card"><span class="big">0</span><h3>vazio esquecido</h3><p>Dolys e paletes no cliente, na rota e na câmara, contados. O patrimônio volta ou é cobrado.</p></div>
-        <div class="card dark"><span class="big">o dia</span><h3>na mão do patrão</h3><p>Faturamento, margem, perdas e custo por entrega, com a origem de cada perda.</p></div>
-      </div>
-      <p class="note">Números de exemplo e faixas típicas do setor. O ganho real se mede no piloto, comparando o antes e o depois.</p>
-    </section>
-    <section id="custos">
-      <span class="eyebrow">Quanto custa</span>
-      <h2>Começa pequeno, cresce com o resultado</h2>
-      <div class="tbl"><table class="t">
-        <thead><tr><th>O quê</th><th>Faixa</th></tr></thead>
-        <tbody>
-          <tr><td>Piloto · 1 doca, 1 câmara, retorno de vazios, relógios e painel</td><td>R$ 150 a 300 mil</td></tr>
-          <tr><td>Implantação completa · portais, antenas, câmeras, sensores, rede</td><td>R$ 0,8 a 1,4 milhão</td></tr>
-          <tr><td>Custo mensal · etiquetas, software, manutenção, suporte</td><td>R$ 20 a 35 mil</td></tr>
-          <tr class="total"><td>Retorno estimado</td><td>8 a 24 meses</td></tr>
-        </tbody>
-      </table></div>
-      <p class="note">Ordem de grandeza para uma distribuidora de porte médio (cerca de 18 caminhões). Precisa de cotação e dos números reais da operação.</p>
-    </section>
-    <section id="riscos">
-      <span class="eyebrow">Sem rodeio</span>
-      <h2>Os riscos, e como cada um é tratado</h2>
-      <ul class="honest">
-        <li><b>RFID perto de líquido e metal</b><span>Iogurte, leite e estruturas metálicas derrubam a leitura.</span><em>Etiqueta certa por produto, leitura de 97% a 99,5% e conciliação automática.</em></li>
-        <li><b>Frio de −18 °C</b><span>Gelo e cola falham.</span><em>Etiquetas próprias para congelado, testadas no piloto.</em></li>
-        <li><b>Relógio com luva</b><span>O toque não funciona e a bateria cai no frio.</span><em>Botão físico e voz.</em></li>
-        <li><b>Sensação de vigilância</b><span>Câmera e registro assustam.</span><em>Regra escrita: o erro não é para punir. Dados tratados pela LGPD.</em></li>
-        <li><b>Antena em cada baia</b><span>É a parte mais cara.</span><em>Começar com leitor de mão no inventário e crescer com o resultado.</em></li>
-        <li><b>Mudança de cultura</b><span>Sem o dono comprar a ideia, nada anda.</span><em>Piloto curto, com números do antes e do depois.</em></li>
-      </ul>
-    </section>
-    <section id="piloto">
-      <span class="eyebrow">O caminho</span>
-      <h2>Um piloto de 90 dias, medindo o antes e o depois</h2>
-      <ol class="steps">
-        <li><span><b>Medir antes.</b> Perdas, erros de conferência, espera em clientes e horas extras de hoje.</span></li>
-        <li><span><b>Começar pelo retorno dos vazios</b>, uma doca e uma câmara: é onde o ganho aparece mais rápido.</span></li>
-        <li><span><b>Relógios para o turno</b> e o primeiro painel na TV do galpão.</span></li>
-        <li><span><b>CRONOS na puxada</b>: diário de bordo e folha de ponto desde o primeiro dia.</span></li>
-        <li><span><b>Comparar e decidir.</b> Com os números na mão, o dono decide se cresce.</span></li>
-      </ol>
-    </section>
-    <section id="contato">
-      <span class="eyebrow">Contato</span>
-      <h2>Quer o olho na sua operação?</h2>
-      <div class="callout"><b>Próximo passo</b><p>Veja o olho em ação, etapa por etapa, e fale com a gente para montar o piloto na sua distribuidora.</p></div>
-      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="https://www.linkedin.com/in/sebastiao-alves-nicolau-421ab71bb" target="_blank" rel="noopener">Fale pelo LinkedIn</a></div>
+
+      <p class="rule">O produto segue. O erro para.</p>
     </section>
   </main>
 </div>
