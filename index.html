@@ -395,6 +395,20 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .selos span { font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; color: #F3E9DA; border: 1px solid #45352A; border-radius: 999px; padding: 4px 10px; }
 .an-marca b { letter-spacing: 0; font-size: 22px; }
 .selos.claro span { color: var(--ink); border-color: var(--line); background: var(--surface); font-size: 13px; padding: 6px 12px; }
+
+.bomba { background: #1A120D; color: #F3E9DA; border-radius: var(--radius); padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+.bomba-cab b { display: block; font-family: var(--font-display); font-size: 21px; color: #F08A78; margin-bottom: 4px; }
+.bomba-cab span { color: #D2C1AA; font-size: 15px; }
+.pavio { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.pavio li { border-top: 3px solid #F08A78; padding-top: 8px; display: flex; flex-direction: column; gap: 2px; }
+.pavio li:nth-child(2) { border-color: #E2B44F; } .pavio li:nth-child(3) { border-color: #E3A15E; } .pavio li:nth-child(4) { border-color: #C9B8A2; }
+.pavio em { font-style: normal; font-family: var(--font-display); font-weight: 600; font-size: 22px; }
+.pavio span { font-size: 13.5px; color: #C9B8A2; line-height: 1.4; }
+.estouro { font-size: 15px; color: #D2C1AA; }
+.estouro b { color: #F3E9DA; }
+.bomba .note { color: #A8957E; }
+.callout.tese { max-width: none; padding: 14px 18px; }
+.bomba { padding: 16px 20px; gap: 10px; }
 /* Menu sempre na lateral; só some no celular */
 @media (max-width: 920px) { .shell { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; } .toc { display: block; } .mnav { display: none; } footer { display: none; } }
 @media (max-width: 640px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } .mnav { display: flex; } footer { display: flex; } }
@@ -516,14 +530,24 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="nasceu" data-titulo="Como nasceu" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>Como nasceu</h2>
-      <p class="lead">O Deméter nasceu do chão. Um desenvolvedor com 40 anos de logística, automação e sistemas passou algumas semanas no posto mais baixo de uma distribuidora de alimentos, como diarista, e anotou o que viu num diário: o <em>Diário de um Fantasma</em>.</p>
-      <div class="cards">
+      <p class="lead">O Deméter nasceu do chão. Um desenvolvedor com 40 anos de logística, automação e sistemas passou algumas semanas no posto mais baixo de uma distribuidora de alimentos, como diarista, e anotou o que viu num diário, sem nomes, só padrões: o <em>Diário de um Fantasma</em>.</p>
+      <div class="cards mini">
         <div class="card"><span class="eyebrow">01</span><h3>Ninguém sabe o que acontece no chão</h3><p>Separação na prancheta, erro sem autor ("de quem é essa letra?"), conferente que corrige em silêncio e caminhão que volta com devolução. Lá em cima, cada um sabe só o que contam.</p></div>
         <div class="card"><span class="eyebrow">02</span><h3>A perda que ninguém mede</h3><p>Avaria esquecida no corredor, refrigerado no lixo, vencimento controlado no olho, carga duplicada. Numa operação de R$ 500 mil por dia, cada 1% que escapa é R$ 130 mil por mês.</p></div>
         <div class="card"><span class="eyebrow">03</span><h3>As regras que ninguém vê</h3><p>Admissão sem registro, pausa no frio, EPI, exame, treinamento. Cada item esquecido hoje é multa, ação ou fiscalização amanhã, e quase sempre também um risco para quem trabalha.</p></div>
       </div>
-      <div class="callout"><b>A tese do Fantasma</b><p>Estavam trocando a caneta pelo bipe, e os erros continuariam. O problema não era a ferramenta: eram pessoas sem treinamento, sem retorno sobre o próprio trabalho e sem dono do erro, num método que não registra nada. O Deméter nasceu para mudar o método, não só a ferramenta.</p></div>
-      <p class="note">O diário não traz nomes de pessoas nem de empresas: mostra padrões, não aponta culpados.</p>
+      <div class="bomba">
+        <div class="bomba-cab"><b>A bomba-relógio do diarista fantasma</b><span>Chamado de diarista, mas trabalha toda semana, com horário e chefe: pela CLT (art. 3º), é empregado. Cada fantasma sem registro vai somando, sem barulho.</span></div>
+        <ol class="pavio">
+          <li><em>R$ 3.000</em><span>de multa por pessoa sem registro (CLT, art. 47), em dobro na reincidência</span></li>
+          <li><em>+ atrasados</em><span>FGTS, INSS, férias e 13º de cada um, com juros e multa</span></li>
+          <li><em>+ hora extra</em><span>pausa no frio não concedida vira hora extra (CLT, art. 253)</span></li>
+          <li><em>+ autuações</em><span>exame, EPI e treinamento: uma multa por norma descumprida</span></li>
+        </ol>
+        <p class="estouro"><b>O pavio é longo:</b> cada pessoa pode cobrar até 2 anos depois de sair, olhando 5 anos para trás, e a fiscalização também volta 5 anos. Vinte fantasmas num ano já são R$ 60 mil só de multa, antes de todo o resto. <b>O Deméter registra quem entrou, onde e por quanto tempo: o fantasma deixa de existir.</b></p>
+        <p class="note">Valores de referência; o caso concreto deve ser visto por um advogado trabalhista.</p>
+      </div>
+      <div class="callout tese"><b>A tese do Fantasma</b><p>Estavam trocando a caneta pelo bipe. O problema não era a ferramenta, era o método: pessoas sem treinamento, sem retorno e sem dono do erro. O Deméter nasceu para mudar o método.</p></div>
       <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
