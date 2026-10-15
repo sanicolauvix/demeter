@@ -1,0 +1,1946 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="../assets/demeter_icone_192.png">
+<title>Deméter</title>
+<meta name="description" content="Deméter: ecossistema de logística de alimentos com RFID, câmeras, relógio de pulso e IA, do recebimento ao caminhão.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: índice fixo à esquerda no desktop, conteúdo em coluna de leitura; a abertura é um placar de doca. */
+:root {
+  --bg: #F7F1E6;
+  --surface: #FFFBF4;
+  --sunk: #EFE4D2;
+  --line: #E2D6C3;
+  --ink: #2B1D14;
+  --ink-2: #5C4A3B;
+  --ink-3: #7A6A5A;
+  --accent: #C8742B;
+  --accent-ink: #A4561B;
+  --board: #2B1D14;
+  --board-ink: #F7F1E6;
+  --board-dim: #C9B8A2;
+  --ok: #2F7A4D;
+  --warn: #9A6A00;
+  --bad: #B23A2A;
+  --info: #2F5F8A;
+  --font-display: 'Rubik', 'Trebuchet MS', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', Consolas, 'Courier New', monospace;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1E1510; --surface: #2A1E17; --sunk: #33251C; --line: #45352A;
+    --ink: #F3E9DA; --ink-2: #D2C1AA; --ink-3: #A8957E;
+    --accent: #E3A15E; --accent-ink: #E8AE70;
+    --board: #120C08; --board-ink: #F7F1E6; --board-dim: #A8957E;
+    --ok: #6CC08E; --warn: #E2B44F; --bad: #F08A78; --info: #8DB8E0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1E1510; --surface: #2A1E17; --sunk: #33251C; --line: #45352A;
+  --ink: #F3E9DA; --ink-2: #D2C1AA; --ink-3: #A8957E;
+  --accent: #E3A15E; --accent-ink: #E8AE70;
+  --board: #120C08; --board-ink: #F7F1E6; --board-dim: #A8957E;
+  --ok: #6CC08E; --warn: #E2B44F; --bad: #F08A78; --info: #8DB8E0;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 20px; padding-block: 0 64px; }
+a { color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; }
+h3 { font-size: 21px; font-weight: 600; }
+p { margin: 0; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+.state { font-family: var(--font-mono); font-size: 13px; background: var(--sunk); color: var(--ink); padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+
+.shell { max-width: 1180px; margin-inline: auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; }
+@media (max-width: 920px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } }
+
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 32px; max-height: calc(100vh - 48px); overflow-y: auto; }
+.toc a { display: block; text-decoration: none; color: var(--ink-3); font-size: 14px; padding: 5px 0 5px 12px; border-left: 2px solid var(--line); }
+.toc a:hover { color: var(--ink); }
+.toc a.on { color: var(--ink); border-left-color: var(--accent); font-weight: 500; }
+.toc .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: var(--font-display); font-weight: 600; letter-spacing: 3px; font-size: 15px; color: var(--ink); }
+.toc .brand svg { width: 32px; height: 32px; }
+.toc .grp { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-3); margin: 18px 0 6px; }
+
+main { min-width: 0; display: flex; flex-direction: column; gap: 88px; padding-top: 32px; }
+section { display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
+.eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-ink); }
+.lead { font-size: 19px; color: var(--ink-2); max-width: 64ch; }
+.prose { max-width: 66ch; color: var(--ink-2); display: flex; flex-direction: column; gap: 12px; }
+
+/* Abertura */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: center; }
+@media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+.hero-mark { display: flex; align-items: center; gap: 16px; }
+.hero-mark svg { width: 76px; height: 76px; flex: none; }
+.hero-mark span { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 6vw, 64px); letter-spacing: 6px; }
+.hero h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 500; margin-top: 0; }
+.hero h2 em { font-style: normal; color: var(--accent-ink); }
+.hero .lead { margin-top: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tags span { font-size: 13px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); }
+
+.board { background: var(--board); color: var(--board-ink); border-radius: var(--radius); padding: 20px; font-family: var(--font-mono); min-width: 0; }
+.board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.board-head b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 1px; }
+.board-head span { color: var(--board-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+.board-scroll { overflow-x: auto; }
+.board table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 440px; }
+.board th { text-align: left; color: var(--board-dim); font-weight: 400; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 8px; }
+.board td { padding: 9px 8px; border-top: 1px solid rgba(247, 241, 230, 0.12); white-space: nowrap; }
+.flap { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.flap.ok { background: #2F7A4D; color: #F2FBF5; }
+.flap.go { background: #2F5F8A; color: #EEF5FC; }
+.flap.wait { background: #9A6A00; color: #FFF7E5; }
+.flap.bad { background: #B23A2A; color: #FFF0ED; }
+.flap.dim { color: var(--board-dim); padding-left: 0; }
+@keyframes flip { 0% { transform: rotateX(90deg); opacity: 0; } 100% { transform: rotateX(0); opacity: 1; } }
+.flap.flipping { animation: flip 0.45s ease-out; }
+.board-note { color: var(--board-dim); font-size: 12px; margin-top: 10px; font-family: var(--font-body); }
+
+/* Blocos */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card p { color: var(--ink-2); font-size: 16px; }
+.card.dark { background: var(--board); border-color: var(--board); }
+.card.dark h3 { color: var(--board-ink); }
+.card.dark p { color: var(--board-dim); }
+.big { font-family: var(--font-display); font-size: 44px; font-weight: 600; color: var(--accent-ink); line-height: 1; }
+.card.dark .big { color: #E3A15E; }
+
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table.t { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 1px; padding: 12px 16px; background: var(--sunk); }
+table.t td { padding: 11px 16px; border-top: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+table.t td:first-child { color: var(--ink); font-weight: 500; }
+table.t tr.total td { font-weight: 600; color: var(--ink); background: var(--sunk); }
+
+ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; color: var(--ink-2); }
+ol.steps li::before { content: counter(s); font-family: var(--font-mono); font-size: 13px; color: var(--accent-ink); border: 1px solid var(--line); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; background: var(--surface); }
+ol.steps li b { color: var(--ink); font-weight: 600; }
+
+.callout { border: 1px solid var(--accent); background: var(--surface); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.callout b { font-family: var(--font-mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-ink); }
+.callout p { color: var(--ink-2); }
+.rule { font-family: var(--font-display); font-size: clamp(22px, 3vw, 28px); font-weight: 500; border-left: 4px solid var(--accent); padding: 4px 0 4px 18px; max-width: 40ch; }
+
+.flow { overflow-x: auto; }
+.flow svg { width: 100%; min-width: 640px; height: auto; display: block; }
+.flow a { cursor: pointer; }
+.flow a:hover rect { stroke: var(--accent); }
+
+.states { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.states .arrow { color: var(--ink-3); }
+
+/* Calculadoras */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+@media (max-width: 760px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.inputs { display: flex; flex-direction: column; gap: 14px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr) 96px; align-items: center; gap: 12px; }
+.field label { font-size: 15px; color: var(--ink-2); }
+.field input, .field select { width: 100%; font: inherit; font-size: 15px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-variant-numeric: tabular-nums; }
+.field select { padding-right: 4px; }
+.out { display: flex; flex-direction: column; gap: 12px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.kpi { background: var(--sunk); border-radius: 10px; padding: 14px; }
+.kpi span { display: block; font-size: 13px; color: var(--ink-3); }
+.kpi b { font-family: var(--font-display); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.out .t td, .out .t th { padding: 8px 12px; font-size: 14px; }
+.note { font-size: 13px; color: var(--ink-3); }
+
+.check { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.check > li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.check ul { padding-left: 18px; margin: 0; color: var(--ink-2); font-size: 15px; display: flex; flex-direction: column; gap: 4px; }
+
+/* Painéis */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--board); border-color: var(--board); color: var(--board-ink); }
+.panel-desc { color: var(--ink-2); font-size: 15px; max-width: 70ch; }
+.board .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.board .tile { background: rgba(247, 241, 230, 0.07); border-radius: 8px; padding: 10px 12px; }
+.board .tile span { display: block; color: var(--board-dim); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.board .tile b { font-family: var(--font-display); font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.board .tile b.alerta { color: #F08A78; }
+.bar { height: 8px; background: rgba(247, 241, 230, 0.14); border-radius: 4px; overflow: hidden; min-width: 80px; }
+.bar i { display: block; height: 100%; background: #E3A15E; border-radius: 4px; transition: width 0.6s ease; }
+.bar i.ok { background: #6CC08E; }
+.bar i.bad { background: #F08A78; }
+.board .sub { color: var(--board-dim); font-size: 12px; }
+
+/* Simulador do turno */
+.sim { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+@media (max-width: 860px) { .sim { grid-template-columns: minmax(0, 1fr); } }
+.ops { display: flex; flex-direction: column; gap: 8px; }
+.op-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px 32px; gap: 8px; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.op-row label { font-size: 14px; color: var(--ink); line-height: 1.3; }
+.op-row label small { display: block; color: var(--ink-3); font-size: 12px; }
+.op-row input { width: 100%; font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font-variant-numeric: tabular-nums; }
+.op-row button, .add-ops button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 8px; }
+.op-row button { width: 32px; height: 32px; font-size: 16px; line-height: 1; }
+.add-ops { display: flex; flex-wrap: wrap; gap: 6px; }
+.add-ops button { font-size: 13px; padding: 5px 10px; }
+.gantt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.g-scroll { overflow-x: auto; }
+.g-inner { min-width: 520px; display: flex; flex-direction: column; gap: 6px; }
+.g-axis, .g-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px; align-items: center; }
+.g-axis .ticks { position: relative; height: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.g-axis .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.g-row .nm { font-size: 13px; color: var(--ink); line-height: 1.25; }
+.g-row .nm small { display: block; color: var(--ink-3); font-family: var(--font-mono); font-size: 11px; }
+.track { position: relative; height: 26px; background: var(--sunk); border-radius: 6px; }
+.track .seg { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; background: var(--accent); }
+.track .seg.conf { background: var(--info); }
+.track .fim { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--bad); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.veredito { border-radius: 10px; padding: 12px 14px; font-size: 15px; border: 1px solid var(--line); }
+.veredito.ok { border-color: var(--ok); color: var(--ink); }
+.veredito.estoura { border-color: var(--bad); color: var(--ink); }
+.veredito b { font-family: var(--font-display); }
+
+/* Abertura de impacto */
+.home { padding-block: 32px 8px; scroll-margin-top: 0; display: flex; flex-direction: column; gap: 28px; }
+.home-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.home-top .hero-mark svg { width: 48px; height: 48px; }
+.home-top .hero-mark span { font-size: 26px; letter-spacing: 5px; }
+@media (min-width: 921px) { .home-top { display: none; } }
+.home-top nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.home-top nav a { font-size: 14px; text-decoration: none; color: var(--ink-2); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
+.home-top nav a:hover { color: var(--ink); border-color: var(--accent); }
+.home h1 { font-size: clamp(36px, 6.4vw, 78px); font-weight: 600; letter-spacing: -1px; line-height: 1.02; max-width: 15ch; }
+.home h1 em { font-style: normal; color: var(--accent-ink); }
+.home .lead { font-size: clamp(17px, 2vw, 21px); }
+.scene { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 8px; overflow-x: auto; }
+.scene svg { display: block; width: 100%; min-width: 680px; height: auto; }
+.scene-hint { display: none; font: 500 12px/1 var(--font-mono); color: var(--accent-ink); margin: 8px 4px 0; }
+@media (max-width: 720px) { .scene-hint { display: block; } }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.stat { border-top: 2px solid var(--accent); padding-top: 10px; }
+.stat b { display: block; font-family: var(--font-display); font-size: clamp(30px, 4vw, 44px); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.05; }
+.stat span { font-size: 14px; color: var(--ink-2); }
+@keyframes pulso { 0% { r: 10; opacity: 0.9; } 100% { r: 34; opacity: 0; } }
+.nfc-pulse { animation: pulso 1.8s ease-out infinite; }
+@keyframes pisca { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.pisca { animation: pisca 1.6s ease-in-out infinite; }
+
+footer { max-width: 1180px; margin: 96px auto 0; border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--ink-3); font-size: 14px; }
+footer a { color: var(--ink-2); }
+.theme-btn { font: inherit; font-size: 13px; background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+
+/* Ouça antes: resumo em áudio pela voz do aparelho */
+.ouvir { margin: 18px 0 8px; max-width: 64ch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+.ouvir[hidden], .ouvir [hidden] { display: none !important; }
+.ouvir .obtn { width: 100%; display: flex; align-items: center; gap: 12px; background: var(--board); color: var(--board-ink); border: 0; border-radius: 10px; padding: 12px 14px; text-align: left; cursor: pointer; font: inherit; min-height: 56px; }
+.ouvir .oic { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--board); display: grid; place-items: center; font-size: 1.05rem; }
+.ouvir .obtn b { display: block; font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; }
+.ouvir .obtn small { color: var(--board-dim); font-size: .88rem; }
+.ouvir .orow { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.ouvir .obar { flex: 1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ouvir .obar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.ouvir .ochip { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; font: inherit; font-size: .85rem; min-height: 36px; }
+.ouvir .onow { margin: 10px 0 0; font-size: 1rem; color: var(--ink); min-height: 2.9em; }
+.ouvir details { margin-top: 10px; }
+.ouvir summary { cursor: pointer; color: var(--ink-3); font-size: .9rem; }
+.ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
+@media print { .ouvir { display: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 512 512">
+      <g fill="var(--ink)" transform="translate(256 262) scale(0.8) translate(-256 -262)">
+        <g transform="translate(256 388)"><path d="M-5 -240C-37.5 -210 -50 -165 -50 -125C-50 -75 -27.5 -40 -5 -30Z M5 -240C37.5 -210 50 -165 50 -125C50 -75 27.5 -40 5 -30Z M-5 -24L5 -24L3 0L-3 0Z"/></g>
+        <g transform="translate(206 382) rotate(-28)"><path d="M-5 -190C-33 -168 -44 -132 -44 -100C-44 -60 -24.2 -34 -5 -24Z M5 -190C33 -168 44 -132 44 -100C44 -60 24.2 -34 5 -24Z M-5 -18L5 -18L3 0L-3 0Z"/></g>
+        <g transform="translate(306 382) rotate(28)"><path d="M-5 -190C-33 -168 -44 -132 -44 -100C-44 -60 -24.2 -34 -5 -24Z M5 -190C33 -168 44 -132 44 -100C44 -60 24.2 -34 5 -24Z M-5 -18L5 -18L3 0L-3 0Z"/></g>
+      </g>
+      <path d="M429.1 164A196 196 0 1 0 410.5 376.7" fill="none" stroke="#C8742B" stroke-width="38"/>
+      <polygon points="448.6,327.8 443,409.7 370.5,353.1" fill="#C8742B"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+
+<div class="shell">
+  <nav class="toc" aria-label="Seções">
+    <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
+    <a href="#inicio">Início</a>
+    <a href="#simulador">Simulador do turno</a>
+    <div class="grp">Ideia</div>
+    <a href="#origem">Como nasceu</a>
+    <a href="#problema">O problema</a>
+    <a href="#principios">Princípios</a>
+    <a href="#fluxo">Fluxo ponta a ponta</a>
+    <a href="#paineis">Painéis</a>
+    <a href="#torre">Torre, palete e etiqueta</a>
+    <a href="#argos">O olho que tudo vê</a>
+    <a href="#transbordo">Transbordo</a>
+    <a href="#pulso">Mãos livres</a>
+    <div class="grp">Operação</div>
+    <a href="#docas">Docas e pátio</a>
+    <a href="#recebimento">Recebimento</a>
+    <a href="#paletizados">Paletizados</a>
+    <a href="#camaras">Controle do frio</a>
+    <a href="#estoque">Estoque e inventário</a>
+    <a href="#onda">Onda</a>
+    <a href="#linha">Linha de dollys e paletes</a>
+    <a href="#expedicao">Expedição</a>
+    <a href="#retorno">Retorno de rota</a>
+    <a href="#avarias">Avarias</a>
+    <a href="#pessoas">Turnos e pessoas</a>
+    <a href="#acesso">Exceções e autorização</a>
+    <div class="grp">Tecnologia</div>
+    <a href="#cenarios">Cenários</a>
+    <a href="#integracao">Cadastros e integração</a>
+    <a href="#cameras">Vídeo 360° com IA</a>
+    <a href="#papel">Papel zero</a>
+    <a href="#hardware">Hardware e custos</a>
+    <a href="#desenvolvimento">Desenvolvimento</a>
+    <a href="#necessario">O que é necessário</a>
+  </nav>
+
+  <main>
+    <section class="home" id="inicio" aria-label="Início">
+      <div class="home-top">
+        <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
+        <nav aria-label="Atalhos">
+          <a href="#fluxo">Fluxo</a><a href="#paineis">Painéis</a><a href="#simulador">Simulador</a><a href="#origem">Como nasceu</a>
+        </nav>
+      </div>
+      <h1>Tudo que sai, <em>volta certo</em>.</h1>
+      <p class="lead">Um ecossistema de logística de alimentos: da carreta da fábrica ao caminhão de entrega, cada torre, cesta e palete com dono, lugar e hora.</p>
+      <p class="rule">O produto segue. O erro para.</p>
+      <p class="lead"><a href="../olho/">Veja o olho em ação: da descarga ao retorno, em animações e tirinhas →</a></p>
+      <div class="ouvir" id="ouvir">
+        <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ler? Ouça antes</b><small id="oSub">O Deméter em uns 2 minutos</small></span></button>
+        <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
+        <p class="onow" id="oNow" hidden aria-live="polite"></p>
+        <details id="oDet"><summary>Prefere ler? Veja o resumo em texto</summary><div id="oText"></div></details>
+      </div>
+
+      <div class="scene" aria-label="Animação da operação: dollys com cestas e paletes seguem caminhos próprios e se encontram no carregamento">
+        <svg id="cena" viewBox="0 0 1100 620" role="img" aria-label="Cena animada: o olho que tudo vê, no alto, orienta descarga, abastecimento, separação, programação, inventário e colaboradores, enquanto dollys e paletizados seguem até o mesmo carregamento">
+          <defs>
+            <path id="rota-a" d="M150 228 C176 228 168 176 196 176 H812 C846 176 846 262 880 262 H904"/>
+            <path id="rota-b" d="M150 248 C176 248 168 386 196 386 H812 C846 386 846 262 880 262 H904"/>
+            <symbol id="ico-torre" viewBox="0 0 28 44">
+              <rect x="2" y="2" width="24" height="34" rx="2" fill="var(--accent)"/>
+              <g stroke="var(--surface)" stroke-width="1.5"><line x1="2" y1="10" x2="26" y2="10"/><line x1="2" y1="18" x2="26" y2="18"/><line x1="2" y1="26" x2="26" y2="26"/><line x1="14" y1="2" x2="14" y2="36"/></g>
+              <rect x="0" y="36" width="28" height="4" rx="1" fill="var(--ink)"/>
+              <circle cx="5" cy="42" r="2" fill="var(--ink)"/><circle cx="23" cy="42" r="2" fill="var(--ink)"/>
+            </symbol>
+            <symbol id="ico-palete" viewBox="0 0 40 44">
+              <rect x="3" y="4" width="16" height="15" rx="1.5" fill="var(--warn)"/><rect x="21" y="4" width="16" height="15" rx="1.5" fill="var(--warn)"/>
+              <rect x="3" y="20" width="16" height="15" rx="1.5" fill="var(--warn)"/><rect x="21" y="20" width="16" height="15" rx="1.5" fill="var(--warn)"/>
+              <rect x="1.5" y="2.5" width="37" height="34" rx="3" fill="var(--info)" fill-opacity="0.12" stroke="var(--info)" stroke-width="1.2" stroke-dasharray="3 2"/>
+              <rect x="0" y="37" width="40" height="3" fill="var(--ink-3)"/>
+              <rect x="2" y="40" width="6" height="4" fill="var(--ink-3)"/><rect x="17" y="40" width="6" height="4" fill="var(--ink-3)"/><rect x="32" y="40" width="6" height="4" fill="var(--ink-3)"/>
+            </symbol>
+          </defs>
+          <rect x="0" y="0" width="1100" height="620" fill="var(--surface)"/>
+          <!-- O olho que tudo vê: olha cada etapa e a acende, uma de cada vez -->
+          <g aria-hidden="true">
+            <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 5" stroke-opacity="0.55">
+              <line x1="550" y1="88" x2="150" y2="112"/>
+              <line x1="550" y1="88" x2="310" y2="112"/>
+              <line x1="550" y1="88" x2="470" y2="112"/>
+              <line x1="550" y1="88" x2="630" y2="112"/>
+              <line x1="550" y1="88" x2="790" y2="112"/>
+              <line x1="550" y1="88" x2="950" y2="112"/>
+            </g>
+            <path d="M462 60 C 494 18, 606 18, 638 60 C 606 102, 494 102, 462 60 Z" fill="var(--bg)" stroke="var(--accent)" stroke-width="3"/>
+            <g>
+              <circle cx="550" cy="60" r="20" fill="none" stroke="var(--accent)" stroke-width="3"/>
+              <circle cx="550" cy="60" r="9" fill="var(--accent)"/>
+              <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.1667;0.3333;0.5;0.6667;0.8333;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" values="-30 8;-18 10;-6 11;6 11;18 10;30 8;-30 8"/>
+            </g>
+            <!-- O dono acompanha: a programação é do olho; o dono só vigia -->
+            <g>
+              <rect x="372" y="14" width="76" height="86" rx="12" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <circle cx="410" cy="34" r="11" fill="var(--sunk)" stroke="var(--ink)" stroke-width="1.5"/>
+              <path d="M396 48 H424 Q430 48 430 54 V84 H390 V54 Q390 48 396 48 Z" fill="var(--board)"/>
+              <path d="M407 49 L413 49 L415 70 L410 76 L405 70 Z" fill="var(--accent)"/>
+              <rect x="420" y="62" width="20" height="14" rx="2" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.2"/>
+              <path d="M424 72 L428 68 L431 70 L436 65" fill="none" stroke="var(--ok)" stroke-width="1.5"/>
+              <line x1="440" y1="56" x2="470" y2="58" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4" stroke-opacity="0.7"/>
+              <text x="362" y="44" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)">O DONO</text>
+              <text x="362" y="62" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">acompanha a programação</text>
+              <text x="362" y="78" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">que o olho faz</text>
+            </g>
+            <text x="660" y="52" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)">O OLHO QUE TUDO VÊ</text>
+            <text x="660" y="70" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">vê, confere e orienta cada etapa</text>
+            <g>
+              <rect x="82" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="82" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="150" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarga</text>
+            </g>
+            <g>
+              <rect x="242" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="242" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="2s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="310" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Abastecimento</text>
+            </g>
+            <g>
+              <rect x="402" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="402" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="4s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="470" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Separação</text>
+            </g>
+            <g>
+              <rect x="562" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="562" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="630" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Programação</text>
+            </g>
+            <g>
+              <rect x="722" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="722" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="8s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="790" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Inventário</text>
+            </g>
+            <g>
+              <rect x="882" y="112" width="136" height="32" rx="16" fill="var(--bg)" stroke="var(--line)"/>
+              <rect x="882" y="112" width="136" height="32" rx="16" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.5" opacity="0"><animate attributeName="opacity" dur="12s" begin="10s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.14;0.18;1"/></rect>
+              <text x="950" y="132" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Colaboradores</text>
+            </g>
+          </g>
+          <g transform="translate(0 150)">
+          <text x="550" y="34" text-anchor="middle" font-family="Rubik, sans-serif" font-size="16" fill="var(--ink-3)">A embalagem define o caminho; o carregamento é um só</text>
+
+          <!-- Faixa A: dolly e cestas -->
+          <g font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)"><text x="196" y="62">DOLLY E CESTAS</text><text x="196" y="272">PALETIZADOS</text></g>
+          <line x1="180" y1="176" x2="830" y2="176" stroke="var(--line)" stroke-width="2"/>
+          <line x1="180" y1="386" x2="830" y2="386" stroke="var(--line)" stroke-width="2"/>
+          <g>
+            <rect x="196" y="72" width="140" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="266" y="96" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarregamento</text>
+            <text x="266" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">doly nasce na doca</text>
+            <circle cx="336" cy="72" r="5" fill="var(--accent)"/><circle cx="336" cy="72" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
+          </g>
+          <g>
+            <rect x="500" y="72" width="140" height="104" rx="8" fill="var(--info)" fill-opacity="0.10" stroke="var(--info)" stroke-width="1.2"/>
+            <text x="570" y="96" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Estoque</text>
+            <text x="570" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">baias · validade</text>
+            <g stroke="var(--info)" stroke-width="1.6" stroke-linecap="round" class="pisca"><line x1="626" y1="79" x2="626" y2="93"/><line x1="619" y1="86" x2="633" y2="86"/><line x1="621" y1="81" x2="631" y2="91"/><line x1="631" y1="81" x2="621" y2="91"/></g>
+          </g>
+          <g>
+            <rect x="652" y="72" width="160" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="732" y="96" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Linha de dollys</text>
+            <text x="732" y="114" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">transbordo conferido</text>
+            <rect x="664" y="124" width="28" height="7" rx="3" fill="var(--ok)" class="pisca"/><rect x="700" y="124" width="28" height="7" rx="3" fill="var(--warn)"/><rect x="736" y="124" width="28" height="7" rx="3" fill="var(--ok)"/><rect x="772" y="124" width="28" height="7" rx="3" fill="var(--ok)"/>
+          </g>
+
+          <!-- Faixa B: paletizados -->
+          <g>
+            <rect x="196" y="282" width="140" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="266" y="306" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Descarregamento</text>
+            <text x="266" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">etiqueta RFID</text>
+            <circle cx="336" cy="282" r="5" fill="var(--accent)"/><circle cx="336" cy="282" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
+          </g>
+          <g>
+            <rect x="348" y="282" width="140" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="418" y="306" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Rebate</text>
+            <text x="418" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">stretch e rebate</text>
+          </g>
+          <g>
+            <rect x="500" y="282" width="140" height="104" rx="8" fill="var(--info)" fill-opacity="0.10" stroke="var(--info)" stroke-width="1.2"/>
+            <text x="570" y="306" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Estoque</text>
+            <text x="570" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">frio ou seco</text>
+            <text x="570" y="340" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--info)"><tspan id="cena-temp">3,8</tspan> °C</text>
+            <g stroke="var(--info)" stroke-width="1.6" stroke-linecap="round" class="pisca"><line x1="626" y1="289" x2="626" y2="303"/><line x1="619" y1="296" x2="633" y2="296"/><line x1="621" y1="291" x2="631" y2="301"/><line x1="631" y1="291" x2="621" y2="301"/></g>
+          </g>
+          <g>
+            <rect x="652" y="282" width="160" height="104" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+            <text x="732" y="306" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Linha de paletes</text>
+            <text x="732" y="324" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="var(--ink-2)">abastecer e separar</text>
+            <rect x="664" y="348" width="28" height="7" rx="3" fill="var(--ok)"/><rect x="700" y="348" width="28" height="7" rx="3" fill="var(--warn)" class="pisca"/><rect x="736" y="348" width="28" height="7" rx="3" fill="var(--ok)"/><rect x="772" y="348" width="28" height="7" rx="3" fill="var(--ok)"/>
+          </g>
+
+          <!-- Carreta da fábrica -->
+          <g>
+            <rect x="16" y="196" width="130" height="66" rx="6" fill="var(--sunk)" stroke="var(--ink-3)"/>
+            <text x="81" y="234" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-3)">FÁBRICA</text>
+            <circle cx="40" cy="270" r="11" fill="var(--ink)"/><circle cx="66" cy="270" r="11" fill="var(--ink)"/><circle cx="124" cy="270" r="11" fill="var(--ink)"/>
+            <animateTransform attributeName="transform" type="translate" values="-170 0; 0 0; 0 0; 0 0" keyTimes="0; 0.12; 0.9; 1" dur="14s" repeatCount="indefinite"/>
+          </g>
+
+          <!-- Carregamento -->
+          <g>
+            <rect x="900" y="196" width="120" height="70" rx="6" fill="var(--board)"/>
+            <text x="960" y="236" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--board-ink)">ROTA 04</text>
+            <path d="M1020 218 H1056 L1078 242 V266 H1020 Z" fill="var(--board)"/>
+            <rect x="1030" y="225" width="20" height="14" rx="2" fill="var(--board-dim)"/>
+            <circle cx="938" cy="274" r="11" fill="var(--ink)"/><circle cx="1050" cy="274" r="11" fill="var(--ink)"/>
+            <animateTransform attributeName="transform" type="translate" values="0 0; 0 0; 220 0; 220 0" keyTimes="0; 0.86; 0.97; 1" dur="14s" repeatCount="indefinite"/>
+          </g>
+          <text x="975" y="312" text-anchor="middle" font-family="Rubik, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Carregamento</text>
+          <text x="975" y="330" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-2)">rampa por rota</text>
+
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-0s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-1.75s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-3.5s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animateMotion dur="7s" repeatCount="indefinite" begin="-5.25s"><mpath href="#rota-a"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-0.8s"><mpath href="#rota-b"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-3.8s"><mpath href="#rota-b"/></animateMotion></use>
+          <use href="#ico-palete" width="40" height="44" x="-20" y="-44"><animateMotion dur="9s" repeatCount="indefinite" begin="-6.8s"><mpath href="#rota-b"/></animateMotion></use>
+          </g>
+        </svg>
+      </div>
+      <p class="scene-hint">arraste a cena para o lado →</p>
+
+      <div class="stats">
+        <div class="stat"><b>10</b><span>etapas, da compra ao caminhão</span></div>
+        <div class="stat"><b>7</b><span>painéis ao vivo nas TVs</span></div>
+        <div class="stat"><b>0</b><span>papel na operação</span></div>
+        <div class="stat"><b>0</b><span>bipe: o Argos lê sozinho</span></div>
+      </div>
+    </section>
+
+    <!-- Abertura -->
+    <section class="hero" id="topo" aria-label="Apresentação">
+      <div>
+        <h2>A doca, <em>ao vivo</em>.</h2>
+        <p class="lead">O placar mostra cada carreta da portaria até a liberação, como num aeroporto. Ninguém pergunta onde está a carga: a tela responde.</p>
+        <div class="tags"><span>Pães</span><span>Cereais</span><span>Laticínios</span><span>Massas</span><span>Papel zero</span></div>
+      </div>
+      <div class="board" aria-label="Exemplo de placar de chegadas da doca">
+        <div class="board-head"><b>Chegadas · doca</b><span id="relogio">15:17</span></div>
+        <div class="board-scroll">
+          <table>
+            <thead><tr><th>Prev.</th><th>Origem</th><th>Torres</th><th>Doca</th><th>Status</th></tr></thead>
+            <tbody id="placar">
+              <tr><td>13:30</td><td>Fábrica A</td><td>12/12</td><td>1</td><td><span class="flap ok">Liberada</span></td></tr>
+              <tr><td>14:45</td><td>Fábrica B</td><td>7/12</td><td>2</td><td><span class="flap go">Descarregando</span></td></tr>
+              <tr><td>15:00</td><td>Fábrica C</td><td>0/10</td><td>1</td><td><span class="flap go">Na portaria</span></td></tr>
+              <tr><td>14:00</td><td>Fábrica D</td><td>0/8</td><td>—</td><td><span class="flap wait">Atrasado</span></td></tr>
+              <tr><td>15:30</td><td>Fábrica A</td><td>0/12</td><td>—</td><td><span class="flap dim">Previsto</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="board-note">Exemplo ilustrativo. Ninguém digita no placar: ele mostra os eventos lidos pelas antenas e câmeras.</p>
+      </div>
+    </section>
+
+    <section id="origem">
+      <span class="eyebrow">Como o Deméter nasceu</span>
+      <h2>Desenhado de dentro, pelo posto mais baixo</h2>
+      <div class="prose">
+        <p>O Deméter não nasceu numa sala de reuniões. Nasceu no chão de uma distribuidora de alimentos, empurrando torres de pão entre câmaras frias, como ajudante do ajudante de carga.</p>
+        <p>Durante semanas, o autor foi um número entre os terceirizados: sem crachá, sem nome, invisível para a operação. E é justamente quem ninguém vê que vê tudo: a conferência no olho, o separador perdido entre os dollys, a cesta que some, o pão que volta, o trabalhador que só quer o fim do turno.</p>
+        <p>Cada regra deste projeto saiu dali. A doca antes da entrada, a câmara vazia, a linha onde o produto fica parado e o dolly anda, o sistema que ensina quem acabou de chegar.</p>
+      </div>
+      <p class="rule">Não é teoria de escritório: é o peso de cada torre, transformado em processo.</p>
+    </section>
+
+    <section id="problema">
+      <span class="eyebrow">Ponto de partida</span>
+      <h2>Hoje, a operação roda no olho e na memória</h2>
+      <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))">
+        <div class="card"><h3>Conferência visual</h3><p>Torres chegam envoltas em filme stretch e são contadas no olho. O erro entra no estoque já no recebimento.</p></div>
+        <div class="card"><h3>Separação sem rumo</h3><p>Separador e ajudante pegam uma carga e andam o depósito inteiro, cruzando com outros dollys num espaço pequeno.</p></div>
+        <div class="card"><h3>Patrimônio sem saldo</h3><p>Dollys, cestas e paletes retornáveis entram e saem sem contagem. A perda é silenciosa e ninguém sabe quem deve a quem.</p></div>
+        <div class="card"><h3>O bipe no lugar da caneta</h3><p>Trocar a prancheta pelo coletor de código de barras digitaliza a anotação, não o processo. O coletor registra só o que alguém lembrou de bipar; o Deméter lê sozinho e orienta o que vai acontecer.</p></div>
+      </div>
+    </section>
+
+    <section id="principios">
+      <span class="eyebrow">Princípios</span>
+      <h2>Dez regras guiam todo o desenho</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
+        <tbody>
+          <tr><td>Tudo começa no recebimento</td><td>O que entra errado contamina o resto do fluxo</td></tr>
+          <tr><td>O erro morre onde nasce</td><td>Cada passagem se confere sozinha; o erro é barrado na hora e não segue com o produto</td></tr>
+          <tr><td>Patrimônio é dinheiro</td><td>Dolly, cesta e palete têm saldo por fornecedor e por cliente, como conta corrente</td></tr>
+          <tr><td>IA propõe, pessoa aprova</td><td>Ondas, veículos e exceções sempre têm um responsável</td></tr>
+          <tr><td>Processo independe do aparelho</td><td>Antena, câmera, balança ou pulso geram o mesmo evento</td></tr>
+          <tr><td>Comercial não é da logística</td><td>Retorno, corte e troca vêm de quem tem autoridade</td></tr>
+          <tr><td>Papel zero</td><td>Todo registro nasce no app e vira indicador e aprendizado</td></tr>
+          <tr><td>O registro não esquece</td><td>O Deméter mostra; o dono decide, e a decisão também fica registrada</td></tr>
+          <tr><td>Regenerativo</td><td>Erros, tempos e produtividade de hoje viram correção para amanhã, em todas as áreas</td></tr>
+          <tr><td>Projeto vivo</td><td>Nada é fechado: regras viram configuração, o desenho muda com a operação e falha encontrada é corrigida logo</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="fluxo">
+      <span class="eyebrow">Fluxo ponta a ponta</span>
+      <h2>Da compra ao caminhão em dez etapas</h2>
+      <p class="lead">A onda é o ponto de virada: antes dela o produto entra e é conferido; depois, cada dolly ou palete já sabe cliente, veículo e rampa. Toque numa etapa para ir até ela.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 236" role="img" aria-label="Fluxo em dez etapas: compra, recebimento, armazenamento, onda, abastecimento, linha, pulmão, conferência, rampa e carregamento">
+          <defs><marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-3)"/></marker></defs>
+          <g fill="none" stroke="var(--ink-3)" stroke-width="1.25">
+            <path d="M154 64H166" marker-end="url(#seta)"/><path d="M300 64H312" marker-end="url(#seta)"/><path d="M446 64H458" marker-end="url(#seta)"/><path d="M592 64H604" marker-end="url(#seta)"/>
+            <path d="M671 92V142" marker-end="url(#seta)"/>
+            <path d="M604 172H592" marker-end="url(#seta)"/><path d="M458 172H446" marker-end="url(#seta)"/><path d="M312 172H300" marker-end="url(#seta)"/><path d="M166 172H154" marker-end="url(#seta)"/>
+          </g>
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <a href="#recebimento"><rect x="20" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="87" y="60" font-size="14" font-weight="600" fill="var(--ink)">Compra</text><text x="87" y="78" font-size="11.5" fill="var(--ink-3)">ordem de retorno</text></a>
+            <a href="#recebimento"><rect x="166" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="233" y="60" font-size="14" font-weight="600" fill="var(--ink)">Recebimento</text><text x="233" y="78" font-size="11.5" fill="var(--ink-3)">NF conferida</text></a>
+            <a href="#estoque"><rect x="312" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="379" y="60" font-size="14" font-weight="600" fill="var(--ink)">Armazenamento</text><text x="379" y="78" font-size="11.5" fill="var(--ink-3)">baias e validade</text></a>
+            <a href="#onda"><rect x="458" y="36" width="134" height="56" rx="10" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="2"/><text x="525" y="60" font-size="14" font-weight="600" fill="var(--ink)">Onda</text><text x="525" y="78" font-size="11.5" fill="var(--ink-2)">IA + aprovação</text></a>
+            <a href="#linha"><rect x="604" y="36" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="671" y="60" font-size="14" font-weight="600" fill="var(--ink)">Abastecimento</text><text x="671" y="78" font-size="11.5" fill="var(--ink-3)">FEFO na linha</text></a>
+            <a href="#linha"><rect x="604" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="671" y="168" font-size="14" font-weight="600" fill="var(--ink)">Separação</text><text x="671" y="186" font-size="11.5" fill="var(--ink-3)">dollys e paletes</text></a>
+            <a href="#expedicao"><rect x="458" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="525" y="168" font-size="14" font-weight="600" fill="var(--ink)">Pré-carga</text><text x="525" y="186" font-size="11.5" fill="var(--ink-3)">pulmão misturado</text></a>
+            <a href="#expedicao"><rect x="312" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="379" y="168" font-size="14" font-weight="600" fill="var(--ink)">Conferência</text><text x="379" y="186" font-size="11.5" fill="var(--ink-3)">dolly e palete</text></a>
+            <a href="#expedicao"><rect x="166" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="233" y="168" font-size="14" font-weight="600" fill="var(--ink)">Rampa</text><text x="233" y="186" font-size="11.5" fill="var(--ink-3)">por veículo</text></a>
+            <a href="#expedicao"><rect x="20" y="144" width="134" height="56" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="87" y="168" font-size="14" font-weight="600" fill="var(--ink)">Carregamento</text><text x="87" y="186" font-size="11.5" fill="var(--ink-3)">assinatura</text></a>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="paineis">
+      <span class="eyebrow">Painéis</span>
+      <h2>A operação inteira, à vista de todos</h2>
+      <p class="lead">Cada painel roda numa TV ou no celular e se alimenta sozinho dos eventos registrados. Ninguém digita nada para o painel. Os dados abaixo são exemplos.</p>
+      <div class="tabs" role="tablist" aria-label="Painéis">
+        <button class="tab" role="tab" id="t-chegadas" aria-controls="p-chegadas" aria-selected="true" type="button">Chegadas</button>
+        <button class="tab" role="tab" id="t-partidas" aria-controls="p-partidas" aria-selected="false" type="button">Partidas</button>
+        <button class="tab" role="tab" id="t-camara" aria-controls="p-camara" aria-selected="false" type="button">Câmara</button>
+        <button class="tab" role="tab" id="t-linha" aria-controls="p-linha" aria-selected="false" type="button">Linha</button>
+        <button class="tab" role="tab" id="t-turno" aria-controls="p-turno" aria-selected="false" type="button">Turno</button>
+        <button class="tab" role="tab" id="t-retornos" aria-controls="p-retornos" aria-selected="false" type="button">Retornos</button>
+        <button class="tab" role="tab" id="t-onda" aria-controls="p-onda" aria-selected="false" type="button">Onda</button>
+      </div>
+
+      <div role="tabpanel" id="p-chegadas" aria-labelledby="t-chegadas">
+        <p class="panel-desc">TV da doca. Mostra as carretas do dia, as duas câmaras e se a doca está pronta para a próxima.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Câmara descarga 1</span><b>Vazia</b></div>
+            <div class="tile"><span>Câmara retorno 1</span><b>12/12 dollys</b></div>
+            <div class="tile"><span>Doca 1</span><b>Pronta</b></div>
+            <div class="tile"><span>Carretas hoje</span><b>2 de 3</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Prev.</th><th>Origem</th><th>Torres</th><th>Retorno</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>13:30</td><td>Fábrica A</td><td>12/12</td><td>12/12</td><td><span class="flap ok">Liberada</span></td></tr>
+              <tr><td>14:45</td><td>Fábrica B</td><td>12/12</td><td>9/12</td><td><span class="flap go">Conferindo</span></td></tr>
+              <tr><td>16:00</td><td>Fábrica C</td><td>0/10</td><td>7/10</td><td><span class="flap bad">Retorno incompleto</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-partidas" aria-labelledby="t-partidas" hidden>
+        <p class="panel-desc">TV das rampas. Cada rota com seu veículo, ocupação do baú e quantos dollys já subiram.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Rota</th><th>Rampa</th><th>Ocupação</th><th>Carregados</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>02</td><td>1</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12 posições</span></td><td>8/8</td><td><span class="flap ok">Partiu 03:20</span></td></tr>
+            <tr><td>04</td><td>3</td><td><div class="bar"><i style="width:92%"></i></div><span class="sub">11/12 posições</span></td><td><span data-cont="rota04">7</span>/11</td><td><span class="flap go">Carregando</span></td></tr>
+            <tr><td>07</td><td>2</td><td><div class="bar"><i style="width:50%"></i></div><span class="sub">6/12 posições</span></td><td>0/6</td><td><span class="flap wait">Conferindo</span></td></tr>
+            <tr><td>11</td><td>4</td><td><div class="bar"><i style="width:75%"></i></div><span class="sub">9/12 posições</span></td><td>0/9</td><td><span class="flap dim">Separando</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-camara" aria-labelledby="t-camara" hidden>
+        <p class="panel-desc">TV dentro da câmara de descarregamento. A NF fecha sozinha: cada doly que nasce na doca é lido pelo portal, e o colaborador da doca só resolve as exceções.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="torres">7</span>/12 dollys</b></div>
+            <div class="tile"><span>Validade</span><b>18/10</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">1</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Produto</th><th>NF (cestas)</th><th>Dollys esperados</th><th>Lidos</th><th>Situação</th></tr></thead>
+            <tbody>
+              <tr><td>Pão de forma 500 g</td><td>128</td><td>4</td><td>4</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bisnaguinha 300 g</td><td>96</td><td>3</td><td>2</td><td><span class="flap bad">Falta 1 doly</span></td></tr>
+              <tr><td>Pão integral</td><td>64</td><td>2</td><td>2</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bolo de chocolate</td><td>96</td><td>3</td><td>0</td><td><span class="flap go">Descarregando</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">1 doly = 1 produto = 32 cestas. Cestas da NF ÷ 32 = dollys esperados.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-linha" aria-labelledby="t-linha" hidden>
+        <p class="panel-desc">Painel da linha de dollys. As antenas contam as cestas de cada posição; a IA olha os próximos dollys da fila e pede reposição antes de a posição zerar.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Posição</th><th>Produto</th><th>Estoque</th><th>Próximos precisam</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>L01</td><td>Pão de forma</td><td><div class="bar"><i class="ok" style="width:88%"></i></div><span class="sub">22 cestas</span></td><td>10</td><td><span class="flap ok">OK</span></td></tr>
+            <tr><td>L05</td><td>Bisnaguinha</td><td><div class="bar"><i style="width:24%"></i></div><span class="sub">6 cestas</span></td><td>8</td><td><span class="flap wait">Abastecer</span></td></tr>
+            <tr><td>L09</td><td>Bolo</td><td><div class="bar"><i class="bad" style="width:3%"></i></div><span class="sub">0 cestas</span></td><td>4</td><td><span class="flap bad">2 dollys aguardando</span></td></tr>
+            <tr><td>L12</td><td>Torrada</td><td><div class="bar"><i class="ok" style="width:60%"></i></div><span class="sub">15 cestas</span></td><td>3</td><td><span class="flap ok">OK</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
+        <p class="panel-desc">Painel do turno, para a gerência e o guardião do turno. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente. Cada linha também vibra no pulso da própria pessoa.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
+            <div class="tile"><span>No frio · em repouso</span><b>3 · 1</b></div>
+            <div class="tile"><span>Onda 3 · previsão</span><b>21:40</b></div>
+            <div class="tile"><span>Fim do turno</span><b class="alerta">21:20</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Relógio de frio</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr data-frio="82"><td>Colaborador 1</td><td>Linha · dolly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="47"><td>Colaborador 2</td><td>Linha · dolly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Colaborador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
+              <tr><td>Colaborador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
+              <tr data-frio="18"><td>Colaborador 6</td><td>Exceções · NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="-12"><td>Colaborador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Alerta: a onda 3 termina depois do fim do turno. Remanejar 1 pessoa para a linha agora evita passar pendência para o 3º turno.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-retornos" aria-labelledby="t-retornos" hidden>
+        <p class="panel-desc">Painel de retorno de rota. Cada caminhão precisa estar liberado antes do 3º turno.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Rotas retornadas</span><b>9 de 15</b></div>
+            <div class="tile"><span>Devolução do dia</span><b>2,4%</b></div>
+            <div class="tile"><span>Em triagem</span><b>14 itens</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">2</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Retorno</th><th>Devolvido</th><th>Cestas</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>13:10</td><td>6 un</td><td>48/48</td><td><span class="flap ok">Concluído</span></td></tr>
+              <tr><td>04</td><td>13:42</td><td>12 un</td><td>60/62</td><td><span class="flap bad">Divergência</span></td></tr>
+              <tr><td>07</td><td>14:05</td><td>9 un</td><td>40/40</td><td><span class="flap wait">Em triagem</span></td></tr>
+              <tr><td>09</td><td>prev. 15:00</td><td>4 un declar.</td><td>—</td><td><span class="flap dim">A caminho</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-onda" aria-labelledby="t-onda" hidden>
+        <p class="panel-desc">Tela de aprovação da onda. A IA propõe veículos e mostra onde não cabe; a gerência aceita ou altera antes de separar.</p>
+        <div class="board">
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Veículo</th><th>Posições</th><th>Peso</th><th>Sugestão da IA</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>ABC1D23</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12</span></td><td>1.900/3.500 kg</td><td>—</td></tr>
+              <tr><td>04</td><td>QRS4T56</td><td><div class="bar"><i class="bad" style="width:100%"></i></div><span class="sub">14/12</span></td><td>3.100/3.500 kg</td><td><span class="flap wait">Mover 2 clientes p/ rota 07</span></td></tr>
+              <tr><td>07</td><td>XYZ7G89</td><td><div class="bar"><i class="ok" style="width:50%"></i></div><span class="sub">6/12</span></td><td>1.200/3.500 kg</td><td><span class="flap go">Recebe 2 dollys</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Estado da onda: PROPOSTA → EM_REVISAO. Plano com veículo excedido não pode ser aprovado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="torre">
+      <span class="eyebrow">Unidade de controle</span>
+      <h2>Cada doly e cada palete ganham uma etiqueta RFID que a empresa reutiliza</h2>
+      <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))">
+        <div class="card"><span class="big">1</span><h3>Doly de ferro</h3><p>Base com quatro rodinhas. Volta para a fábrica.</p></div>
+        <div class="card"><span class="big">32</span><h3>Cestas plásticas</h3><p>Todas do mesmo produto e da mesma validade: 1 doly = 1 produto.</p></div>
+        <div class="card"><span class="big">1</span><h3>Palete</h3><p>PBR ou descartável, refrigerado ou seco. Rebatido e com filme stretch.</p></div>
+        <div class="card dark"><span class="big">RFID</span><h3>Etiqueta reutilizável</h3><p>UHF, lida à distância, sem ninguém encostar. No doly, etiqueta própria para metal presa por ímã; no palete, por presilha. Fixada na doca, retirada antes do retorno. Nada descartável.</p></div>
+      </div>
+      <p class="rule">A conferência vira aritmética: cestas da NF ÷ 32 = dollys esperados de cada produto.</p>
+      <h3>A cesta: etiqueta de fábrica ou clip</h3>
+      <p class="note">As cestas voltam para a fábrica, então uma etiqueta colada iria embora com elas. O Deméter aceita os dois caminhos e a empresa escolhe no cadastro do fornecedor.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Caminho</th><th>Como funciona</th><th>Custo por mês</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td>Cesta etiquetada de fábrica</td><td>RFID moldado ou fixado na cesta pela fábrica; vive na cesta para sempre</td><td>Zero</td><td>Ideal. É o padrão mundial de embalagem retornável e exige a fábrica no ecossistema</td></tr>
+          <tr><td>Clip reutilizável</td><td>Preso na alça no abastecimento e retirado no carregamento ou no retorno</td><td>Só reposição de perdas</td><td>Ponte enquanto a fábrica não etiqueta</td></tr>
+          <tr><td>Adesivo descartável</td><td>Uma etiqueta por cesta que entra</td><td>Recorrente</td><td>Evitar: contraria o papel zero e o "tudo volta"</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Palete: a etiqueta vai no palete, não na paleteira</h3>
+      <p class="note">A paleteira só transporta e logo busca outro palete; quem fica parado no estoque e no porta-palete é o palete. Paleteira e empilhadeira levam só uma etiqueta fixa de patrimônio.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Ponto</th><th>Definição</th></tr></thead>
+        <tbody>
+          <tr><td>Onde</td><td>Bloco central da face que fica para o corredor, fora do filme stretch</td></tr>
+          <tr><td>Como prende</td><td>Estojo com presilha que abraça a tábua de cima, ou abraçadeira de nylon reutilizável. Na madeira o ímã não prende</td></tr>
+          <tr><td>Etiqueta</td><td>RFID UHF comum (madeira não precisa de etiqueta para metal) e QR grande como reserva visual</td></tr>
+          <tr><td>Entra</td><td>No descarregamento, antes do rebate</td></tr>
+          <tr><td>Sai</td><td>Na rampa, se o palete vai ao cliente; ao esvaziar, se fica (configurável)</td></tr>
+          <tr><td>3º nível</td><td>Palete ligado à posição no chão, antes de a empilhadeira subir</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">A embalagem define o fluxo, não o produto.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Etapa</th><th>Pão (12 a 14 por cesta, à mostra)</th><th>Rap (24 por cesta, amontoado)</th></tr></thead>
+        <tbody>
+          <tr><td>Recebimento</td><td>Doly lacrado, lido ao passar pela doca</td><td>Igual ao pão</td></tr>
+          <tr><td>Separação</td><td>Cada cesta lida ao mudar de doly (transbordo)</td><td>Igual ao pão</td></tr>
+          <tr><td>Unidades dentro da cesta</td><td>Padrão do cadastro, faces conferidas pela câmera</td><td>Dolly inteiro pesado e comparado com o peso esperado</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>Tudo que chega em dolly com cestas segue o mesmo caminho. O cadastro do produto diz quantas unidades cabem na cesta, quanto pesa cada uma e como contar. A balança é mais um sentido do Argos: unidades = (peso bruto − tara do dolly e das cestas) ÷ peso unitário. Os paletizados, refrigerados ou secos, são a outra família, com fluxo próprio.</p></div>
+      <div class="states" aria-label="Estados da etiqueta do doly">
+        <span class="state">LIVRE</span><span class="arrow">→</span><span class="state">NA_DOCA</span><span class="arrow">→</span><span class="state">VINCULADA</span><span class="arrow">→</span><span class="state">EM_CAMARA</span><span class="arrow">→</span><span class="state">ABERTA</span><span class="arrow">→</span><span class="state">RETIRADA</span><span class="arrow">→</span><span class="state">LIVRE</span>
+      </div>
+    </section>
+
+    <section id="argos">
+      <span class="eyebrow">O olho que tudo vê</span>
+      <h2>O Deméter vê com vários sentidos, e nenhum depende de alguém lembrar de bipar</h2>
+      <p class="lead">Diz o ditado que o olho do dono é que engorda o boi. O Deméter é esse olho: em cada baia, em cada caixa, em cada unidade, em cada carga e descarga, em cada entrega e ao lado de cada colaborador. A empresa define as regras, e elas são seguidas à risca.</p>
+      <p class="rule">O produto segue. O erro para.</p>
+      <div class="prose">
+        <p>Mais do que registrar, ele antecipa: prevê a chegada da carreta, a falta antes de a posição zerar, o vencimento antes de o pão vencer, a pausa térmica antes do limite e a onda que não cabe no turno.</p>
+        <p>O Deméter gerencia, confere e controla. O que fazer com a informação é decisão do dono, e até a decisão de não fazer nada fica registrada.</p>
+        <p>Na mitologia, Argos era o gigante de cem olhos que nunca dormia. No Deméter, Argos é o conjunto de sentidos que lê a operação sozinho: cada um responde a uma pergunta, e juntos se confirmam.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><h3>Onde está?</h3><p><b>RFID UHF.</b> Antena curta em cada baia e posição de linha, portais nas portas e docas. Sabe em qual baia está cada doly e cada cesta.</p></div>
+        <div class="card"><h3>Em qual câmara?</h3><p><b>BLE.</b> Receptores baratos (ESP32) cobrem 20 a 50 m e dizem a zona de dollys e pessoas.</p></div>
+        <div class="card"><h3>O que é e como está?</h3><p><b>Câmera com IA.</b> Reconhece o produto, conta camadas, lê a validade, vê avaria e baia livre.</p></div>
+        <div class="card"><h3>Quanto tem?</h3><p><b>Balança.</b> Confere o miolo do palete e o produto amontoado, que nenhuma câmera enxerga.</p></div>
+        <div class="card"><h3>Está no frio certo?</h3><p><b>Sensores.</b> Temperatura, umidade e porta aberta em cada câmara.</p></div>
+        <div class="card dark"><h3>Quem faz o quê, agora?</h3><p><b>A voz no pulso.</b> O Deméter avisa cada pessoa pelo relógio, e ela confirma com um toque.</p></div>
+      </div>
+      <h3>Como o RFID sabe a posição</h3>
+      <div class="prose"><p>Não é latitude e longitude: o GPS não entra no galpão. O armazém vira um mapa próprio, em metros, e as etiquetas fixas das baias servem de ponto de referência. Para o Deméter, saber a zona (qual baia) vale mais que a coordenada exata, e por isso cada baia tem a sua própria antena curta.</p><p>A etiqueta UHF passiva não aceita repetidor: ela funciona com a energia da antena que a lê. Cobrir uma área maior é pôr mais antenas e leitores em rede, todos falando com o mesmo servidor.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Leitura</th><th>Alcance na operação real</th><th>Uso no Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Antena curta de baia ou posição</td><td>~50 cm, só a própria baia</td><td>Doly na baia, cesta que entra e sai</td></tr>
+          <tr><td>Portal de porta ou doca</td><td>Toda a passagem</td><td>Entrou, saiu, a que horas</td></tr>
+          <tr><td>Gateway de teto</td><td>3 a 6 m, precisão de ~1 a 2 m</td><td>Achar o doly perdido no galpão</td></tr>
+          <tr><td>BLE com receptor ESP32</td><td>20 a 50 m, precisão de zona</td><td>Em qual câmara estão dollys e pessoas</td></tr>
+          <tr><td>Antena no baú + GPS do caminhão</td><td>A porta do baú, em cada parada</td><td>O que desceu em cada cliente e o que voltou, com hora e local</td></tr>
+        </tbody>
+      </table></div>
+      <h3>A mesma lógica em todos os níveis: palete, caixa, cesta, unidade</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Nível</th><th>Identificação</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Palete</td><td>RFID reutilizável</td><td>Leitura ótima, uma etiqueta por palete</td></tr>
+          <tr><td>Caixa fechada</td><td>RFID, de preferência aplicado na fábrica</td><td>Padrão das grandes redes; o líquido dentro reduz o alcance</td></tr>
+          <tr><td>Cesta de pão</td><td>RFID de fábrica ou clip</td><td>Plástico e pão seco deixam o sinal passar bem</td></tr>
+          <tr><td>Unidade</td><td>Código 2D impresso (GS1 DataMatrix ou QR) lido pela câmera</td><td>Em iogurte, líquido e tampa de alumínio bloqueiam o RFID, e a etiqueta comeria a margem</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>O que um sentido sozinho não vê</b><p>Num palete de 12 caixas por camada e 8 camadas, a câmera enxerga 10 caixas por camada e 2 ficam escondidas no miolo: 16 caixas no palete inteiro que nenhuma câmera vê. Por isso o Argos cruza três sentidos: a visão confirma o produto e a forma, o peso confirma a quantidade, e o cadastro diz como o palete deveria ser.</p></div>
+    </section>
+
+    <section id="transbordo">
+      <span class="eyebrow">Transbordo</span>
+      <h2>Sumiu de um doly, apareceu no outro: a cesta é conferida na passagem</h2>
+      <p class="lead">Cada posição de montagem tem uma antena curta só dela, separada da vizinha por uma chapa de metal. As antenas leem dezenas de vezes por segundo e mandam a lista do que estão ouvindo. O Deméter compara as listas.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 270" role="img" aria-label="Transbordo: a cesta sai da posição A, do doly de abastecimento, e entra na posição B, do doly do cliente; a antena A deixa de ler a cesta e a antena B passa a ler">
+          <defs><marker id="seta-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <rect x="40" y="40" width="250" height="150" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="165" y="66" font-size="14" font-weight="600" fill="var(--ink)">Posição A · abastecimento</text>
+            <text x="165" y="86" font-size="12" fill="var(--ink-3)">doly E-203 · pão de forma · 21/10</text>
+            <text x="165" y="128" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="var(--ink)">32 → 31</text>
+            <text x="165" y="150" font-size="12" fill="var(--ink-2)">cestas lidas pela antena A</text>
+            <rect x="350" y="30" width="16" height="170" rx="3" fill="var(--ink-3)" fill-opacity="0.35"/>
+            <text x="358" y="222" font-size="11.5" fill="var(--ink-3)">chapa de metal</text>
+            <rect x="430" y="40" width="290" height="150" rx="12" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="2"/>
+            <text x="575" y="66" font-size="14" font-weight="600" fill="var(--ink)">Posição B · doly do cliente</text>
+            <text x="575" y="86" font-size="12" fill="var(--ink-3)">doly X-501 · caminhão 07 · onda 3</text>
+            <text x="575" y="128" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="var(--ink)">0 → 1</text>
+            <text x="575" y="150" font-size="12" fill="var(--ink-2)">cestas lidas pela antena B</text>
+            <path d="M290 112 C 330 112, 330 18, 400 18 C 420 18, 430 60, 430 80" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#seta-t)"/>
+            <text x="398" y="12" font-size="12" font-weight="600" fill="var(--accent-ink)">cesta C-0007</text>
+            <text x="165" y="214" font-size="12" fill="var(--ink-3)">antena A: "C-0007 sumiu"</text>
+            <text x="575" y="214" font-size="12" fill="var(--ink-3)">antena B: "C-0007 apareceu"</text>
+            <text x="380" y="256" font-size="13" font-weight="600" fill="var(--ink)">Sumiu de A + apareceu em B + estável por 1 a 2 s = transbordo registrado</text>
+          </g>
+        </svg>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>O que acontece</th><th>O que as antenas veem</th><th>O Deméter faz</th></tr></thead>
+        <tbody>
+          <tr><td>Cesta certa no doly certo</td><td>Some de A, aparece em B</td><td>Registra e o pulso conta: "Forma 1/12"</td></tr>
+          <tr><td>Produto errado</td><td>Aparece em B uma cesta de outro produto</td><td>Luz vermelha e pulso vibra: "Cesta errada, devolver"</td></tr>
+          <tr><td>Quantidade a mais</td><td>13ª cesta de um pedido de 12</td><td>Alerta antes de o doly fechar</td></tr>
+          <tr><td>Fora do FEFO</td><td>Cesta veio de um doly que vence depois</td><td>Aviso: "Pegue da baia 01, vence antes"</td></tr>
+          <tr><td>Pegou e devolveu</td><td>Some de A e volta para A</td><td>Nada aconteceu</td></tr>
+          <tr><td>Sumiu e não apareceu</td><td>Some de A, ninguém lê em 10 s</td><td>Pergunta no pulso: "C-0007 está com você?"</td></tr>
+          <tr><td>Leitura piscou</td><td>Some e volta em menos de 1 s</td><td>Ignora: só vale o que fica estável</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">O erro morre onde nasce: a separação se confere sozinha, e o erro não segue com o produto.</p>
+      <div class="prose"><p>É o que a Toyota chama de <b>poka-yoke</b> (o processo torna o erro difícil: a luz acende na baia certa, o pulso diz produto e quantidade) e de <b>jidoka</b> (detectado o erro, para na hora, e o defeito não passa para a etapa seguinte). No padrão internacional de rastreio GS1 EPCIS, o transbordo é um evento de agregação: um item filho (a cesta) sai de um pai (o doly A) e entra em outro (o doly B).</p><p>Com etiqueta em cada cesta e antena na porta do baú, o rastreio vai da carreta da fábrica até o cliente e de volta: qual cesta, de qual NF, com qual validade, montada por quem, em qual caminhão, entregue onde.</p></div>
+      <div class="callout"><b>A leitura não é 100%</b><p>Uma etiqueta pode não responder num instante. Por isso a regra exige as duas pontas (sumiu e apareceu), lê muitas vezes por segundo e mostra a exceção no pulso para uma pessoa confirmar. Se uma antena para, o turno segue com confirmação manual, e o progresso fica no servidor.</p></div>
+    </section>
+
+    <section id="pulso">
+      <span class="eyebrow">Mãos livres</span>
+      <h2>O Deméter fala pelo pulso, e as mãos ficam para o trabalho</h2>
+      <p class="lead">No frio, de luva e com peso nas mãos, ninguém deveria segurar um celular. As antenas leem sozinhas; o relógio no pulso diz o que fazer, vibra no alerta e recebe a confirmação com um toque. Cada pessoa recebe só o que é dela.</p>
+      <div class="board" aria-label="Exemplo de conversa do Deméter pelo pulso numa chegada de carreta">
+        <div class="board-head"><b>Pulso · chegada da NF 12345</b><span>exemplo</span></div>
+        <div class="board-scroll"><table>
+          <thead><tr><th>Hora</th><th>Para</th><th>Mensagem</th></tr></thead>
+          <tbody>
+            <tr><td>13:40</td><td>Todos</td><td>Carreta prevista em 20 min · pão · 24 dollys</td></tr>
+            <tr><td>13:42</td><td>Retorno</td><td><span class="flap bad">Montar retorno</span> 24 dollys · U5 baias 01 a 24</td></tr>
+            <tr><td>13:55</td><td>Retorno</td><td>Retorno 24/24 <span class="flap ok">Doca liberada</span></td></tr>
+            <tr><td>14:02</td><td>Doca</td><td>Doly E-203 · pão de forma · validade 21/10? <span class="flap go">Toque para confirmar</span></td></tr>
+            <tr><td>14:30</td><td>Ajudante A</td><td><span class="flap wait">1h40 no frio</span> Pausa térmica de 20 min</td></tr>
+            <tr><td>18:44</td><td>Separação</td><td>Doly X-501 · forma 12/12 <span class="flap ok">Próxima: baia 05</span></td></tr>
+          </tbody>
+        </table></div>
+        <p class="board-note">Sem resposta em 5 minutos, a tarefa vai para o guardião do turno e, depois, para a gerência.</p>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Aparelho de pulso</th><th>Serve para</th><th>Limite</th></tr></thead>
+        <tbody>
+          <tr><td>Relógio Wear OS</td><td>Tarefa, alerta, relógio de frio e confirmação com um toque, pelas notificações do app</td><td>Não lê RFID; tela pequena para luva, então botões físicos ajudam; bateria cai no frio</td></tr>
+          <tr><td>Computador de pulso industrial</td><td>Tela maior, mãos livres, lê código de barras (ex.: <a href="https://www.zebra.com/ap/en/products/spec-sheets/mobile-computers/wearable/ws50.html" target="_blank" rel="noopener">Zebra WS50</a>)</td><td>Custo maior; opera de -10 °C a 50 °C</td></tr>
+          <tr><td>Leitor RFID de pulso ou luva</td><td>Saber também quem pegou cada cesta</td><td>Opcional: custo e bateria por pessoa</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><h3>Luz na baia</h3><p>Um LED em cada baia e posição acende onde encostar o próximo doly ou de onde tirar a próxima cesta, com o número de cestas (put-to-light e pick-to-light). Apaga quando a antena confirma.</p></div>
+        <div class="card"><h3>Placar na TV</h3><p>A mesma mensagem do pulso, para todos: carreta chegando, doca pronta, rota carregando.</p></div>
+        <div class="card"><h3>Celular</h3><p>Fica para quem não está no chão frio: gerência, motorista e entrega.</p></div>
+      </div>
+    </section>
+
+    <section id="docas">
+      <span class="eyebrow">Docas e pátio</span>
+      <h2>O pátio inteiro é cadastrado e configurado</h2>
+      <p class="lead">Quantas docas, de que lado ficam, que veículo aceitam, para que servem e a que câmaras se ligam: tudo é cadastro, e muda quando o pátio muda. Abaixo, o exemplo de um armazém de referência com 16 docas: seis de um lado, a administração no meio e dez do outro.</p>
+      <div class="flow">
+        <svg viewBox="0 0 760 250" role="img" aria-label="Layout: lado A com 6 docas, administração no meio, lado B com 10 docas, pátio à frente">
+          <g font-family="IBM Plex Sans, Arial, sans-serif" text-anchor="middle">
+            <rect x="20" y="20" width="720" height="130" rx="12" fill="var(--sunk)" stroke="var(--line)"/>
+            <text x="380" y="44" font-size="13" fill="var(--ink-3)">Prédio do armazém (câmaras)</text>
+            <rect x="36" y="80" width="210" height="58" rx="8" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="141" y="104" font-size="15" font-weight="600" fill="var(--ink)">Lado A · 6 docas</text>
+            <text x="141" y="124" font-size="12" fill="var(--ink-2)">D1 a D6</text>
+            <rect x="262" y="80" width="110" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+            <text x="317" y="104" font-size="15" font-weight="600" fill="var(--ink)">Administração</text>
+            <text x="317" y="124" font-size="12" fill="var(--ink-2)">meio</text>
+            <rect x="388" y="80" width="336" height="58" rx="8" fill="var(--info)" fill-opacity="0.16" stroke="var(--info)" stroke-width="1.5"/>
+            <text x="556" y="104" font-size="15" font-weight="600" fill="var(--ink)">Lado B · 10 docas</text>
+            <text x="556" y="124" font-size="12" fill="var(--ink-2)">D7 a D16</text>
+            <rect x="20" y="176" width="720" height="56" rx="12" fill="none" stroke="var(--ink-3)" stroke-dasharray="5 4"/>
+            <text x="380" y="200" font-size="15" font-weight="600" fill="var(--ink)">Pátio</text>
+            <text x="380" y="219" font-size="12" fill="var(--ink-3)">carretas e caminhões toco</text>
+          </g>
+        </svg>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Campo</th><th>Exemplo</th><th>Para quê</th></tr></thead>
+        <tbody>
+          <tr><td>Número e lado</td><td>D3, lado A</td><td>Placar e orientação do motorista</td></tr>
+          <tr><td>Veículos aceitos</td><td>Carreta, toco ou ambos</td><td>Altura da plataforma e manobra</td></tr>
+          <tr><td>Função</td><td>Recebimento, expedição, retorno ou mista</td><td>O que pode ser agendado ali</td></tr>
+          <tr><td>Câmaras ligadas</td><td>Descarga 1 e retorno 1</td><td>Pré-condições do descarregamento</td></tr>
+          <tr><td>Temperatura</td><td>Fria ou seca</td><td>Frios só por doca e câmara fria</td></tr>
+          <tr><td>Horário por função</td><td>Carreta de dia, toco à noite</td><td>Docas mistas mudam de papel por turno</td></tr>
+          <tr><td>Portal RFID</td><td>Antenas na porta da doca</td><td>Doly que entra sem etiqueta ou etiqueta que sai na carreta vira alerta</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">A doca é definida antes de o veículo entrar no pátio.</p>
+      <div class="prose"><p>A onda escolhe a doca dos tocos e a agenda escolhe a das carretas; a portaria só confirma. Veículos com rota fixa ou preferencial mantêm a mesma doca sempre que couber, e o carregamento fica mais rápido.</p><p>A agenda da carreta só oferece docas que aceitam carreta e fazem recebimento; a onda dá a cada rota uma doca de expedição compatível com o toco; o placar mostra doca e lado. Com 16 docas, o limite deixa de ser a doca e passa a ser câmaras e pessoas, e o simulador mostra essa disputa.</p></div>
+      <p class="note">Configurável: lado de carretas e tocos, docas mistas e seus horários e a câmara de cada doca vêm do cadastro de docas. O simulador lê o mesmo cadastro.</p>
+    </section>
+
+    <section id="recebimento">
+      <span class="eyebrow">Recebimento</span>
+      <h2>A carreta encontra uma câmara vazia e outra cheia</h2>
+      <p class="lead">O Deméter sabe da carga antes de ela chegar: a NF-e é baixada da SEFAZ assim que a fábrica emite, cruzada com a compra, e a previsão de chegada vem do rastreador ou do histórico da rota. Divergência entre pedido e NF aparece horas antes da carreta.</p>
+      <div class="cards">
+        <div class="card"><h3>Câmara de descarregamento</h3><p>Precisa estar vazia para abrir. O Argos confere sozinho: baia sem etiqueta de doly é baia livre. Tudo o que entra nela pertence àquela NF.</p></div>
+        <div class="card"><h3>Câmara de retorno</h3><p>Precisa estar cheia, com dollys, cestas e paletes iguais à ordem de retorno da compra. Cada doly vazio encostado numa baia soma duas etiquetas, a da baia e a dele. A logística executa; quem define é Compras.</p></div>
+      </div>
+      <ol class="steps">
+        <li><span><b>Faltam ~40 min:</b> o pulso do responsável recebe "montar retorno, baias 01 a 24", e a luz acende na próxima baia.</span></li>
+        <li><span><b>Retorno completo:</b> a doca é liberada sozinha. Sem retorno, a descarga fica bloqueada, e o placar mostra por quê.</span></li>
+        <li><span><b>Doly nasce na doca:</b> o ajudante prende a etiqueta reutilizável, e o portal liga o doly à NF, à hora e a quem descarregou.</span></li>
+        <li><span><b>Conteúdo:</b> a câmera da doca sugere o produto e lê a validade; o pulso confirma com um toque. 1 doly = 1 produto = 1 validade.</span></li>
+        <li><span><b>Em paralelo:</b> o retorno sobe na carreta. O portal avisa se alguma etiqueta da empresa estiver saindo junto.</span></li>
+        <li><span><b>NF fechada:</b> dollys lidos × dollys esperados; divergência com foto, na hora. O motorista assina e o placar mostra <span class="state">Liberada</span>.</span></li>
+      </ol>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>O que se registra</th><th>Quem lê</th><th>O que a pessoa faz</th></tr></thead>
+        <tbody>
+          <tr><td>Doly</td><td>Portal da doca</td><td>Prende a etiqueta</td></tr>
+          <tr><td>Produto</td><td>NF-e + câmera</td><td>Confirma no pulso</td></tr>
+          <tr><td>Validade</td><td>Câmera lê a etiqueta da cesta</td><td>Confirma no pulso</td></tr>
+          <tr><td>Baia</td><td>Antena da baia (duas etiquetas)</td><td>Segue a luz</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Baixar a NF-e da SEFAZ exige o certificado digital A1 da empresa: essa parte só existe com a empresa participando.</p>
+    </section>
+
+    <section id="paletizados">
+      <span class="eyebrow">Paletizados</span>
+      <h2>Laticínios e secos em palete têm uma etapa a mais: rebater</h2>
+      <p class="lead">O palete de madeira chega misturado. Antes de guardar, ele é desmontado e remontado em paletes novos, por tipo e sabor. Refrigerados e secos seguem a mesma dinâmica, em câmaras diferentes.</p>
+      <ol class="steps">
+        <li><span>Palete chega misturado e envolto em stretch.</span></li>
+        <li><span>Conferência pelas caixas contra a NF: RFID de fábrica quando houver, código de barras lido pela câmera quando não houver, e a balança confirmando o miolo que ninguém vê.</span></li>
+        <li><span><b>Rebater:</b> desmonta e remonta por tipo e sabor. No refrigerado, dentro da câmara fria, sem quebrar a cadeia de frio.</span></li>
+        <li><span>Stretch de novo; o palete novo ganha a etiqueta RFID e registra produto, quantidade, validade e lote.</span></li>
+        <li><span>Pré-armazenamento no 3º nível do porta-palete, na própria câmara.</span></li>
+        <li><span>Abastecimento desce do 3º nível conforme a linha consome.</span></li>
+        <li><span>Linha de separação nos níveis 1 e 2, no mesmo modelo da linha de dollys.</span></li>
+      </ol>
+      <p class="rule">Identificar sempre no chão, nunca na altura.</p>
+      <div class="cards">
+        <div class="card"><h3>Placa da posição</h3><p>Na coluna do porta-palete, à altura do peito: "Rua A · coluna 12 · nível 3", com etiqueta RFID fixa. O vínculo palete ↔ posição nasce no chão, antes de a empilhadeira subir.</p></div>
+        <div class="card"><h3>Etiqueta de palete</h3><p>RFID reutilizável, presa por presilha ou abraçadeira no bloco de madeira, fora do stretch. O portal lê ao passar; o QR grande fica como reserva visual.</p></div>
+      </div>
+      <p class="note">Decidido: empilhadeira a bateria sobe e desce o 3º nível, só com operador habilitado no cadastro. O palete PBR tem muitas avarias e só parte volta; a regra é configurada por fornecedor, e o avariado vai para a fila de avarias.</p>
+    </section>
+
+    <section id="camaras">
+      <span class="eyebrow">Controle do frio</span>
+      <h2>A temperatura de cada câmara e o tempo de cada pessoa no frio, no mesmo controle</h2>
+      <p class="lead">O frio cuida do produto e cobra do corpo. O Deméter junta as duas coisas: sensores nas câmaras, entrada autorizada e um relógio de frio para cada colaborador, tudo nos mesmos painéis e na mesma cadeia de alertas.</p>
+      <h3>Câmaras e temperatura</h3>
+      <div class="board" aria-label="Exemplo de painel das câmaras">
+        <div class="board-head"><b>Câmaras · agora</b><span>exemplo</span></div>
+        <div class="board-scroll"><table>
+          <thead><tr><th>Câmara</th><th>Temp.</th><th>Dentro</th><th>Maior tempo no frio</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Fria 1 · dollys</td><td><span data-temp="f1">3,8</span> °C</td><td>3</td><td>1h22 · próx. repouso 18 min</td><td><span class="flap ok">Na faixa</span></td></tr>
+            <tr><td>Fria 2 · laticínios</td><td>6,1 °C</td><td>1</td><td>0h40</td><td><span class="flap wait">Subindo</span></td></tr>
+            <tr><td>Seca 1 · paletizados</td><td>24 °C</td><td>4</td><td>—</td><td><span class="flap ok">Normal</span></td></tr>
+            <tr><td>Fria 3 · retorno</td><td>—</td><td>0</td><td>—</td><td><span class="flap bad">Sensor sem sinal</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Evento</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td>Temperatura subindo</td><td>Aviso ao guardião do turno</td></tr>
+          <tr><td>Fora da faixa por muito tempo</td><td>Alerta em cadeia; produtos da câmara bloqueados até a qualidade decidir</td></tr>
+          <tr><td>Porta aberta demais</td><td>Aviso</td></tr>
+          <tr><td>Sensor sem sinal</td><td>Alerta: pode ser queda de energia</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>O cadastro diz o tipo (fria, seca ou refrigeração desligada), a função, a estrutura (baias ou porta-palete com níveis), as docas ligadas e a faixa de temperatura. O histórico de temperatura é a prova da cadeia de frio para a vigilância sanitária.</p></div>
+      <h3>Acesso e permanência: estoque, pessoas e lucro, sem pagar com a saúde de quem trabalha</h3>
+      <div class="prose"><p>Só entra na câmara fria quem está autorizado, no horário e com o descanso térmico em dia. A CLT garante 20 minutos de repouso a cada 1h40 de trabalho contínuo no frio, contados como trabalho. O Deméter controla entrada, permanência e saída de cada pessoa, e o quadro de pessoal já nasce prevendo esse descanso.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Para entrar</th><th>Como o sistema confere</th></tr></thead>
+        <tbody>
+          <tr><td>Estar autorizado</td><td>Crachá RFID do colaborador lido pelo portal da porta; função e habilitação no cadastro</td></tr>
+          <tr><td>Estar no horário</td><td>Escalado no turno e dentro do horário cadastrado da câmara</td></tr>
+          <tr><td>Estar com o descanso em dia</td><td>Relógio de frio de cada pessoa; repouso pendente bloqueia a entrada</td></tr>
+          <tr><td>Estar protegido</td><td>EPI conferido na porta: japona, luva, bota, touca</td></tr>
+          <tr><td>Ser necessário</td><td>A linha ou a câmara precisa de alguém agora</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>QLP com descanso térmico</b><p>A cada ciclo de 2 horas no frio, 20 minutos são de repouso. Para manter a mesma produção, as funções de câmara fria precisam de cerca de 20% a mais de pessoas, em rodízio: enquanto um descansa, outro entra. O QLP calcula isso sozinho, e o descanso nunca vira atraso nem desculpa para pular a pausa.</p></div>
+      <h3>Como funciona a entrada</h3>
+      <ol class="steps">
+        <li><span>Funcionário chega à porta e o portal lê o crachá, sem tirar a luva.</span></li>
+        <li><span>A câmera de vídeo na porta da câmara confere o EPI: japona, luva, bota, touca.</span></li>
+        <li><span>O sistema cruza autorização, horário, EPI, repouso em dia e a necessidade da linha, e autoriza ou nega com o motivo.</span></li>
+        <li><span>Dentro, o relógio de frio corre: o pulso vibra aos 1h30, e o repouso é obrigatório aos 1h40.</span></li>
+        <li><span>Entrou sem autorização: alerta ao guardião do turno; sem resposta, sobe para a gerência.</span></li>
+      </ol>
+      <h3>Relógio de frio de cada colaborador</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Tempo no frio</th><th>O que acontece</th><th>Onde aparece</th></tr></thead>
+        <tbody>
+          <tr><td>Entrada</td><td>O relógio da pessoa começa a contar; a câmara soma mais um "dentro"</td><td>Painel do turno e painel da câmara</td></tr>
+          <tr><td>1h30</td><td>Vibra no pulso da pessoa e do guardião do turno; o sistema já chama quem vai substituir</td><td>Painel do turno, em amarelo</td></tr>
+          <tr><td>1h40</td><td>Repouso obrigatório de 20 minutos, fora do frio, contado como trabalho</td><td>Painel do turno, em repouso</td></tr>
+          <tr><td>Fim do repouso</td><td>Relógio zera e a pessoa fica liberada para voltar</td><td>Painel do turno, liberado</td></tr>
+          <tr><td>Não passou de volta pelo portal</td><td>Alerta: pode haver alguém preso na câmara</td><td>Alerta em cadeia, sem exceção</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">O painel <a href="#paineis">Turno</a>, o mesmo dos colaboradores, mostra ao vivo quem está no frio, há quanto tempo e quanto falta para o repouso. O histórico de cada pessoa prova que a pausa foi cumprida.</p>
+    </section>
+
+    <section id="estoque">
+      <span class="eyebrow">Estoque e inventário</span>
+      <h2>Vendas só enxergam o que pode ser vendido</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Situação</th><th>Onde está</th><th>Vende?</th></tr></thead>
+        <tbody>
+          <tr><td>Prevista</td><td>Carreta a caminho</td><td>Sim, sujeito à chegada</td></tr>
+          <tr><td>Em conferência</td><td>Câmara de descarregamento</td><td>Sim, sujeito à conferência</td></tr>
+          <tr><td>Armazenada</td><td>Câmara de armazenamento, por baia</td><td>Sim</td></tr>
+          <tr><td>Abastecida</td><td>Posição da linha de dollys</td><td>Sim</td></tr>
+          <tr><td>Carregada</td><td>Dolly do cliente ou caminhão</td><td>Não, já comprometida</td></tr>
+          <tr><td>Avaria</td><td>Área de avaria</td><td>Não</td></tr>
+          <tr><td>Sem data para venda</td><td>Bloqueada pela validade</td><td>Não</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose">
+        <p>Com o Argos, o inventário é contínuo: as antenas sabem o tempo todo que doly está em cada baia e quantas cestas há em cada posição. A contagem humana passa a conferir o Argos: cíclica diária da linha, câmara completa antes de cada carreta, patrimônio semanal e geral mensal. A contagem é cega: o inventariante não vê o saldo do sistema.</p><p>A validade gravada na entrada libera o FEFO (o primeiro a vencer é o primeiro a sair), o alerta dias antes de vencer e o bloqueio do vencido.</p>
+      </div>
+    </section>
+
+    <section id="onda">
+      <span class="eyebrow">Onda</span>
+      <h2>A IA propõe a onda; o responsável aprova antes de separar</h2>
+      <div class="cards">
+        <div class="card"><h3>A IA gera</h3><p>Dollys por pedido (cestas cheias e picado), paletes fechados ou montados, veículo e rampa de cada rota.</p></div>
+        <div class="card"><h3>A IA confere</h3><p>Posições no baú, peso e temperatura. Não cabe? Sugere outro veículo, segunda viagem ou divisão da rota.</p></div>
+        <div class="card"><h3>O responsável decide</h3><p>Aceita ou altera. Toda alteração fica registrada e ensina a IA para a próxima onda.</p></div>
+      </div>
+      <div class="states"><span class="state">PROPOSTA</span><span class="arrow">→</span><span class="state">EM_REVISAO</span><span class="arrow">→</span><span class="state">APROVADA</span><span class="arrow">→</span><span class="state">EM_SEPARACAO</span><span class="arrow">→</span><span class="state">CONCLUIDA</span></div>
+    </section>
+
+    <section id="linha">
+      <span class="eyebrow">Linha de dollys e paletes</span>
+      <h2>O estoque fica parado; o dolly ou o palete do cliente anda</h2>
+      <p class="lead">Abastecimento e separação acontecem ao mesmo tempo, o dia todo, nas duas linhas. A posição vazia é reabastecida pela validade mais curta, e o dolly ou o palete do cliente percorre as posições guiado pela luz em cada posição e pelo pulso.</p>
+      <p class="rule">Nada entra na linha sem estoque para o pedido inteiro.</p>
+      <div class="prose">
+        <p><b>Linha de dollys.</b> Cestas cheias vão embaixo, na primeira passada. As unidades picadas vêm numa segunda passada, por cima, em cestas mistas que enchem por ocupação. O dolly com picado fica na linha até ser encerrado. A etiqueta do doly do cliente é vinculada ao pedido antes da primeira cesta e o acompanha até o caminhão; cada cesta que entra é conferida no <a href="#transbordo">transbordo</a>.</p>
+        <p><b>Linha de paletes.</b> Fica nos níveis 1 e 2 do porta-palete, no mesmo modelo, e é reabastecida do 3º nível pela empilhadeira. O palete do cliente recebe a etiqueta antes da primeira caixa, é montado na linha e ganha filme stretch antes de seguir para a rampa.</p>
+      </div>
+    </section>
+
+    <section id="expedicao">
+      <span class="eyebrow">Expedição</span>
+      <h2>Duas conferências até a responsabilidade mudar de mãos</h2>
+      <ol class="steps">
+        <li><span><b>Pulmão.</b> Dollys e paletes de uma onda ficam misturados, mas cada um tem baia no sistema.</span></li>
+        <li><span><b>Portal da rampa.</b> O Argos lê o doly e as cestas ao passar e valida contra o pedido. Doly na rampa errada é barrado ali; o conferidor só trata a exceção.</span></li>
+        <li><span><b>Rampa.</b> Só dollys e paletes da rota, alinhados do último cliente para o primeiro.</span></li>
+        <li><span><b>Caminhão.</b> A antena na porta do baú lê o que sobe e, na entrega, o que desce em cada cliente, com hora e GPS. O motorista assina.</span></li>
+      </ol>
+      <div class="callout"><b>Cestas escondidas</b><p>As cestas do meio da pilha não aparecem para a câmera, mas respondem à antena: plástico e pão seco deixam o sinal passar. A linha garante o que entrou, cesta a cesta; a balança confere o que a etiqueta não alcança. Desmontar dolly é exceção.</p></div>
+    </section>
+
+    <section id="retorno">
+      <span class="eyebrow">Retorno de rota</span>
+      <h2>O caminhão volta com devoluções, cestas, dollys e paletes</h2>
+      <p class="lead">A antena do baú já sabe o que desceu e o que voltou. A equipe de entrega registra no cliente o motivo e a foto de cada devolução; na doca, o portal confere o retorno e o colaborador do dia só cataloga e libera o caminhão antes do terceiro turno.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Motivo</th><th>Destino padrão</th><th>Quem é avisado</th></tr></thead>
+        <tbody>
+          <tr><td>Cliente fechado</td><td>Estoque, se a validade permitir</td><td>Comercial</td></tr>
+          <tr><td>Pedido errado</td><td>Estoque</td><td>Gerência</td></tr>
+          <tr><td>Recusa comercial</td><td>Estoque</td><td>Comercial</td></tr>
+          <tr><td>Avaria no transporte</td><td>Avaria</td><td>Logística de entrega</td></tr>
+          <tr><td>Vencido / troca</td><td>A configurar</td><td>Compras</td></tr>
+          <tr><td>Validade curta</td><td>Sem data para venda</td><td>Comercial</td></tr>
+          <tr><td>Divergência</td><td>Bloqueado até apurar</td><td>Gerência e motorista</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Configurar</b><p>O destino da troca de pão vencido ainda não está definido: volta à fábrica com crédito ou é descartada na distribuidora. O sistema deixa essa regra configurável por fábrica ou por produto.</p></div>
+    </section>
+
+    <section id="avarias">
+      <span class="eyebrow">Avarias</span>
+      <h2>O dono decide; o app controla cada unidade até o destino</h2>
+      <p class="lead">Avaria é prejuízo financeiro para a empresa e moral para a equipe: produto bom para consumo indo para o lixo, diante de quem ganha pouco, estimula quebrar regras. O lixo é sempre o último destino.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Modo de decisão</th><th>Como funciona</th><th>Exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Regra genérica</td><td>O dono cria a política: tipo, origem, validade e valor até um limite levam a um destino já aprovado</td><td>Embalagem amassada, na validade, até R$ 50 → venda interna</td></tr>
+          <tr><td>Caso a caso</td><td>Nenhuma regra serve ou passou do limite: fila do responsável</td><td>Palete de laticínio quebrado</td></tr>
+          <tr><td>Regra com confirmação</td><td>A regra sugere, uma pessoa confirma</td><td>Avaria de fábrica nova</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Controle total: o ciclo de cada avaria</h3>
+      <ol class="steps">
+        <li><span><b>Registrada:</b> foto, local, etapa, quem achou, quantidade, validade e valor. Sai do disponível na hora.</span></li>
+        <li><span><b>Em quarentena:</b> baia de avarias, contada no inventário como qualquer posição.</span></li>
+        <li><span><b>Aguardando decisão:</b> regra aplicada ou fila aberta, com prazo e escada guardião do turno → gerência.</span></li>
+        <li><span><b>Decidida:</b> quem decidiu, por qual regra, e o destino.</span></li>
+        <li><span><b>Encerrada:</b> só com comprovante: NF de devolução ou de venda, recibo de doação ou foto do descarte.</span></li>
+      </ol>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Destino (ordem definida pelo dono)</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Devolução à fábrica</td><td>Quando ela repõe; regra no cadastro do fornecedor</td></tr>
+          <tr><td>Venda simbólica interna</td><td>Com NF; desconto em folha só com autorização escrita</td></tr>
+          <tr><td>Prêmio para a turma</td><td>Ligado a meta objetiva, como a queda de avarias no mês</td></tr>
+          <tr><td>Doação</td><td>Banco de alimentos ou entidade, dentro da validade</td></tr>
+          <tr><td>Compostagem ou biomassa</td><td>Para o que não serve para consumo</td></tr>
+          <tr><td>Lixo</td><td>Último recurso, com justificativa e aprovação</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">Quem registra a avaria não escolhe o destino. O benefício é da turma, e cresce quando a avaria cai.</p>
+      <div class="callout"><b>Validar antes de ligar</b><p>Venda interna e prêmio em produto passam pelo contador e pelo jurídico; produto com embalagem danificada, pela vigilância sanitária. O app nasce pronto e cada destino é ligado quando validado. Base: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15224.htm" target="_blank" rel="noopener">Lei 15.224/2025</a>.</p></div>
+    </section>
+
+    <section id="pessoas">
+      <span class="eyebrow">Turnos e pessoas</span>
+      <h2>Sem equipes fixas: o sistema distribui o turno</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Turno</th><th>Foco</th><th>Também faz</th></tr></thead>
+        <tbody>
+          <tr><td>1º</td><td>Recebimento, armazenagem, abastecimento</td><td>Retornos da manhã, inventário antes da carreta</td></tr>
+          <tr><td>2º</td><td>Ondas e separação</td><td>1 a 2 carretas por dia, retornos da tarde</td></tr>
+          <tr><td>3º</td><td>Carregamento</td><td>Pendências da onda, se aceitar; pode barrar</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>No início do turno o sistema confirma quem está disponível. Cada operação tem início, previsão, fim e rendimento, e a previsão aprende com a experiência de cada pessoa. A gerência acompanha o painel e muda a dinâmica quando precisa.</p></div>
+
+      <p class="rule">Multicolaboradores: todos treinados no mesmo nível de execução. Planejamento e controle são do Deméter e da gerência.</p>
+      <div class="prose"><p>O ser humano continua lá, em todas as etapas. O que deixa de existir é o colaborador que se acha chefe: não há conferente, fiscal nem encarregado, porque conferir e acompanhar passou a ser trabalho do olho. Cada pessoa é treinada para vários momentos da operação, e o Deméter escolhe a função do dia por habilidade, habilitação e rodízio, o que também tira as pessoas do frio e varia o esforço.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>Quem</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td>Gerência</td><td>A empresa</td><td>Define as regras, aprova ondas e decide as exceções</td></tr>
+          <tr><td>O olho</td><td>O Deméter</td><td>Planeja, distribui, confere, controla e avisa</td></tr>
+          <tr><td>Multicolaboradores</td><td>Todos iguais na execução</td><td>Recebimento, linha, rampa, retorno, conforme o dia</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><h3>Guardião do turno</h3><p>Uma função do dia, não um cargo: passa de um colaborador para outro. É quem atende primeiro a exceção que o sistema não resolve sozinho.</p></div>
+        <div class="card"><h3>Habilitação não é hierarquia</h3><p>Empilhadeira (NR-11), brigada e primeiros socorros, designado da CIPA (NR-5): ficam no cadastro de cada pessoa, e o Deméter só escala quem está habilitado.</p></div>
+      </div>
+
+      <p class="rule">Com mão de obra escassa e alta rotatividade, o sistema é o treinamento.</p>
+      <div class="prose"><p>Treinar alguém que sai em poucos meses custa mais que a tecnologia. O Deméter coloca o conhecimento no processo, não na memória de quem sabe: a luz e o pulso dizem onde ir, o que pegar e quantas cestas; o transbordo barra o erro na hora; o painel mostra quem precisa de ajuda.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Ponto</th><th>Hoje</th><th>No Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Pessoa nova</td><td>Semanas aprendendo com quem já sabe</td><td>Produz no 1º dia, guiada pela luz e pelo pulso</td></tr>
+          <tr><td>Conhecimento</td><td>Na cabeça dos antigos; sai quando eles saem</td><td>No sistema; fica quando a pessoa sai</td></tr>
+          <tr><td>Modo aprendiz</td><td>—</td><td>Mais detalhe no pulso e previsão de tempo maior nos primeiros dias</td></tr>
+          <tr><td>Polivalência</td><td>Ninguém sabe quem faz o quê</td><td>Matriz de habilidades: cada pessoa, cada tarefa, nível e tempo médio</td></tr>
+          <tr><td>Curva de aprendizado</td><td>Invisível</td><td>Tempo real por tarefa caindo dia a dia, por pessoa</td></tr>
+          <tr><td>Custo da rotatividade</td><td>Não medido</td><td>Dias até a pessoa atingir o ritmo, por função</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Um sistema que se regenera</h3>
+      <div class="prose"><p>Cada turno deixa dados: quanto tempo levou cada tarefa, onde houve erro, que onda atrasou, que cliente devolveu. No turno seguinte, as previsões, as ondas e os pedidos já vêm corrigidos. O Deméter decide o rotineiro e não depende da boa vontade de quem está desmotivado.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Para a equipe usar, em vez de</th><th>Mostrar</th></tr></thead>
+        <tbody>
+          <tr><td>"O sistema vigia você"</td><td>"O sistema diz exatamente o que fazer, sem bronca"</td></tr>
+          <tr><td>Produtividade para punir</td><td>Produtividade para reconhecer quem rende e treinar quem precisa</td></tr>
+          <tr><td>Pessoa substituível</td><td>Trabalho mais leve: menos andar, menos erro, menos retrabalho</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>O erro não é para punir</h3>
+      <p class="rule">O erro não é para punir: é para tomar providência e não se repetir.</p>
+      <div class="prose"><p>O Deméter pensa do mesmo jeito. Cada erro registrado vira uma pergunta: o processo deixou errar? A pessoa precisa de retreino? A regra está clara? A resposta muda o processo, o treino ou o cadastro, e o mesmo erro não volta amanhã.</p><p>E o olho vê tudo, igual para todos: ninguém é um na frente do chefe e outro por trás. Acabam o puxa-saco e quem finge que trabalha, porque o que conta é o que cada um entrega, não o que diz nem o que pensa.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>O que aconteceu</th><th>O que o Deméter faz</th></tr></thead>
+        <tbody>
+          <tr><td>Erro de primeira vez</td><td>Barra na hora, registra e verifica se o processo deixou errar</td></tr>
+          <tr><td>Erro que se repete com a mesma pessoa</td><td>Retreino guiado no ponto exato da dificuldade, com modo aprendiz no pulso</td></tr>
+          <tr><td>Erro que se repete com várias pessoas</td><td>O problema é do processo: muda a regra, o endereço ou a embalagem</td></tr>
+          <tr><td>Burla deliberada</td><td>Vai para a gerência, que decide; fica registrado quem decidiu e o quê</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Remunerado pelo que faz bem feito</h3>
+      <div class="prose"><p>Com cada tarefa medida, a relação muda: em vez de patrão e empregado em lados opostos, colaboradores com o mesmo objetivo, remunerados pelo que fazem bem feito. "Bem feito" quer dizer sem erro, com a pausa térmica cumprida e sem atalho na segurança. Rápido sozinho não conta.</p></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Parte</th><th>Como funciona</th></tr></thead>
+        <tbody>
+          <tr><td>Salário-base</td><td>Igual para todos na mesma função (CLT, art. 461)</td></tr>
+          <tr><td>Variável individual</td><td>Prêmio pelo que foi bem feito, acima do esperado (CLT, art. 457)</td></tr>
+          <tr><td>Variável da turma</td><td>Participação nos resultados com metas negociadas (Lei 10.101/2000), como a queda de avarias e de devoluções</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Cada um vê os próprios números, a qualquer hora</td><td>Transparência gera confiança</td></tr>
+          <tr><td>Nunca um ranking público com nomes</td><td>Exposição vira assédio moral</td></tr>
+          <tr><td>A média considera o contexto: frio ou seco, aprendiz, PcD</td><td>Comparar o diferente como igual é injusto</td></tr>
+          <tr><td>Parte do prêmio é da turma</td><td>Mantém a ajuda mútua e evita o "cada um por si"</td></tr>
+          <tr><td>A medida vem das tarefas, não do vídeo</td><td>O vídeo mede o fluxo, não ranqueia trabalhador</td></tr>
+          <tr><td>Abaixo da média: retreino, não punição</td><td>O objetivo é subir o nível, não descartar gente</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Os formatos de remuneração variável precisam ser validados por contador e advogado trabalhista antes de virar regra numa empresa.</p>
+
+      <h3>Calculadora de QLP</h3>
+      <form class="calc" id="qlp" aria-label="Calculadora de quadro de pessoal" onsubmit="return false">
+        <div class="inputs">
+          <div class="field"><label for="q-carretas">Carretas por semana</label><input id="q-carretas" type="number" min="0" step="1" value="3"></div>
+          <div class="field"><label for="q-torres">Torres por carreta</label><input id="q-torres" type="number" min="1" step="1" value="60"></div>
+          <div class="field"><label for="q-dollys">Dollys de saída por dia</label><input id="q-dollys" type="number" min="0" step="10" value="150"></div>
+          <div class="field"><label for="q-min">Minutos por dolly na linha</label><input id="q-min" type="number" min="1" step="0.5" value="8"></div>
+          <div class="field"><label for="q-dias">Dias de operação por semana</label><input id="q-dias" type="number" min="1" max="7" step="1" value="6"></div>
+          <div class="field"><label for="q-horas">Horas produtivas por pessoa</label><input id="q-horas" type="number" min="1" step="0.1" value="6.2"></div>
+          <div class="field"><label for="q-cob">Cobertura (férias, faltas) %</label><input id="q-cob" type="number" min="0" step="1" value="12"></div>
+          <div class="field"><label for="q-frio">Trabalho dentro da câmara fria %</label><input id="q-frio" type="number" min="0" max="100" step="5" value="70"></div>
+        </div>
+        <div class="out" aria-live="polite">
+          <div class="kpis">
+            <div class="kpi"><span>Horas de trabalho/dia</span><b id="r-hho">30</b></div>
+            <div class="kpi"><span>Colaboradores no quadro</span><b id="r-op">9</b></div>
+          </div>
+          <div class="tbl"><table class="t">
+            <thead><tr><th>Tarefa</th><th>Horas/dia</th></tr></thead>
+            <tbody id="r-tab"></tbody>
+          </table></div>
+          <p class="note">Tempos iniciais estimados. Na operação, a previsão é substituída pelos tempos reais de cada pessoa. Quadro para um turno; com três turnos, cada um precisa de um mínimo de pessoas e de um guardião do dia.</p>
+        </div>
+      </form>
+    </section>
+
+    <section id="acesso">
+      <span class="eyebrow">Exceções e autorização</span>
+      <h2>A IA autoriza o rotineiro; a gerência abre exceção e responde por ela</h2>
+      <p class="lead">O mesmo mecanismo que libera a entrada na câmara fria vale para toda a operação: o sistema autoriza o que é rotina, nega com o motivo, e qualquer exceção tem um responsável com nome.</p>
+      <p class="note">Lei e segurança não têm exceção.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Tipo de regra</th><th>Exemplos</th><th>Exceção</th></tr></thead>
+        <tbody>
+          <tr><td>Legal e de segurança</td><td>Repouso do art. 253, EPI, pessoa presa na câmara</td><td>Nunca: o sistema troca a pessoa, não fura a regra</td></tr>
+          <tr><td>Operacional</td><td>Prioridade, doca, onda, quem entra agora</td><td>Sim, aberta pela gerência, que responde por ela</td></tr>
+        </tbody>
+      </table></div>
+      <div class="cards">
+        <div class="card"><span class="big">5'</span><h3>Guardião do turno</h3><p>Um colaborador na função do dia. Primeiro a receber o alerta; resolve o que tem regra e chama a gerência no resto.</p></div>
+        <div class="card"><span class="big">15'</span><h3>Gerência</h3><p>Recebe se o guardião não respondeu no prazo, e decide toda exceção operacional. Prazos configuráveis.</p></div>
+      </div>
+      <div class="callout"><b>Vídeo e LGPD</b><p>Identificação pelo crachá RFID, sem reconhecimento facial. A câmera de vídeo só confere o EPI, e a imagem fica guardada apenas quando há exceção ou violação, por prazo definido, com placa avisando o monitoramento.</p></div>
+      <p class="note">As câmeras de vídeo têm seção própria: <a href="#cameras">Vídeo 360° com IA</a>.</p>
+      <p class="note">Fonte: <a href="https://www.aurum.com.br/blog/clt-comentado/art-253-clt/" target="_blank" rel="noopener">art. 253 da CLT comentado (Aurum)</a>.</p>
+    </section>
+
+    <section id="simulador">
+      <span class="eyebrow">Simulador do turno</span>
+      <h2>Monte o turno e veja se cabe</h2>
+      <p class="lead">Escolha as operações, as quantidades e quantas pessoas há no turno. O simulador distribui as pessoas minuto a minuto, na ordem da lista, e mostra quando cada operação começa e termina.</p>
+      <div class="sim">
+        <div class="inputs">
+          <div class="field"><label for="s-inicio">Início do turno</label><input id="s-inicio" type="time" value="06:00"></div>
+          <div class="field"><label for="s-duracao">Duração (horas)</label><input id="s-duracao" type="number" min="1" max="12" step="0.25" value="7.33"></div>
+          <div class="field"><label for="s-op">Colaboradores</label><input id="s-op" type="number" min="1" max="50" step="1" value="9"></div>
+          <div class="field"><label for="s-docas">Docas (1 a 3)</label><input id="s-docas" type="number" min="1" max="3" step="1" value="1"></div>
+          <div class="field"><label for="s-min">Minutos por dolly na linha</label><input id="s-min" type="number" min="1" step="0.5" value="8"></div>
+          <h3>Operações do turno</h3>
+          <div class="ops" id="s-ops" aria-live="polite"></div>
+          <div class="add-ops" aria-label="Adicionar operação">
+            <button type="button" data-add="carreta">+ Carreta</button>
+            <button type="button" data-add="abastecer">+ Abastecer linha</button>
+            <button type="button" data-add="separar">+ Separar onda</button>
+            <button type="button" data-add="conferir">+ Conferir onda</button>
+            <button type="button" data-add="carregar">+ Carregar rotas</button>
+            <button type="button" data-add="retorno">+ Retorno de rota</button>
+          </div>
+        </div>
+        <div class="gantt">
+          <div class="veredito" id="s-veredito" aria-live="polite"></div>
+          <div class="kpis">
+            <div class="kpi"><span>Fim previsto</span><b id="s-fim">—</b></div>
+            <div class="kpi"><span>Uso dos colaboradores</span><b id="s-uop">—</b></div>
+          </div>
+          <div class="g-scroll"><div class="g-inner" id="s-gantt"></div></div>
+          <div class="legend"><span><i style="background:var(--accent)"></i>Movimentação</span><span><i style="background:var(--info)"></i>Confirmação e exceções</span><span><i style="border-left:2px dashed var(--bad);border-radius:0;width:0;height:12px"></i>Fim do turno</span></div>
+          <p class="note">Cada doca tem suas câmaras: numa mesma doca, a carreta seguinte só encosta quando a anterior foi liberada; com mais docas, as carretas são distribuídas em rodízio e descarregam ao mesmo tempo, disputando as mesmas pessoas. Tempos de partida estimados: descarga e carga do retorno 4 pessoa-min por torre (até 4 pessoas); confirmação de produto e validade 3 min por torre (1 pessoa); abastecimento 4 pessoa-min por torre; conferência 2 min por dolly; carregamento 1 pessoa-min por dolly; retorno de rota 8 min por caminhão. Na operação, cada tempo é substituído pelo tempo real de cada pessoa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cenarios">
+      <span class="eyebrow">Cenários</span>
+      <h2>Do olho humano ao olho do Argos</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Aspecto</th><th>Hoje</th><th>Deméter com Argos</th><th>Depois</th></tr></thead>
+        <tbody>
+          <tr><td>Doly</td><td>Visual</td><td>Portal lê ao passar</td><td>—</td></tr>
+          <tr><td>Produto</td><td>Olho e memória</td><td>NF-e + câmera; o pulso confirma</td><td>IA reconhece sozinha</td></tr>
+          <tr><td>Validade</td><td>Sem registro</td><td>Câmera lê; o pulso confirma</td><td>Leitura automática</td></tr>
+          <tr><td>Cesta</td><td>Some sem ninguém saber</td><td>Lida em cada transbordo</td><td>Cesta de fábrica, rastreada da fábrica ao cliente</td></tr>
+          <tr><td>Linha</td><td>Andando por carga</td><td>Luz na posição + pulso</td><td>Robô leva o doly</td></tr>
+          <tr><td>Produto amontoado</td><td>Contagem na mão</td><td>Doly inteiro na balança</td><td>—</td></tr>
+          <tr><td>Unidade</td><td>Contagem na mão</td><td>Código 2D lido pela câmera</td><td>—</td></tr>
+          <tr><td>Custo</td><td>—</td><td>Médio, sem consumo de etiqueta</td><td>Alto</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rule">Um ecossistema só: antena, câmera, balança, sensor e pulso são sentidos do mesmo Argos.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>Papel</th></tr></thead>
+        <tbody>
+          <tr><td>Antenas e leitores RFID</td><td>Em rede cabeada (PoE), que leva dados e energia e não depende de Wi-Fi dentro da câmara</td></tr>
+          <tr><td>Servidor local</td><td>Ouve as antenas, recebe o vídeo e roda a IA na empresa; transforma leituras em eventos; mantém a operação sem internet</td></tr>
+          <tr><td>VPS na nuvem</td><td>Eventos e trechos curtos de vídeo; painéis, alertas e histórico de qualquer lugar</td></tr>
+          <tr><td>Pulso, TVs e celulares</td><td>Recebem as tarefas e alertas de cada pessoa e devolvem as confirmações</td></tr>
+          <tr><td>Controle de acesso</td><td>Cada perfil vê só o que lhe cabe; toda visualização de vídeo fica registrada</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>Qualquer sentido gera o mesmo evento. Se uma antena para, o pulso pede a confirmação manual e o turno continua do ponto em que parou, porque o progresso está no servidor. A empresa pode começar por um trecho (o recebimento, por exemplo) e estender o Argos às outras câmaras quando a primeira estiver firme.</p></div>
+    </section>
+
+    <section id="integracao">
+      <span class="eyebrow">Cadastros e integração</span>
+      <h2>Nada fixo no código: mudou a operação, muda o cadastro</h2>
+      <p class="lead">Docas, turnos, janelas de carreta, capacidade, patrimônio de cada fornecedor e destinos de avaria são cadastros. O app nasce pronto para qualquer empresa; só lei e segurança ficam travadas.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Cadastro</th><th>O que guarda</th><th>Quem altera</th></tr></thead>
+        <tbody>
+          <tr><td>Docas</td><td>Lado, tipo (carreta, toco, mista), horários, câmara ligada</td><td>Gerência</td></tr>
+          <tr><td>Turnos e janelas</td><td>Horários, prioridades, janela livre por fornecedor</td><td>Gerência + compras</td></tr>
+          <tr><td>Capacidade</td><td>Torres por carreta, dollys por dia, rendimento</td><td>Calculado; gerência ajusta</td></tr>
+          <tr><td>Câmaras</td><td>Quantas de descarga e de retorno, faixa de temperatura</td><td>Gerência</td></tr>
+          <tr><td>Fornecedores</td><td>O que volta (dolly, cesta, PBR) e regra de troca; origem dos dollys (empresa, fábrica ou os dois)</td><td>Compras</td></tr>
+          <tr><td>Avarias</td><td>Destinos possíveis e quem aprova cada um</td><td>Gerência</td></tr>
+          <tr><td>Equipamentos</td><td>Leitores e antenas RFID, câmeras, balanças, relógios, empilhadeiras a bateria, TVs, sensores</td><td>Gerência</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Dolly no cliente</h3>
+      <div class="prose"><p>O dolly vai até o cliente, então tem saldo por cliente, como uma conta corrente de patrimônio. Saiu na rampa, desceu no cliente lido pela antena do baú, voltou lido do mesmo jeito, no retorno de rota. Passou do prazo configurado, vendedor e supervisor de rota são avisados.</p></div>
+      <h3>Conexão com o sistema da empresa</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Uso</th><th>Quando</th><th>O que passa</th></tr></thead>
+        <tbody>
+          <tr><td>Migração</td><td>Uma vez, na implantação</td><td>Produtos, clientes, rotas, fornecedores, saldos</td></tr>
+          <tr><td>Conexão on-line</td><td>O tempo todo</td><td>Pedidos e compras entram; NF, retornos, avarias e saldos voltam</td></tr>
+          <tr><td>NF-e de entrada</td><td>Assim que a fábrica emite</td><td>XML da nota baixado da SEFAZ com o certificado A1 da empresa, antes de a carreta chegar</td></tr>
+          <tr><td>Rastreador da carreta</td><td>Durante a viagem</td><td>Previsão de chegada; sem ele, o horário de saída e o histórico da rota</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">API do Deméter com chave por empresa. O conector lê uma view do banco, a API do ERP ou, em último caso, um arquivo exportado. Se o ERP cair, os eventos esperam numa fila e a doca não para.</p>
+    </section>
+
+    <section id="cameras">
+      <span class="eyebrow">Vídeo 360° com IA</span>
+      <h2>O vídeo vigia o processo, não a pessoa</h2>
+      <p class="lead">Câmeras de vídeo 360° no teto cobrem docas, corredores, portas das câmaras e rampas com poucos aparelhos. Começam pela segurança: EPI, acesso à câmara fria, pontos cegos. Numa fase seguinte, o mesmo vídeo vira um dos olhos do Argos: mede o que acontece de verdade, confirma o que as antenas leram, e a inteligência regenerativa transforma essa medida em correção.</p>
+      <h3>Fase 1: segurança e pontos cegos</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Detecção</th><th>Funciona</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Câmera de vídeo tapada, virada ou desligada</td><td>Muito bem</td><td>Alerta imediato: fim do ponto cego criado</td></tr>
+          <tr><td>Pessoa em área restrita ou fora do horário</td><td>Bem</td><td>Câmara fechada, doca à noite</td></tr>
+          <tr><td>Porta aberta, corredor bloqueado</td><td>Bem</td><td>Junto com o sensor de temperatura</td></tr>
+          <tr><td>Palete ou dolly fora do lugar</td><td>Bem</td><td>Vira tarefa de arrumação</td></tr>
+          <tr><td>"Atitude suspeita", consumo de produto</td><td>Mal: muitos falsos alarmes</td><td>Não serve como acusação</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose"><p>As perdas são encontradas pelo inventário cego (onde, quando, qual item) e só o trecho de vídeo da divergência vai para revisão de uma pessoa. A IA sinaliza, uma pessoa decide. E o registro de cada movimento acaba com o "foi ele": protege também o trabalhador honesto, que hoje leva a culpa junto.</p></div>
+      <h3>Fase 2: inteligência regenerativa</h3>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>O vídeo mede</th><th>A IA compara com</th><th>Vira</th></tr></thead>
+        <tbody>
+          <tr><td>Torres e paletes que passam na doca e na rampa</td><td>NF e pedido</td><td>Contagem automática; divergência na hora</td></tr>
+          <tr><td>Tempo real de cada etapa, fila na doca, linha parada</td><td>Tempo previsto</td><td>Previsão de tempo e QLP corrigidos a cada turno</td></tr>
+          <tr><td>Ocupação de baias e porta-paletes</td><td>Estoque no sistema</td><td>Inventário visual contínuo e endereçamento melhor</td></tr>
+          <tr><td>Queda de caixa, palete tombado</td><td>Fluxo normal</td><td>Avaria aberta no ato, com o vídeo do momento</td></tr>
+          <tr><td>Ordem dos volumes no baú</td><td>Ordem de entrega da rota</td><td>Alerta antes de o caminhão sair</td></tr>
+          <tr><td>Caminhos e cruzamentos no armazém</td><td>Layout cadastrado</td><td>Mapa de calor do fluxo, sem identificar pessoas, para redesenhar o pátio</td></tr>
+        </tbody>
+      </table></div>
+      <ol class="steps">
+        <li><span><b>Mede:</b> o vídeo registra o que aconteceu, sem depender de alguém anotar.</span></li>
+        <li><span><b>Compara:</b> a IA confronta com o previsto, o cadastrado e o histórico.</span></li>
+        <li><span><b>Sugere:</b> propõe o ajuste: tempo, quadro de pessoal, endereço, regra.</span></li>
+        <li><span><b>Pessoa aprova:</b> o responsável aceita ou recusa; nada muda sozinho.</span></li>
+        <li><span><b>Melhora:</b> a configuração muda, e o próximo turno já começa melhor.</span></li>
+      </ol>
+      <div class="callout"><b>Limites</b><p>Sem reconhecimento facial e sem nota por pessoa: o vídeo mede o fluxo, não ranqueia trabalhador. Imagem guardada só quando há exceção, por prazo definido, com placa avisando o monitoramento (LGPD). A fase 2 começa quando a fase 1 estiver estável e a equipe confiar nela.</p></div>
+    </section>
+
+    <section id="papel">
+      <span class="eyebrow">Papel zero</span>
+      <h2>Nenhum papel circula na operação</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Papel de hoje</th><th>No Deméter</th></tr></thead>
+        <tbody>
+          <tr><td>Conferência anotada da NF</td><td>Leitura automática contra a NF-e</td></tr>
+          <tr><td>Comprovante da carreta</td><td>Assinatura na tela, enviada por WhatsApp ou e-mail</td></tr>
+          <tr><td>Romaneio de separação</td><td>Luz e pulso guiando posição por posição</td></tr>
+          <tr><td>Lista das cestas mistas</td><td>Conteúdo ligado à etiqueta do doly, consultado em qualquer tela</td></tr>
+          <tr><td>Canhoto de entrega</td><td>Assinatura e foto no celular</td></tr>
+          <tr><td>Fichas de inventário</td><td>Contagem cega no app</td></tr>
+          <tr><td>Relatórios impressos</td><td>Painéis e placar nas TVs</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">A verificar com a contabilidade: documentos fiscais que a lei exija impressos no transporte ficam fora do papel zero até confirmação.</p>
+    </section>
+
+    <section id="hardware">
+      <span class="eyebrow">Hardware e custos</span>
+      <h2>Antenas, etiquetas que voltam e o pulso: nada que vire lixo</h2>
+      <p class="lead">Valores aproximados, para ordem de grandeza; cada item precisa de cotação. O que se repete por mês é pouco, porque nenhuma etiqueta é descartável.</p>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Item</th><th>Para quê</th><th>Qtd.</th><th>Valor unitário</th></tr></thead>
+        <tbody>
+          <tr><td>Leitor RFID UHF fixo</td><td>4 a 8 antenas cada, em rede PoE</td><td>Por câmara</td><td>~R$ 6–15 mil</td></tr>
+          <tr><td>Antena UHF curta</td><td>Uma por baia ou posição de linha</td><td>Por baia</td><td>~R$ 600–1.500</td></tr>
+          <tr><td>Portal UHF</td><td>Portas das câmaras, docas e rampas</td><td>Por passagem</td><td>~R$ 8–25 mil</td></tr>
+          <tr><td>Gateway RFID de teto</td><td>Achar doly perdido no galpão</td><td>Opcional</td><td>A cotar</td></tr>
+          <tr><td>Etiqueta UHF para metal + ímã</td><td>Doly, reutilizável</td><td>1 por doly em giro</td><td>~R$ 5–30</td></tr>
+          <tr><td>Etiqueta ou clip UHF de cesta</td><td>Se a fábrica não etiquetar</td><td>1 por cesta em giro</td><td>A cotar</td></tr>
+          <tr><td>Crachá RFID do colaborador</td><td>Portal da câmara fria, quem fez o quê</td><td>1 por pessoa</td><td>A cotar</td></tr>
+          <tr><td>Relógio Wear OS</td><td>A voz do Deméter no pulso</td><td>1 por pessoa no turno</td><td>~R$ 800+</td></tr>
+          <tr><td>LED de baia (ESP32)</td><td>Luz que guia o abastecimento e a separação</td><td>Por baia</td><td>~R$ 40–70</td></tr>
+          <tr><td>Receptor BLE (ESP32)</td><td>Zona de dollys e pessoas</td><td>1 por câmara</td><td>~R$ 50–100</td></tr>
+          <tr><td>Sensor de temperatura e porta</td><td>Cadeia de frio</td><td>1 a 2 por câmara</td><td>~R$ 100</td></tr>
+          <tr><td>Câmera IP com IA</td><td>Doca, baias, portas e rampas</td><td>2 por câmara</td><td>~R$ 200–500</td></tr>
+          <tr><td>Balança de piso ou paleteira com balança</td><td>Miolo do palete e produto amontoado</td><td>1 por doca</td><td>~R$ 4–10 mil</td></tr>
+          <tr><td>Servidor local</td><td>Ouvir as antenas, IA e operação sem internet</td><td>1 + reserva</td><td>~R$ 1.500–3.500</td></tr>
+          <tr><td>Access point Wi-Fi</td><td><a href="https://magazineluiza.com.br/busca/ubiquiti+ap/" target="_blank" rel="noopener">UniFi U6+</a>, para pulso e celulares</td><td>5–6</td><td>R$ 1.058–1.196</td></tr>
+          <tr><td>Celular da entrega</td><td><a href="https://www.xataka.com.br/ofertas/samsung-galaxy-a16-atinge-menor-preco-da-internet-com-cupom-e-sai-r-630-no-mercado-livre" target="_blank" rel="noopener">Galaxy A16 5G</a>, para motorista e equipe de entrega</td><td>17</td><td>~R$ 630</td></tr>
+          <tr><td>Impressora de placas</td><td><a href="https://www.kabum.com.br/produto/402918/impressora-de-etiquetas-elgin-termica-l42-pro-full-ethernet-usb-e-serial" target="_blank" rel="noopener">Elgin L42 Pro</a>, placas das posições</td><td>1</td><td>R$ 1.736</td></tr>
+          <tr><td>TV do placar</td><td>TV 43" + TV box</td><td>3–4</td><td>A cotar</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Os aparelhos de pulso estão na seção <a href="#pulso">Mãos livres</a>. O processo é o mesmo com qualquer sentido (princípio 5): cada um é ligado ou desligado na configuração, por decisão de quem tem esse direito.</p>
+
+      <h3>Calculadora de custo mensal</h3>
+      <form class="calc" id="custo" aria-label="Calculadora de custo mensal" onsubmit="return false">
+        <div class="inputs">
+          <div class="field"><label for="c-caminhoes">Caminhões de entrega</label><input id="c-caminhoes" type="number" min="0" step="1" value="15"></div>
+          <div class="field"><label for="c-plano">Plano de dados por linha (R$)</label><input id="c-plano" type="number" min="0" step="1" value="59"></div>
+          <div class="field"><label for="c-vps">VPS (R$/mês)</label><input id="c-vps" type="number" min="0" step="10" value="200"></div>
+          <div class="field"><label for="c-fotos">Fotos analisadas pela IA/mês</label><input id="c-fotos" type="number" min="0" step="500" value="6000"></div>
+          <div class="field"><label for="c-modelo">Modelo de IA</label>
+            <select id="c-modelo"><option value="sonnet">Sonnet 5.5</option><option value="haiku">Haiku 5.5</option></select></div>
+          <div class="field"><label for="c-dolar">Dólar (R$)</label><input id="c-dolar" type="number" min="1" step="0.1" value="5.6"></div>
+        </div>
+        <div class="out" aria-live="polite">
+          <div class="kpis">
+            <div class="kpi"><span>Total por mês</span><b id="k-total">R$ 1.900</b></div>
+            <div class="kpi"><span>IA por mês</span><b id="k-ia">R$ 450</b></div>
+          </div>
+          <div class="tbl"><table class="t">
+            <thead><tr><th>Item</th><th>R$/mês</th></tr></thead>
+            <tbody id="k-tab"></tbody>
+          </table></div>
+          <p class="note">Preços da API por milhão de tokens: Sonnet 5.5 US$ 2 entrada / US$ 10 saída; Haiku 5.5 US$ 0,10 / US$ 0,50 (<a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">tabela oficial</a>). Estimativa: ~3.000 tokens de entrada e ~300 de saída por foto. Fora da conta: desenvolvimento e manutenção.</p>
+        </div>
+      </form>
+    </section>
+
+    <section id="desenvolvimento">
+      <span class="eyebrow">Desenvolvimento</span>
+      <h2>Um código em Python, três plataformas</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Camada</th><th>Tecnologia</th><th>Papel</th></tr></thead>
+        <tbody>
+          <tr><td>Interface</td><td>Flet (Flutter)</td><td>Android na operação, Windows no escritório, Web numa VPS</td></tr>
+          <tr><td>Servidor</td><td>FastAPI</td><td>Regras, eventos, API para aparelhos e painéis</td></tr>
+          <tr><td>Banco central</td><td>PostgreSQL</td><td>Fonte única da verdade com muitos aparelhos gravando</td></tr>
+          <tr><td>Banco no aparelho</td><td>SQLite</td><td>Trabalhar sem sinal na câmara fria e sincronizar depois</td></tr>
+          <tr><td>Leitura RFID</td><td>Leitores UHF em rede (protocolo LLRP)</td><td>O servidor local ouve as antenas e transforma leituras em eventos</td></tr>
+          <tr><td>Hospedagem</td><td>Oracle Cloud + servidor local</td><td>Acesso externo e operação sem internet</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Maior risco técnico</b><p>Transformar milhares de leituras por segundo em eventos confiáveis: filtrar o ruído, decidir a zona e reconhecer o transbordo. Isso roda no servidor local, em Python, e precisa ser provado primeiro numa bancada com duas posições, antes de qualquer câmara. O app Flet no relógio é experimental: o pulso recebe as tarefas como notificações.</p></div>
+      <ol class="steps">
+        <li><span>Prova técnica: bancada de transbordo com um leitor UHF, duas antenas, um doly e 32 cestas etiquetadas.</span></li>
+        <li><span>Recebimento: NF-e da SEFAZ, retorno nas baias, doly nascendo na doca, validade, placar.</span></li>
+        <li><span>Estoque e inventário contínuo.</span></li>
+        <li><span>Onda, abastecimento, linha de dollys com transbordo, e paletizados.</span></li>
+        <li><span>Expedição, portal da rampa, antena do baú e retorno de rota.</span></li>
+        <li><span>Pessoas, pulso, relógio de frio e QLP dinâmico.</span></li>
+        <li><span>Câmeras com IA e o Argos completo.</span></li>
+      </ol>
+    </section>
+
+    <section id="necessario">
+      <span class="eyebrow">O que é necessário</span>
+      <h2>Antes de qualquer código</h2>
+      <ul class="check">
+        <li><h3>Dados da operação</h3><ul><li>Torres por carreta e carretas por dia</li><li>Medidas da cesta, do doly e das baias</li><li>Dollys e paletes por dia e clientes por rota</li><li>Horários dos turnos</li><li>Baús dos veículos e posições de dolly e palete</li><li>Cadastro de produtos e validades</li><li>Origem dos pedidos e compras hoje</li></ul></li>
+        <li><h3>Decisões de negócio</h3><ul><li>Destino da troca de pão vencido</li><li>Regra de corte quando falta produto</li><li>Prazo de devolução do dolly no cliente</li><li>Quem aprova ondas e exceções</li><li>Destinos de avaria liberados pelo jurídico</li><li>Etiqueta na cesta: de fábrica ou clip</li></ul></li>
+        <li><h3>Prova técnica</h3><ul><li>Leitor UHF com duas antenas e chapa de separação</li><li>Um doly e 32 cestas etiquetadas</li><li>Reconhecer o transbordo cesta a cesta</li><li>Relógio Wear OS recebendo tarefas</li><li>Testar dentro da câmara fria: metal, umidade e frio</li></ul></li>
+        <li><h3>Pessoas e aprovações</h3><ul><li>Patrocinador do piloto</li><li>Fábrica parceira para as cestas etiquetadas</li><li>Compras e contabilidade</li><li>Responsável pela rede</li><li>LGPD: a equipe sabe como seus dados de produtividade, fotos e assinaturas são usados</li></ul></li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span>Deméter · ideia aberta · outubro de 2026</span>
+  <span><a href="https://github.com/sanicolauvix" target="_blank" rel="noopener">GitHub</a> · <button class="theme-btn" id="tema" type="button">Alternar tema</button></span>
+</footer>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const num = (id) => { const v = parseFloat($(id).value); return Number.isFinite(v) ? v : 0; };
+  const fmt = (v, d = 1) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const brl = (v) => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+
+  function calcQlp() {
+    const carretas = num('q-carretas'), torres = Math.max(num('q-torres'), 1), dollys = num('q-dollys');
+    const minDolly = num('q-min'), dias = Math.max(num('q-dias'), 1), horas = Math.max(num('q-horas'), 0.1), cob = num('q-cob') / 100;
+    const torresDia = (torres * carretas) / dias;
+    const linhas = [
+      ['Descarga e carga do retorno', (8 * (torres / 60) * carretas) / dias, 'op'],
+      ['Descarga → armazenamento', (3 * torresDia) / 60, 'op'],
+      ['Abastecimento da linha', (4 * torresDia) / 60, 'op'],
+      ['Separação (linha)', (minDolly * dollys) / 60, 'op'],
+      ['Rampa', dollys / 60, 'op'],
+      ['Confirmação da NF e exceções', (3 * torresDia) / 60, 'conf'],
+      ['Exceções da expedição', (2 * dollys) / 60, 'conf'],
+    ];
+    // Descanso térmico (CLT art. 253): 20 min a cada 1h40 no frio = +20% sobre as horas trabalhadas na câmara.
+    const frio = Math.min(Math.max(num('q-frio'), 0), 100) / 100;
+    const hhFrio = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0) * frio;
+    linhas.push(['Descanso térmico (art. 253)', hhFrio * 0.2, 'op']);
+    const hhOp = linhas.filter((l) => l[2] === 'op').reduce((s, l) => s + l[1], 0);
+    const hhConf = linhas.filter((l) => l[2] === 'conf').reduce((s, l) => s + l[1], 0);
+    $('r-hho').textContent = fmt(hhOp + hhConf);
+    $('r-op').textContent = String(Math.ceil(((hhOp + hhConf) / horas) * (1 + cob)));
+    $('r-tab').innerHTML = linhas.map((l) => `<tr><td>${l[0]}</td><td>${fmt(l[1])}</td></tr>`).join('');
+  }
+
+  function calcCusto() {
+    const caminhoes = num('c-caminhoes'), plano = num('c-plano'), vps = num('c-vps'), fotos = num('c-fotos'), dolar = num('c-dolar');
+    const modelo = $('c-modelo').value;
+    const preco = modelo === 'haiku' ? { in: 0.10, out: 0.50 } : { in: 2, out: 10 };
+    const porFoto = (3000 * preco.in + 300 * preco.out) / 1e6;
+    const ondas = modelo === 'haiku' ? 1.3 : 25;
+    const iaUsd = fotos * porFoto + ondas + 5;
+    const linhasDados = Math.ceil(caminhoes * 1.12);
+    const itens = [
+      ['VPS', vps],
+      ['Fotos e backup', 40],
+      ['IA (API do Claude)', iaUsd * dolar],
+      [`Dados móveis (${linhasDados} linhas)`, linhasDados * plano],
+      ['Internet reserva', 60],
+      ['Domínio .com.br', 40 / 12],
+      ['Reposição de etiquetas e clips', 235],
+    ];
+    const total = itens.reduce((s, i) => s + i[1], 0);
+    $('k-total').textContent = brl(total);
+    $('k-ia').textContent = brl(iaUsd * dolar);
+    $('k-tab').innerHTML = itens.map((i) => `<tr><td>${i[0]}</td><td>${brl(i[1])}</td></tr>`).join('') +
+      `<tr class="total"><td>Total</td><td>${brl(total)}</td></tr>`;
+  }
+
+  $('qlp').addEventListener('input', calcQlp);
+  $('custo').addEventListener('input', calcCusto);
+  calcQlp();
+  calcCusto();
+
+  // Relógio e placar: um status muda a cada poucos segundos, como numa doca de verdade.
+  const relogio = $('relogio');
+  const tick = () => { const d = new Date(); relogio.textContent = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); };
+  tick(); setInterval(tick, 30000);
+  const ciclo = [
+    ['go', 'Descarregando', '7/12'], ['go', 'Descarregando', '10/12'], ['wait', 'Conferindo', '12/12'], ['ok', 'Liberada', '12/12'], ['go', 'Descarregando', '3/12'],
+  ];
+  let passo = 0;
+  const linhaB = document.querySelector('#placar tr:nth-child(2)');
+  setInterval(() => {
+    passo = (passo + 1) % ciclo.length;
+    const [cls, txt, torres] = ciclo[passo];
+    const flap = linhaB.querySelector('.flap');
+    flap.className = 'flap ' + cls + ' flipping';
+    flap.textContent = txt;
+    linhaB.children[2].textContent = torres;
+    setTimeout(() => flap.classList.remove('flipping'), 500);
+  }, 4000);
+
+  // Painéis: abas acessíveis (clique e setas do teclado).
+  const abas = Array.from(document.querySelectorAll('.tab'));
+  const mostrar = (aba) => {
+    abas.forEach((a) => {
+      const ativa = a === aba;
+      a.setAttribute('aria-selected', String(ativa));
+      a.tabIndex = ativa ? 0 : -1;
+      document.getElementById(a.getAttribute('aria-controls')).hidden = !ativa;
+    });
+  };
+  abas.forEach((a, i) => {
+    a.tabIndex = i === 0 ? 0 : -1;
+    a.addEventListener('click', () => mostrar(a));
+    a.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const prox = abas[(i + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length];
+      prox.focus(); mostrar(prox);
+    });
+  });
+
+  // Sempre abre no Início: ignora a posição guardada e o item do endereço (#secao).
+  try { history.scrollRestoration = 'manual'; } catch (e) { /* navegador antigo */ }
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', () => window.scrollTo(0, 0));
+
+  // Quem pede menos movimento vê a cena parada.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('cena')?.pauseAnimations();
+
+  // Relógio de frio no painel do turno: +1 minuto a cada 3 s; aos 100 min entra em repouso de 20 min (valores negativos).
+  const linhasFrio = Array.from(document.querySelectorAll('[data-frio]'));
+  const pintarFrio = () => {
+    linhasFrio.forEach((tr) => {
+      const m = Number(tr.dataset.frio), c = tr.querySelector('.frio-c');
+      if (!c) return;
+      if (m < 0) { c.innerHTML = '<span class="flap go">Repouso · volta em ' + (-m) + ' min</span>'; return; }
+      const hm = Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0');
+      c.innerHTML = m >= 90 ? '<span class="flap wait">' + hm + ' · repouso em ' + (100 - m) + ' min</span>' : '<span class="flap ok">' + hm + '</span>';
+    });
+  };
+  pintarFrio();
+  setInterval(() => {
+    linhasFrio.forEach((tr) => {
+      let m = Number(tr.dataset.frio) + 1;
+      if (m >= 100) m = -20;
+      tr.dataset.frio = String(m);
+    });
+    pintarFrio();
+  }, 3000);
+
+  // Painéis vivos: barras do turno andam e contadores sobem, voltando ao início em ciclo.
+  setInterval(() => {
+    document.querySelectorAll('[data-anda]').forEach((b) => {
+      const atual = parseFloat(b.style.width) || 0;
+      b.style.width = (atual >= 96 ? 8 : Math.min(atual + 4 + Math.random() * 6, 100)) + '%';
+    });
+    const torres = document.querySelector('[data-cont="torres"]');
+    if (torres) torres.textContent = String(Number(torres.textContent) >= 12 ? 7 : Number(torres.textContent) + 1);
+    const temp = document.querySelector('[data-temp="f1"]');
+    if (temp) temp.textContent = (3.4 + Math.random() * 0.9).toFixed(1).replace('.', ',');
+    const cenaTemp = document.getElementById('cena-temp');
+    if (cenaTemp && temp) cenaTemp.textContent = temp.textContent;
+    const rota = document.querySelector('[data-cont="rota04"]');
+    if (rota) rota.textContent = String(Number(rota.textContent) >= 11 ? 7 : Number(rota.textContent) + 1);
+  }, 3000);
+
+  // Simulador do turno: agenda minuto a minuto, pessoas por função, prioridade pela ordem da lista.
+  const TIPOS = {
+    carreta: { nome: 'Carreta de pão', unidade: 'torres', padrao: 60 },
+    abastecer: { nome: 'Abastecer linha', unidade: 'torres', padrao: 30 },
+    separar: { nome: 'Separar onda', unidade: 'dollys', padrao: 75 },
+    conferir: { nome: 'Conferir onda', unidade: 'dollys', padrao: 75 },
+    carregar: { nome: 'Carregar rotas', unidade: 'dollys', padrao: 75 },
+    retorno: { nome: 'Retorno de rota', unidade: 'caminhões', padrao: 8 },
+  };
+  let ops = [
+    { tipo: 'carreta', qtd: 60 }, { tipo: 'carreta', qtd: 60 }, { tipo: 'abastecer', qtd: 30 },
+    { tipo: 'separar', qtd: 75 }, { tipo: 'conferir', qtd: 75 },
+  ];
+  const hhmm = (min) => { const m = ((Math.round(min) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+
+  function rotulos() {
+    const cont = {};
+    return ops.map((o) => { cont[o.tipo] = (cont[o.tipo] || 0) + 1; return `${TIPOS[o.tipo].nome} ${cont[o.tipo]}`; });
+  }
+
+  function montarTarefas(minDolly, docas) {
+    const nomes = rotulos();
+    const tarefas = [];
+    const naDoca = [];
+    let carretas = 0, ultimaSeparar = null, ultimaConferir = null;
+    ops.forEach((o, i) => {
+      const q = Math.max(0, o.qtd), n = nomes[i];
+      if (o.tipo === 'carreta') {
+        const doca = carretas % docas;
+        carretas += 1;
+        const anterior = naDoca[doca];
+        const deps = anterior ? [anterior.r, anterior.s] : [];
+        const rotulo = docas > 1 ? `${n} (doca ${doca + 1})` : n;
+        const d = { nome: rotulo + ' · descarga', papel: 'op', trabalho: 4 * q, max: 4, deps };
+        const r = { nome: rotulo + ' · carga do retorno', papel: 'op', trabalho: 4 * q, max: 4, deps: [d] };
+        const s = { nome: rotulo + ' · confirmação', papel: 'conf', trabalho: 3 * q, max: 1, deps: [d] };
+        tarefas.push(d, r, s); naDoca[doca] = { r, s };
+      } else if (o.tipo === 'abastecer') {
+        tarefas.push({ nome: n, papel: 'op', trabalho: 4 * q, max: 2, deps: [] });
+      } else if (o.tipo === 'separar') {
+        ultimaSeparar = { nome: n, papel: 'op', trabalho: minDolly * q, max: 6, deps: [] }; tarefas.push(ultimaSeparar);
+      } else if (o.tipo === 'conferir') {
+        ultimaConferir = { nome: n, papel: 'conf', trabalho: 2 * q, max: 2, deps: ultimaSeparar ? [ultimaSeparar] : [] }; tarefas.push(ultimaConferir);
+      } else if (o.tipo === 'carregar') {
+        tarefas.push({ nome: n, papel: 'op', trabalho: q, max: 4, deps: ultimaConferir ? [ultimaConferir] : [] });
+      } else if (o.tipo === 'retorno') {
+        tarefas.push({ nome: n, papel: 'conf', trabalho: 8 * q, max: 1, deps: [] });
+      }
+    });
+    return tarefas;
+  }
+
+  function simular() {
+    const [h, m] = ($('s-inicio').value || '06:00').split(':').map(Number);
+    const inicio = (h || 0) * 60 + (m || 0);
+    const duracao = Math.max(num('s-duracao'), 1) * 60;
+    const pessoas = { op: Math.max(1, Math.round(num('s-op'))) };
+    const docas = Math.min(3, Math.max(1, Math.round(num('s-docas')) || 1));
+    const tarefas = montarTarefas(Math.max(num('s-min'), 1), docas);
+    tarefas.forEach((t) => { t.resta = t.trabalho; t.ini = null; t.fim = t.trabalho <= 0 ? 0 : null; });
+    const usado = { op: 0, conf: 0 };
+    let t = 0;
+    while (tarefas.some((x) => x.fim === null) && t < 1440) {
+      let livre = pessoas.op;
+      for (const x of tarefas) {
+        if (x.fim !== null || !x.deps.every((d) => d.fim !== null && d.fim <= t)) continue;
+        const n = Math.min(x.max, livre, Math.ceil(x.resta));
+        if (n <= 0) continue;
+        livre -= n; usado.op += n;
+        if (x.ini === null) x.ini = t;
+        x.resta -= n;
+        if (x.resta <= 0) x.fim = t + 1;
+      }
+      t += 1;
+    }
+    const fimGeral = Math.max(0, ...tarefas.map((x) => x.fim ?? 1440));
+    desenhar(tarefas, inicio, duracao, fimGeral, pessoas, usado);
+  }
+
+  function desenhar(tarefas, inicio, duracao, fimGeral, pessoas, usado) {
+    const escala = Math.max(duracao, fimGeral);
+    const pct = (min) => (min / escala) * 100;
+    const passo = escala > 600 ? 120 : 60;
+    let ticks = '';
+    for (let k = 0; k <= escala; k += passo) ticks += `<span style="left:${pct(k)}%">${hhmm(inicio + k)}</span>`;
+    const linhaFim = `<div class="fim" style="left:${pct(duracao)}%" aria-hidden="true"></div>`;
+    $('s-gantt').innerHTML = `<div class="g-axis"><span></span><div class="ticks">${ticks}</div></div>` +
+      tarefas.filter((x) => x.trabalho > 0).map((x) => {
+        const ini = x.ini ?? 0, fim = x.fim ?? 1440;
+        return `<div class="g-row"><div class="nm">${x.nome}<small>${hhmm(inicio + ini)}–${hhmm(inicio + fim)}</small></div>` +
+          `<div class="track">${linhaFim}<div class="seg ${x.papel === 'conf' ? 'conf' : ''}" style="left:${pct(ini)}%;width:${Math.max(pct(fim - ini), 0.6)}%" title="${x.nome}"></div></div></div>`;
+      }).join('');
+    $('s-fim').textContent = hhmm(inicio + fimGeral);
+    const janela = Math.max(fimGeral, 1);
+    $('s-uop').textContent = Math.round((usado.op / (pessoas.op * janela)) * 100) + '%';
+    const v = $('s-veredito');
+    if (fimGeral <= duracao) {
+      v.className = 'veredito ok';
+      v.innerHTML = `<b>Cabe no turno.</b> Termina às ${hhmm(inicio + fimGeral)}, com ${Math.round(duracao - fimGeral)} min de folga.`;
+    } else {
+      v.className = 'veredito estoura';
+      v.innerHTML = `<b>Não cabe no turno.</b> Passa ${Math.round(fimGeral - duracao)} min do fim (${hhmm(inicio + duracao)}). Aumente as pessoas, tire uma carreta ou passe a pendência para o turno seguinte, que pode recusar.`;
+    }
+  }
+
+  function listarOps() {
+    const nomes = rotulos();
+    $('s-ops').innerHTML = ops.map((o, i) => `
+      <div class="op-row">
+        <label for="s-q${i}">${nomes[i]}<small>${TIPOS[o.tipo].unidade}</small></label>
+        <input id="s-q${i}" type="number" min="0" step="1" value="${o.qtd}" data-i="${i}">
+        <button type="button" data-del="${i}" aria-label="Remover ${nomes[i]}">×</button>
+      </div>`).join('');
+    simular();
+  }
+
+  $('s-ops').addEventListener('input', (e) => {
+    const i = e.target.dataset.i;
+    if (i === undefined) return;
+    ops[Number(i)].qtd = Math.max(0, parseFloat(e.target.value) || 0);
+    simular();
+  });
+  $('s-ops').addEventListener('click', (e) => {
+    const i = e.target.dataset.del;
+    if (i === undefined) return;
+    ops.splice(Number(i), 1);
+    listarOps();
+  });
+  document.querySelector('.add-ops').addEventListener('click', (e) => {
+    const tipo = e.target.dataset.add;
+    if (!tipo) return;
+    ops.push({ tipo, qtd: TIPOS[tipo].padrao });
+    listarOps();
+  });
+  ['s-inicio', 's-duracao', 's-op', 's-docas', 's-min'].forEach((id) => $(id).addEventListener('input', simular));
+  listarOps();
+
+  // Índice: marca a seção visível.
+  const links = Array.from(document.querySelectorAll('.toc a'));
+  const alvos = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  // Marca a seção cujo topo passou da linha de leitura (35% da tela), pela posição real na página.
+  const marcar = () => {
+    const linha = window.innerHeight * 0.35;
+    let atual = alvos[0];
+    const ordem = alvos.slice().sort((x, y) => x.getBoundingClientRect().top - y.getBoundingClientRect().top);
+    ordem.forEach((sec) => { if (sec.getBoundingClientRect().top <= linha) atual = sec; });
+    if (window.scrollY < 40) atual = document.getElementById('inicio') || atual;
+    links.forEach((lk) => lk.classList.toggle('on', atual && lk.getAttribute('href') === '#' + atual.id));
+  };
+  let pedido = false;
+  window.addEventListener('scroll', () => {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(() => { pedido = false; marcar(); });
+  }, { passive: true });
+  window.addEventListener('resize', marcar);
+  window.addEventListener('pageshow', marcar);
+  marcar();
+
+  // Tema: alterna e lembra a escolha neste navegador.
+  const raiz = document.documentElement;
+  try { const salvo = localStorage.getItem('demeter-tema'); if (salvo) raiz.setAttribute('data-theme', salvo); } catch (e) { /* sem armazenamento */ }
+  $('tema').addEventListener('click', () => {
+    const escuro = raiz.getAttribute('data-theme') === 'dark' ||
+      (!raiz.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+    const novo = escuro ? 'light' : 'dark';
+    raiz.setAttribute('data-theme', novo);
+    try { localStorage.setItem('demeter-tema', novo); } catch (e) { /* sem armazenamento */ }
+  });
+})();
+</script>
+
+<script>
+/* Ouça antes: leitura em voz alta pelo próprio aparelho (Web Speech API) */
+(function(){
+  const PRONUNCIA = [[/\bWhatsApp\b/gi,"zap"],[/\blaser\b/gi,"lêiser"],[/\bdollys\b/gi,"dólis"],[/\bdolly\b/gi,"dóli"],[/\bRFID\b/g,"erre efe i dê"],[/\bArgos\b/g,"Árgos"],[/\bIA\b/g,"i a"],[/\bQLP\b/g,"quê éle pê"],[/Deméter/g,"Demeter"]];
+  const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
+  const RESUMO = [
+    "Olá. Este é o Deméter, o olho que tudo vê.",
+    "É uma ideia aberta para organizar a logística de uma distribuidora de alimentos: pão, cereais, laticínios, massas. Da carreta que chega da fábrica até o caminhão que sai para entregar.",
+    "A ideia é simples. Cada doly, cesta e palete ganha uma etiqueta RFID que a empresa reutiliza, e passa a ter dono, lugar e hora. Um doly é sempre um produto só, com trinta e duas cestas e uma validade.",
+    "Diz o ditado que o olho do dono é que engorda o boi. O Deméter é esse olho, em cada baia, cada caixa, cada carga e cada entrega. O produto segue, o erro para. Antenas, câmeras e balanças formam o Argos, o olho que tudo vê. Ninguém precisa bipar nada: quando uma cesta sai de um doly e entra no outro, o Deméter confere na hora. O erro morre onde nasce.",
+    "O estoque fica parado e é o dolly do cliente que anda pela linha. A IA propõe a separação, mas quem aprova é sempre uma pessoa. E nenhum papel circula na operação.",
+    "As mãos ficam livres: o Deméter fala pelo relógio no pulso de cada um, e uma luz na baia mostra onde ir. Nenhuma etiqueta vai para o lixo.",
+    "Pela página você encontra o fluxo em dez etapas, os painéis que mostram a operação ao vivo, como num aeroporto, e calculadoras para ver quantas pessoas o turno precisa e quanto custa.",
+    "Se tiver pouco tempo, comece pelo Fluxo e depois brinque no Simulador.",
+    "O Deméter é uma ideia aberta: qualquer pessoa pode copiar e adaptar, citando a autoria. Obrigado por ouvir."
+  ];
+  const $=id=>document.getElementById(id);
+  const box=$("ouvir"); if (!box) return;
+  const play=$("oPlay"), ic=$("oIc"), title=$("oTitle"), sub=$("oSub"), row=$("oRow"), bar=$("oBar"), now=$("oNow");
+  $("oText").innerHTML = RESUMO.map(t=>"<p>"+t+"</p>").join("");
+  const synth = window.speechSynthesis;
+  if (!synth || typeof SpeechSynthesisUtterance==="undefined"){
+    play.hidden=true; $("oDet").open=true; $("oDet").querySelector("summary").textContent="Resumo do Deméter";
+    return;
+  }
+  let voice=null, idx=0, state="idle", gen=0;
+  const RATES=[1,1.2,1.4,1.6]; let ri=3;
+  try{ const r=+localStorage.getItem("vozRate"); if (RATES.includes(r)) ri=RATES.indexOf(r); }catch(e){}
+  const spB=$("oSpeed");
+  const spTxt=()=>{ spB.textContent=String(RATES[ri]).replace(".",",")+"×"; }; spTxt();
+  spB.addEventListener("click", ()=>{
+    ri=(ri+1)%RATES.length; spTxt();
+    try{ localStorage.setItem("vozRate", RATES[ri]); }catch(e){}
+    if (state==="playing"){ synth.cancel(); speak(); }
+  });
+  function pickVoice(){
+    const vs=synth.getVoices();
+    voice = vs.find(v=>/pt[-_]BR/i.test(v.lang) && /antonio|daniel|male|masculin/i.test(v.name))
+         || vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang)) || null;
+  }
+  pickVoice(); if (synth.onvoiceschanged!==undefined) synth.onvoiceschanged=pickVoice;
+  function ui(){
+    const on = state!=="idle";
+    row.hidden=!on; now.hidden=!on;
+    ic.textContent = state==="playing" ? "❚❚" : "▶";
+    title.textContent = state==="playing" ? "Ouvindo…" : state==="paused" ? "Pausado, toque para continuar" : "Sem tempo para ler? Ouça antes";
+    sub.textContent = state==="idle" ? "O Deméter em uns 2 minutos" : Math.min(idx+1,RESUMO.length)+" de "+RESUMO.length;
+    bar.style.width = (state==="idle"?0:(idx/RESUMO.length*100))+"%";
+  }
+  function speak(){
+    if (idx>=RESUMO.length){ state="idle"; idx=0; ui(); return; }
+    const my=++gen; const u=new SpeechSynthesisUtterance(falar(RESUMO[idx]));
+    u.lang="pt-BR"; if (voice) u.voice=voice; u.rate=RATES[ri];
+    u.onend=()=>{ if (my===gen && state==="playing"){ idx++; speak(); } };
+    u.onerror=e=>{ if (my===gen && e.error!=="interrupted" && e.error!=="canceled"){ state="idle"; ui(); $("oDet").open=true; } };
+    now.textContent=RESUMO[idx]; ui(); synth.speak(u);
+  }
+  play.addEventListener("click", ()=>{
+    if (state==="playing"){ state="paused"; synth.cancel(); ui(); }
+    else { state="playing"; synth.cancel(); speak(); }
+  });
+  $("oStop").addEventListener("click", ()=>{ state="idle"; idx=0; synth.cancel(); ui(); });
+  window.addEventListener("pagehide", ()=>synth.cancel());
+})();
+</script>
+</body>
+</html>
