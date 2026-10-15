@@ -375,6 +375,29 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .toc .toc-pe a { border: 0; padding: 2px 0; font-size: 13px; }
 @media (min-width: 921px) { footer { display: none; } }
 
+/* Home: "Você sabe de toda a sua operação?" */
+.anuncio h1 { font-size: clamp(30px, 4vw, 52px); max-width: 22ch; }
+.an-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.rot { font-family: var(--font-mono); font-weight: 400; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #A8957E; }
+.rot.laranja { color: #E3A15E; }
+.cadeia { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cadeia li { position: relative; padding: 10px 14px 10px 16px; border-left: 3px solid #45352A; background: rgba(243, 233, 218, 0.04); border-radius: 0 10px 10px 0; font-size: clamp(15px, 1.4vw, 17px); color: #D2C1AA; }
+.cadeia li b { color: #F3E9DA; font-weight: 600; }
+.cadeia li:nth-child(2) { opacity: .8; margin-left: 14px; }
+.cadeia li:nth-child(3) { opacity: .62; margin-left: 28px; }
+.cadeia li:nth-child(4) { opacity: .45; margin-left: 42px; }
+.an-dir .an-olho { width: min(100%, 260px); align-self: flex-start; }
+.an-dir .an-sabe { font-size: clamp(16px, 1.6vw, 19px); color: #D2C1AA; }
+.an-dir .an-sabe strong { color: #F3E9DA; }
+.regras { border: 2px solid #45352A; border-radius: 16px; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+.regras p { font-size: clamp(15px, 1.5vw, 18px); color: #D2C1AA; }
+.selos { display: flex; flex-wrap: wrap; gap: 6px; }
+.selos span { font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; color: #F3E9DA; border: 1px solid #45352A; border-radius: 999px; padding: 4px 10px; }
+.an-marca b { letter-spacing: 0; font-size: 22px; }
+/* Menu sempre na lateral; só some no celular */
+@media (max-width: 920px) { .shell { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; } .toc { display: block; } .mnav { display: none; } footer { display: none; } }
+@media (max-width: 640px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } .mnav { display: flex; } footer { display: flex; } }
+
 .ouvir{max-width:64ch;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
 .ouvir[hidden],.ouvir [hidden]{display:none!important}
 .ouvir .obtn{width:100%;display:flex;align-items:center;gap:12px;background:var(--board);color:var(--board-ink);border:0;border-radius:10px;padding:12px 14px;text-align:left;cursor:pointer;font:inherit;min-height:56px}
@@ -431,13 +454,19 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view home" id="inicio" aria-label="Home">
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
+        <h1>Você sabe de toda a sua operação?</h1>
         <div class="an-grid">
           <div class="an-esq">
-            <h1>Quanto a sua operação perdeu ontem?<span>Ninguém sabe.</span></h1>
-            <p class="an-sabe">Existe um olho que sabe.</p>
-            <p class="an-lista">Em cada baia. Em cada volume.<br>Em cada carga. Em cada entrega.</p>
+            <b class="rot">Hoje</b>
+            <ol class="cadeia">
+              <li><b>O patrão</b> sabe o que o gerente geral conta.</li>
+              <li><b>O gerente geral</b> sabe o que o encarregado conta.</li>
+              <li><b>O encarregado</b> sabe o que o colaborador conta.</li>
+              <li><b>E assim por diante</b>, cada um contando um pouco menos.</li>
+            </ol>
           </div>
           <div class="an-dir">
+            <b class="rot laranja">Com o Deméter</b>
             <svg class="an-olho" viewBox="0 0 560 220" aria-hidden="true">
           <path d="M20 110 C 120 10, 440 10, 540 110 C 440 210, 120 210, 20 110 Z" fill="none" stroke="#E3A15E" stroke-width="5"/>
           <circle cx="280" cy="110" r="74" fill="none" stroke="#F3E9DA" stroke-width="3" stroke-opacity="0.35"/>
@@ -445,10 +474,14 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
           <circle cx="280" cy="110" r="20" fill="#E3A15E"><animate attributeName="r" values="20;24;20" dur="2.4s" repeatCount="indefinite"/></circle>
           <g stroke="#F3E9DA" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"><line x1="280" y1="22" x2="280" y2="44"/><line x1="280" y1="176" x2="280" y2="198"/><line x1="192" y1="110" x2="214" y2="110"/><line x1="346" y1="110" x2="368" y2="110"/></g>
         </svg>
-            <div class="an-conta"><b>FAÇA A CONTA</b><p>Numa operação de R$ 500 mil por dia, cada 1% que escapa é</p><strong>R$ 130 mil<small> por mês</small></strong></div>
+            <p class="an-sabe">Você sabe <strong>cada detalhe</strong> da operação e de <strong>cada colaborador</strong>, direto da fonte, de um jeito inteligente, com IA.</p>
           </div>
         </div>
-        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/">O olho em ação</a></div></div>
+        <div class="regras">
+          <p>E as regras? Das inúmeras que temos no Brasil, você sabe se a empresa cumpre todas, sem nenhuma surpresa no futuro.</p>
+          <div class="selos"><span>CLT</span><span>Pausa no frio</span><span>NR-6 · EPI</span><span>NR-11 · cargas</span><span>Lei 13.103 · motorista</span><span>Vigilância sanitária</span><span>NF-e · SEFAZ</span><span>LGPD</span></div>
+        </div>
+        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>Parece o futuro.</b><small>Pode ser o presente: a tecnologia já existe.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/">O olho em ação</a></div></div>
       </div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
