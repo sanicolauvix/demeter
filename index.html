@@ -441,9 +441,9 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
     <a href="#inicio">Home</a>
     <div class="grp">Apresentação</div>
-    <a href="#oque">O que é o Deméter</a>
+    <a href="#oque">O que é</a>
+    <a href="#tecnologia">O que usa</a>
     <a href="#fases">As fases</a>
-    <a href="#tecnologia">A tecnologia</a>
     <a href="#ia">A IA generativa</a>
     <div class="grp">Ver</div>
     <a class="out" href="olho/">O olho em ação →</a>
@@ -451,8 +451,8 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   </nav>
 
   <main>
-    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#fases">Fases</a><a href="#tecnologia">Tecnologia</a><a href="#ia">IA generativa</a><a href="olho/">O olho em ação →</a></nav>
-    <section class="view home" id="inicio" aria-label="Home">
+    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#tecnologia">O que usa</a><a href="#fases">Fases</a><a href="#ia">IA generativa</a><a href="olho/">O olho em ação →</a></nav>
+    <section class="view home" id="inicio" data-titulo="Home" aria-label="Home">
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
         <h1>Você sabe de toda a sua operação?</h1>
@@ -491,14 +491,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   <details id="oDet"><summary>Prefere ler? Veja o resumo em texto</summary><div id="oText"></div></details>
 </div>
 
-      <nav class="passo" aria-label="Navegação"><span></span><a class="prox" href="#oque">O que é o Deméter →</a></nav>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
-    <section class="view" id="oque" hidden>
+    <section class="view" id="oque" data-titulo="O que é" hidden>
       <span class="eyebrow">Apresentação · 1 de 4</span>
-      <h2>O que é o Deméter</h2>
+      <h2>O que é</h2>
       <p class="lead">O Deméter é fruto da imaginação de um desenvolvedor que não quer parar no tempo. É um projeto que junta tecnologias que já existem, estão disponíveis no mercado e têm um custo-benefício muito bom.</p>
-      <div class="selos claro"><span>RFID UHF</span><span>Câmeras com IA</span><span>Sensores IoT de temperatura</span><span>Balanças integradas</span><span>Relógios inteligentes</span><span>GPS e cercas eletrônicas</span><span>NF-e da SEFAZ</span><span>IA generativa</span></div>
       <div class="cards">
         <div class="card"><h3>Nasceu numa distribuidora de alimentos</h3><p>Foi pensado no chão da operação: câmaras frias, puxada, onda, rota e retorno, com os problemas de verdade de quem vive isso todo dia.</p></div>
         <div class="card"><h3>Serve para qualquer operação</h3><p>Atacado, indústria, farmacêutica, varejo, e-commerce, armazém geral: onde há volume que entra, anda e sai, o olho se adapta.</p></div>
@@ -510,11 +509,27 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="stat"><b>0</b><span>papel circulando na operação</span></div>
         <div class="stat"><b>24 h</b><span>de olho, sem cansar</span></div>
       </div>
-      <nav class="passo" aria-label="Navegação"><a href="#inicio">← Home</a><a class="prox" href="#fases">As fases →</a></nav>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
-    <section class="view" id="fases" hidden>
+    <section class="view" id="tecnologia" data-titulo="O que usa" hidden>
       <span class="eyebrow">Apresentação · 2 de 4</span>
+      <h2>O que usa</h2>
+      <p class="lead">Tecnologias que já existem, estão no mercado e têm ótimo custo-benefício. Seis sentidos e um único registro: nada depende de alguém lembrar de bipar.</p>
+      <div class="selos claro"><span>RFID UHF</span><span>Câmeras com IA</span><span>Sensores IoT de temperatura</span><span>Balanças integradas</span><span>Relógios inteligentes</span><span>GPS e cercas eletrônicas</span><span>NF-e da SEFAZ</span><span>IA generativa</span></div>
+      <div class="cards">
+        <div class="card"><h3>RFID UHF</h3><p>Etiquetas nos montados e nos volumes; antenas nas portas e nas baias. Ninguém bipa nada.</p></div>
+        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: EPI na câmara fria, o que saiu da doca, a avaria na hora.</p></div>
+        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de peso variável.</p></div>
+        <div class="card"><h3>Relógio no pulso</h3><p>O olho conversa com cada colaborador. Mãos livres para o trabalho.</p></div>
+        <div class="card"><h3>GPS e CRONOS</h3><p>Rastreador e cercas eletrônicas na estrada; jornada, diário de bordo e folha de ponto.</p></div>
+        <div class="card"><h3>Registro único</h3><p>Cada evento no padrão GS1 (EPCIS). Painéis, alertas e o resultado do patrão saem dele.</p></div>
+      </div>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
+    </section>
+
+    <section class="view" id="fases" data-titulo="As fases" hidden>
+      <span class="eyebrow">Apresentação · 3 de 4</span>
       <h2>As fases</h2>
       <p class="lead">Uma operação contínua em oito fases, e três trilhas que correm em paralelo, em qualquer fase. Fora do galpão, o CRONOS olha pelo Deméter. Toque numa fase para ver a tirinha.</p>
       <div class="fases"><a class="fase" href="olho/#puxada"><span>01</span>Puxada</a><a class="fase" href="olho/#descarga"><span>02</span>Descarga</a><a class="fase" href="olho/#onda"><span>03</span>Onda</a><a class="fase" href="olho/#abastecimento"><span>04</span>Abastecimento</a><a class="fase" href="olho/#separacao"><span>05</span>Separação</a><a class="fase" href="olho/#carregamento"><span>06</span>Carregamento</a><a class="fase" href="olho/#rota"><span>07</span>Rota</a><a class="fase" href="olho/#retorno"><span>08</span>Retorno</a></div>
@@ -669,25 +684,11 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   </svg>
   </div>
       <p class="scene-hint">Arraste para o lado para ver a cena inteira.</p>
-      <nav class="passo" aria-label="Navegação"><a href="#oque">← O que é o Deméter</a><a class="prox" href="#tecnologia">A tecnologia →</a></nav>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
-    <section class="view" id="tecnologia" hidden>
-      <span class="eyebrow">Apresentação · 3 de 4</span>
-      <h2>A tecnologia</h2>
-      <p class="lead">Seis sentidos e um único registro. Nada depende de alguém lembrar de bipar.</p>
-      <div class="cards">
-        <div class="card"><h3>RFID UHF</h3><p>Etiquetas nos montados e nos volumes; antenas nas portas e nas baias. Ninguém bipa nada.</p></div>
-        <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: EPI na câmara fria, o que saiu da doca, a avaria na hora.</p></div>
-        <div class="card"><h3>Sensores e balanças</h3><p>Temperatura de cada câmara e o peso de cada peça de peso variável.</p></div>
-        <div class="card"><h3>Relógio no pulso</h3><p>O olho conversa com cada colaborador. Mãos livres para o trabalho.</p></div>
-        <div class="card"><h3>GPS e CRONOS</h3><p>Rastreador e cercas eletrônicas na estrada; jornada, diário de bordo e folha de ponto.</p></div>
-        <div class="card"><h3>Registro único</h3><p>Cada evento no padrão GS1 (EPCIS). Painéis, alertas e o resultado do patrão saem dele.</p></div>
-      </div>
-      <nav class="passo" aria-label="Navegação"><a href="#fases">← As fases</a><a class="prox" href="#ia">A IA generativa →</a></nav>
-    </section>
 
-    <section class="view" id="ia" hidden>
+    <section class="view" id="ia" data-titulo="A IA generativa" hidden>
       <span class="eyebrow">Apresentação · 4 de 4</span>
       <h2>A IA generativa</h2>
       <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
@@ -710,7 +711,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         </div>
       </div>
       <div class="callout"><b>Feito com IA generativa</b><p>O próprio Deméter foi desenhado em parceria com IA generativa: o fluxo, as animações, as tirinhas e este site. A experiência de chão de quem conhece a operação, somada a uma IA como parceira de equipe.</p></div>
-      <nav class="passo" aria-label="Navegação"><a href="#tecnologia">← A tecnologia</a><a class="prox" href="olho/">O olho em ação →</a></nav>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
   </main>
 </div>
@@ -732,6 +733,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     window.scrollTo(0, 0);
     const m = document.querySelector('.mnav a.on'); if (m && m.scrollIntoView) m.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
+  // anterior e próximo, na ordem das telas
+  views.forEach((v, i) => {
+    const n = v.querySelector('.passo'); if (!n) return;
+    const a = views[i - 1], d = views[i + 1];
+    n.innerHTML = (a ? `<a href="#${a.id}">← ${a.dataset.titulo}</a>` : '<span></span>') +
+                  (d ? `<a class="prox" href="#${d.id}">${d.dataset.titulo} →</a>` : '<a class="prox" href="olho/">O olho em ação →</a>');
+  });
   addEventListener('hashchange', mostrar); mostrar();
   // Chips da cena levam à tirinha da etapa
   document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) location.href = 'olho/#' + b.getAttribute('data-ir'); });
