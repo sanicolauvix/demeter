@@ -463,8 +463,10 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .continuar p { font-size: 16px; color: var(--ink); max-width: 46ch; }
 .continuar p b { font-family: var(--font-display); }
 .continuar div { display: flex; gap: 8px; flex-wrap: wrap; flex: none; }
+.continuar .escolha { flex: 1 1 100%; border-top: 1px solid var(--line); padding-top: 10px; }
+.continuar .escolha button { font-size: 13px; padding: 5px 12px; }
 .continuar button, .barra-tour button { font: inherit; font-size: 14px; cursor: pointer; border-radius: 999px; padding: 8px 16px; border: 1px solid var(--line); background: none; color: var(--ink-2); }
-.continuar button.sim { background: var(--accent); border-color: var(--accent); color: #1A120D; font-weight: 600; }
+.continuar button.bsim { background: var(--accent); border-color: var(--accent); color: #1A120D; font-weight: 600; }
 .barra-tour { position: fixed; z-index: 40; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 10px; background: var(--board); color: var(--board-ink); border-radius: 999px; padding: 8px 10px 8px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.3); max-width: calc(100vw - 32px); }
 .barra-tour span { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .barra-tour span b { color: #E3A15E; font-weight: 600; }
@@ -960,43 +962,88 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   document.addEventListener('click', e => { if (e.target.closest('[data-tour]')) tourComecar(); });
   document.addEventListener('keydown', e => { if (tp < 0) return; if (e.key === 'Escape') tourFechar(); if (e.key === 'ArrowRight') tourIr(tp + 1); if (e.key === 'ArrowLeft') tourIr(tp - 1); });
 
-  // Tour com áudio: ao terminar o áudio da Home, convida a seguir ouvindo tela a tela
-  const SEQ = Array.from(document.querySelectorAll('.toc > a[href^="#"]')).map(a => a.getAttribute('href').slice(1)).filter(id => id !== 'inicio' && document.querySelector('#' + id + ' .player'));
-  const titulo = id => (document.getElementById(id) || {}).dataset ? document.getElementById(id).dataset.titulo : id;
+  document.body.dataset.pagina = 'home';
+  // Tour com áudio: tela a tela, incluindo as fases (que abrem em tela cheia e voltam sozinhas)
+  const lsGet = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+  const lsSet = (k, v) => { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const linkFases = (document.querySelector('.toc a[href^="olho/"]') || {}).getAttribute ? document.querySelector('.toc a[href^="olho/"]').getAttribute('href') : 'olho/#puxada';
+  const SEQ = Array.from(document.querySelectorAll('.toc > a')).map(a => {
+    const h = a.getAttribute('href');
+    if (h.startsWith('olho/')) return { id: 'fases', titulo: 'As fases' };
+    const id = h.slice(1); return document.querySelector('#' + id + ' .player') && id !== 'inicio' ? { id, titulo: document.getElementById(id).dataset.titulo } : null;
+  }).filter(Boolean);
   let si = -1, barra = null;
   function barraUI() {
     if (!barra) { barra = document.createElement('div'); barra.className = 'barra-tour'; barra.setAttribute('role', 'region'); barra.setAttribute('aria-label', 'Tour com áudio'); document.body.append(barra); }
-    barra.innerHTML = `<span>Tour com áudio · <b>${titulo(SEQ[si])}</b> · ${si + 1} de ${SEQ.length}</span><button type="button" class="bt-pausa">${window.demeterAudio.tocando() ? 'Pausar' : 'Continuar'}</button><button type="button" class="bt-pula">Pular</button><button type="button" class="bt-sai" aria-label="Parar o tour">✕</button>`;
+    barra.innerHTML = `<span>Tour com áudio · <b>${SEQ[si].titulo}</b> · ${si + 1} de ${SEQ.length}</span><button type="button" class="bt-pausa">${window.demeterAudio.tocando() ? 'Pausar' : 'Continuar'}</button><button type="button" class="bt-pula">Pular</button><button type="button" class="bt-sai" aria-label="Parar o tour">✕</button>`;
     barra.querySelector('.bt-pausa').onclick = () => { window.demeterAudio.alternar(); setTimeout(barraUI, 50); };
     barra.querySelector('.bt-pula').onclick = () => seguir(si + 1);
     barra.querySelector('.bt-sai').onclick = sairTour;
   }
-  function sairTour() { si = -1; window.demeterSeguindo = false; window.demeterAudio.parar(); if (barra) { barra.remove(); barra = null; } }
+  function sairTour() { si = -1; window.demeterSeguindo = false; window.demeterAudio.parar(); lsSet('demeter-tour', null); if (barra) { barra.remove(); barra = null; } }
   function seguir(i) {
-    if (i >= SEQ.length) { sairTour(); location.hash = 'ia'; setTimeout(() => oferecer('fim'), 300); return; }
-    si = i; window.demeterSeguindo = true;
-    location.hash = SEQ[i];
-    setTimeout(() => { window.demeterAudio.tocar(SEQ[i]); barraUI(); }, 120);
-  }
-  function oferecer(tipo) {
     document.querySelectorAll('.continuar').forEach(e => e.remove());
-    const box = document.createElement('div'); box.className = 'continuar';
-    if (tipo === 'fim') {
-      box.innerHTML = '<p><b>Fim do tour com áudio.</b> Quer ver e ouvir as oito fases em tela cheia, com as animações e as tirinhas?</p><div><a class="btn main" href="olho/#puxada">Ver as fases</a><button type="button" class="nao">Agora não</button></div>';
-      document.querySelector('#ia .passo').before(box);
-    } else {
-      box.innerHTML = '<p><b>Ficou curioso?</b> Continue ouvindo: eu passo por cada parte do projeto, você ouve e vê, e para quando quiser.</p><div><button type="button" class="sim">Sim, continuar ouvindo</button><button type="button" class="nao">Agora não</button></div>';
-      document.querySelector('#inicio .player').after(box);
-      box.querySelector('.sim').onclick = () => { box.remove(); seguir(0); };
+    if (i >= SEQ.length) { sairTour(); location.hash = 'ia'; setTimeout(() => oferecer('fim'), 300); return; }
+    si = i; const it = SEQ[i];
+    if (it.id === 'fases') {   // as fases são outra página: guarda o tour e vai até lá
+      lsSet('demeter-tour', { si: i, naFases: true, depois: (SEQ[i + 1] || {}).id || 'ia', base: location.href.split('#')[0] });
+      window.demeterSeguindo = false; window.demeterAudio.parar(); location.href = linkFases; return;
     }
-    box.querySelector('.nao').onclick = () => box.remove();
+    lsSet('demeter-tour', { si: i });
+    window.demeterSeguindo = true; location.hash = it.id;
+    setTimeout(() => { window.demeterAudio.tocar(it.id); barraUI(); }, 120);
+  }
+  function caixa(html, onde) {
+    document.querySelectorAll('.continuar').forEach(e => e.remove());
+    const box = document.createElement('div'); box.className = 'continuar'; box.innerHTML = html;
+    (onde || document.querySelector('#inicio .player')).after(box);
+    box.querySelectorAll('.nao').forEach(b => b.onclick = () => box.remove());
+    return box;
+  }
+  const escolha = () => '<div class="escolha">' + SEQ.map((x, i) => `<button type="button" data-de="${i}">${x.titulo}</button>`).join('') + '</div>';
+  function ligarEscolha(box) { box.querySelectorAll('[data-de]').forEach(b => b.onclick = () => seguir(+b.dataset.de)); }
+  function oferecer(tipo) {
+    if (tipo === 'fim') {
+      if (location.hash !== '#ia') location.hash = 'ia';
+      const box = caixa('<p><b>Fim do tour com áudio.</b> Obrigado por ouvir o Deméter. Quer rever alguma parte?</p>' + escolha() + '<div><button type="button" class="nao">Fechar</button></div>', document.querySelector('#ia .player'));
+      ligarEscolha(box); return;
+    }
+    const box = caixa('<p><b>Ficou curioso?</b> Continue ouvindo: eu passo por cada parte do projeto, você ouve e vê, e para quando quiser. Ou escolha por onde começar.</p><div><button type="button" class="bsim">Sim, continuar ouvindo</button><button type="button" class="nao">Agora não</button></div>' + escolha());
+    box.querySelector('.bsim').onclick = () => seguir(0); ligarEscolha(box);
   }
   document.addEventListener('audio-fim', e => {
     if (e.detail === 'home' && si < 0 && window.demeterAudio && window.demeterAudio.ok) oferecer('inicio');
-    else if (si >= 0 && e.detail === SEQ[si]) seguir(si + 1);
+    else if (si >= 0 && SEQ[si] && e.detail === SEQ[si].id) seguir(si + 1);
   });
   // se a pessoa mudar de tela por conta própria, o tour com áudio para
-  addEventListener('hashchange', () => { if (si >= 0 && location.hash.slice(1) !== SEQ[si]) sairTour(); });
+  addEventListener('hashchange', () => { if (si >= 0 && SEQ[si] && location.hash.slice(1) !== SEQ[si].id) { si = -1; window.demeterSeguindo = false; window.demeterAudio.parar(); if (barra) { barra.remove(); barra = null; } } });
+
+  // Boas-vindas: lembra a visita e oferece continuar de onde parou (ou começar onde quiser)
+  const visitas = (lsGet('demeter-visitas') || 0) + 1; lsSet('demeter-visitas', visitas);
+  const tourSalvo = lsGet('demeter-tour'), ouvindo = lsGet('demeter-ouvindo');
+  setTimeout(() => {
+    if (!window.demeterAudio || !window.demeterAudio.ok) return;
+    if (tourSalvo && tourSalvo.voltandoDasFases) {   // voltou das fases no meio do tour
+      lsSet('demeter-tour', null);
+      const j = SEQ.findIndex(x => x.id === tourSalvo.depois);
+      location.hash = tourSalvo.depois || 'inicio';
+      const box = caixa(`<p><b>Tour com áudio:</b> as fases ficaram para trás. A próxima parte é <b>${(SEQ[j] || {}).titulo || ''}</b>.</p><div><button type="button" class="bsim">▶ Continuar o tour</button><button type="button" class="nao">Parar aqui</button></div>`, document.querySelector('#' + (tourSalvo.depois || 'inicio') + ' .player'));
+      box.querySelector('.bsim').onclick = () => seguir(j < 0 ? 0 : j); return;
+    }
+    if (visitas < 2) return;
+    if (location.hash && location.hash !== '#inicio') return;
+    if (tourSalvo && SEQ[tourSalvo.si]) {
+      const box = caixa(`<p><b>Que bom te ver de novo!</b> Você estava no tour com áudio, em <b>${SEQ[tourSalvo.si].titulo}</b>. Continua de onde parou, ou escolha por onde começar.</p><div><button type="button" class="bsim">▶ Continuar de onde parei</button><button type="button" class="nao">Agora não</button></div>` + escolha());
+      box.querySelector('.bsim').onclick = () => seguir(tourSalvo.si); ligarEscolha(box); return;
+    }
+    if (ouvindo && ouvindo.pagina !== 'fases' && document.querySelector(`.player[data-audio="${ouvindo.k}"]`)) {
+      const box = caixa(`<p><b>Que bom te ver de novo!</b> Você estava ouvindo <b>${ouvindo.titulo.replace('Ouvir: ', '')}</b>, parte ${ouvindo.i + 1} de ${ouvindo.n}. Continua de onde parou, ou escolha por onde começar.</p><div><button type="button" class="bsim">▶ Continuar de onde parei</button><button type="button" class="nao">Agora não</button></div>` + escolha());
+      box.querySelector('.bsim').onclick = () => { if (ouvindo.tela) location.hash = ouvindo.tela; setTimeout(() => window.demeterAudio.tocar(ouvindo.k, ouvindo.i), 150); box.remove(); };
+      ligarEscolha(box); return;
+    }
+    const box = caixa('<p><b>Que bom te ver de novo no Deméter!</b> Quer ouvir de novo, ou escolher por onde começar?</p><div><button type="button" class="bsim">▶ Ouvir o Deméter em 2 minutos</button><button type="button" class="nao">Agora não</button></div>' + escolha());
+    box.querySelector('.bsim').onclick = () => { box.remove(); window.demeterAudio.tocar('home'); }; ligarEscolha(box);
+  }, 200);
   addEventListener('hashchange', mostrar); mostrar();
   // Chips da cena levam à tirinha da etapa
   document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) location.href = 'olho/#' + b.getAttribute('data-ir'); });
@@ -1097,8 +1144,9 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   }
   function parar(p) { if (!p) return; p._estado = 'idle'; p._i = 0; ui(p); limparAlvo(); if (atual === p) atual = null; }
   function falarParte(p) {
-    if (p._i >= p._partes.length) { parar(p); document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
+    if (p._i >= p._partes.length) { parar(p); try { localStorage.removeItem('demeter-ouvindo'); } catch (e) {} document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
     const parte = p._partes[p._i], meu = ++gen;
+    try { localStorage.setItem('demeter-ouvindo', JSON.stringify({ k: p.dataset.audio, i: p._i, n: p._partes.length, titulo: p.querySelector('.pbtn b').textContent, pagina: document.body.dataset.pagina || '', tela: location.hash.slice(1), t: Date.now() })); } catch (e) {}
     if (parte.etapa && window.demeterIr) window.demeterIr(parte.etapa, true);
     limparAlvo();
     if (parte.alvo) { const el = document.querySelector(parte.alvo); if (el) { el.classList.add('falando'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
@@ -1117,7 +1165,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); }
       atual = p; p._estado = 'tocando'; synth.cancel(); falarParte(p);
     });
-    p.querySelector('.pstop').addEventListener('click', () => { gen++; synth.cancel(); parar(p); });
+    p.querySelector('.pstop').addEventListener('click', () => { gen++; synth.cancel(); parar(p); try { localStorage.removeItem('demeter-ouvindo'); } catch (e) {} });
     p.querySelector('.pvel').addEventListener('click', () => {
       ri = (ri + 1) % RATES.length; try { localStorage.setItem('vozRate', RATES[ri]); } catch (e) {}
       players.forEach(ui); if (p._estado === 'tocando') { gen++; synth.cancel(); falarParte(p); }
@@ -1136,7 +1184,8 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   // controle para quem quiser encadear áudios (tour com áudio)
   window.demeterAudio = {
     ok,
-    tocar(k) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = 0; gen++; synth.cancel(); falarParte(p); return true; },
+    tocar(k, inicio) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = Math.min(inicio || 0, p._partes.length - 1); gen++; synth.cancel(); falarParte(p); return true; },
+    titulo(k) { const p = players.find(x => x.dataset.audio === k); return p ? p.querySelector('.pbtn b').textContent : k; },
     alternar() { if (atual) atual.querySelector('.pbtn').click(); },
     parar() { if (atual) { gen++; synth.cancel(); parar(atual); } },
     tocando() { return !!(atual && atual._estado === 'tocando'); },

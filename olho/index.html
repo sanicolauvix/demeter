@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
 .player details p { margin: .4em 0; font-size: 14px; color: var(--ink-2); }
 .player [hidden] { display: none !important; }
 .falando { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 8px; transition: outline-color .3s; }
-</style>
+.continuar{border:1px solid var(--accent);background:var(--surface);border-radius:14px;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}.continuar p{font-size:16px;margin:0;max-width:52ch}.continuar div{display:flex;gap:8px;flex-wrap:wrap}.continuar button{font:inherit;font-size:14px;cursor:pointer;border-radius:999px;padding:8px 16px;border:1px solid var(--line);background:none;color:var(--ink-2)}.continuar button.sim{background:var(--accent);border-color:var(--accent);color:#1A120D;font-weight:600}</style>
 </head>
 <body>
 
@@ -1700,6 +1700,28 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
     if(!deVoz) document.dispatchEvent(new CustomEvent('demeter-etapa',{detail:k}));
   }
   window.demeterIr=ir;
+  document.body.dataset.pagina='fases';
+  // Tour com áudio vindo da Home, e retomada de onde parou
+  setTimeout(function(){
+    var A=window.demeterAudio; if(!A||!A.ok) return;
+    function ls(k,v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)||'null'); if(v===null) localStorage.removeItem(k); else localStorage.setItem(k,JSON.stringify(v)); }catch(e){ return null; } }
+    function caixa(html){ var b=document.createElement('div'); b.className='continuar'; b.innerHTML=html; var w=document.querySelector('.wrap'); w.insertBefore(b,w.firstChild); b.querySelectorAll('.nao').forEach(function(x){ x.onclick=function(){ b.remove(); }; }); return b; }
+    var tour=ls('demeter-tour'), ouv=ls('demeter-ouvindo');
+    if(tour&&tour.naFases){
+      var b=caixa('<p><b>Tour com áudio: agora as fases.</b> O áudio passa por cada fase e a tela acompanha. Depois o tour volta sozinho para a apresentação.</p><div><button type="button" class="sim">▶ Ouvir o passeio pelas fases</button><button type="button" class="sair">Sair do tour</button></div>');
+      b.querySelector('.sim').onclick=function(){ b.remove(); A.tocar('fases'); };
+      b.querySelector('.sair').onclick=function(){ ls('demeter-tour',null); b.remove(); };
+      document.addEventListener('audio-fim',function(e){
+        var t=ls('demeter-tour'); if(e.detail!=='fases'||!t||!t.naFases) return;
+        ls('demeter-tour',{voltandoDasFases:true,depois:t.depois}); location.href=t.base+'#'+t.depois;
+      });
+      return;
+    }
+    if(ouv&&ouv.pagina==='fases'&&document.querySelector('.player[data-audio="'+ouv.k+'"]')){
+      var c=caixa('<p><b>Que bom te ver de novo!</b> Você estava ouvindo <b>'+(ouv.k==='fases'?'o passeio pelas fases':'a fase '+ouv.k.slice(5))+'</b>, parte '+(ouv.i+1)+' de '+ouv.n+'.</p><div><button type="button" class="sim">▶ Continuar de onde parei</button><button type="button" class="nao">Agora não</button></div>');
+      c.querySelector('.sim').onclick=function(){ c.remove(); if(ouv.k.indexOf('fase-')===0) ir(ouv.k.slice(5)); A.tocar(ouv.k,ouv.i); };
+    }
+  },50);
   document.addEventListener('click',function(ev){ var a=ev.target.closest('.ftoc a[data-ir]'); if(a){ ev.preventDefault(); history.replaceState(null,'','#'+a.getAttribute('data-ir')); } });
   var volta=document.querySelector('.fvoltar');
   if(volta) volta.addEventListener('click',function(ev){ if(document.referrer && history.length>1){ ev.preventDefault(); history.back(); } });
@@ -1733,8 +1755,9 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
   }
   function parar(p) { if (!p) return; p._estado = 'idle'; p._i = 0; ui(p); limparAlvo(); if (atual === p) atual = null; }
   function falarParte(p) {
-    if (p._i >= p._partes.length) { parar(p); document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
+    if (p._i >= p._partes.length) { parar(p); try { localStorage.removeItem('demeter-ouvindo'); } catch (e) {} document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
     const parte = p._partes[p._i], meu = ++gen;
+    try { localStorage.setItem('demeter-ouvindo', JSON.stringify({ k: p.dataset.audio, i: p._i, n: p._partes.length, titulo: p.querySelector('.pbtn b').textContent, pagina: document.body.dataset.pagina || '', tela: location.hash.slice(1), t: Date.now() })); } catch (e) {}
     if (parte.etapa && window.demeterIr) window.demeterIr(parte.etapa, true);
     limparAlvo();
     if (parte.alvo) { const el = document.querySelector(parte.alvo); if (el) { el.classList.add('falando'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
@@ -1753,7 +1776,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
       if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); }
       atual = p; p._estado = 'tocando'; synth.cancel(); falarParte(p);
     });
-    p.querySelector('.pstop').addEventListener('click', () => { gen++; synth.cancel(); parar(p); });
+    p.querySelector('.pstop').addEventListener('click', () => { gen++; synth.cancel(); parar(p); try { localStorage.removeItem('demeter-ouvindo'); } catch (e) {} });
     p.querySelector('.pvel').addEventListener('click', () => {
       ri = (ri + 1) % RATES.length; try { localStorage.setItem('vozRate', RATES[ri]); } catch (e) {}
       players.forEach(ui); if (p._estado === 'tocando') { gen++; synth.cancel(); falarParte(p); }
@@ -1772,7 +1795,8 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
   // controle para quem quiser encadear áudios (tour com áudio)
   window.demeterAudio = {
     ok,
-    tocar(k) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = 0; gen++; synth.cancel(); falarParte(p); return true; },
+    tocar(k, inicio) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = Math.min(inicio || 0, p._partes.length - 1); gen++; synth.cancel(); falarParte(p); return true; },
+    titulo(k) { const p = players.find(x => x.dataset.audio === k); return p ? p.querySelector('.pbtn b').textContent : k; },
     alternar() { if (atual) atual.querySelector('.pbtn').click(); },
     parar() { if (atual) { gen++; synth.cancel(); parar(atual); } },
     tocando() { return !!(atual && atual._estado === 'tocando'); },
