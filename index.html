@@ -458,13 +458,16 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <a href="#oque">O que é</a>
     <a href="#nasceu">Como nasceu</a>
     <a href="#tecnologia">O que usa</a>
+    <a href="#problema">O problema</a>
+    <a href="#principios">Princípios</a>
     <a href="olho/#puxada" data-titulo="As fases">As fases ↗</a>
-    <a href="#ia">A IA generativa</a>
+    <a href="#paineis">Painéis</a>
+    <a href="#ia">A IA regenerativa</a>
     <div class="toc-pe"><a href="v1/">Versão anterior</a><a href="https://github.com/sanicolauvix/demeter" target="_blank" rel="noopener">GitHub</a><button class="theme-btn" id="tema2" type="button">Alternar tema</button></div>
   </nav>
 
   <main>
-    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#nasceu">Como nasceu</a><a href="#tecnologia">O que usa</a><a href="olho/#puxada">As fases ↗</a><a href="#ia">IA generativa</a></nav>
+    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#nasceu">Como nasceu</a><a href="#tecnologia">O que usa</a><a href="#problema">O problema</a><a href="#principios">Princípios</a><a href="olho/#puxada">As fases ↗</a><a href="#paineis">Painéis</a><a href="#ia">IA regenerativa</a></nav>
     <section class="view home" id="inicio" data-titulo="Home" aria-label="Home">
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
@@ -567,9 +570,185 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 
 
 
-    <section class="view" id="ia" data-titulo="A IA generativa" hidden>
+    <section class="view" id="problema" data-titulo="O problema" hidden>
       <span class="eyebrow">Apresentação</span>
-      <h2>A IA generativa</h2>
+      <h2>Hoje, a operação roda no olho e na memória</h2>
+      <div class="cards c2">
+        <div class="card"><h3>Conferência visual</h3><p>Montados chegam envoltos em filme stretch e são contados no olho. O erro entra no estoque já no recebimento.</p></div>
+        <div class="card"><h3>Separação sem rumo</h3><p>Separador e ajudante pegam uma carga e andam o depósito inteiro, cruzando com outros dolys num espaço pequeno.</p></div>
+        <div class="card"><h3>Patrimônio sem saldo</h3><p>Dolys, paletes e vazios retornáveis entram e saem sem contagem. A perda é silenciosa e ninguém sabe quem deve a quem.</p></div>
+        <div class="card dark"><h3>O bipe no lugar da caneta</h3><p>Trocar a prancheta pelo coletor de código de barras digitaliza a anotação, não o processo. O coletor registra só o que alguém lembrou de bipar; o Deméter lê sozinho e orienta o que vai acontecer.</p></div>
+      </div>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
+    </section>
+
+    <section class="view" id="principios" data-titulo="Princípios" hidden>
+      <span class="eyebrow">Apresentação</span>
+      <h2>Dez regras guiam todo o desenho</h2>
+      <div class="tbl"><table class="t">
+        <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
+        <tbody>
+          <tr><td>Tudo começa no recebimento</td><td>O que entra errado contamina o resto do fluxo</td></tr>
+          <tr><td>O erro morre onde nasce</td><td>Cada passagem se confere sozinha; o erro é barrado na hora e não segue com o produto</td></tr>
+          <tr><td>Patrimônio é dinheiro</td><td>Dolys, paletes e vazios têm saldo por fornecedor e por cliente, como conta corrente</td></tr>
+          <tr><td>IA propõe, pessoa aprova</td><td>Ondas, veículos e exceções sempre têm um responsável</td></tr>
+          <tr><td>Processo independe do aparelho</td><td>Antena, câmera, balança ou pulso geram o mesmo evento</td></tr>
+          <tr><td>Comercial não é da logística</td><td>Retorno, corte e troca vêm de quem tem autoridade</td></tr>
+          <tr><td>Papel zero</td><td>Todo registro nasce no app e vira indicador e aprendizado</td></tr>
+          <tr><td>O registro não esquece</td><td>O Deméter mostra; o dono decide, e a decisão também fica registrada</td></tr>
+          <tr><td>Regenerativo</td><td>Erros, tempos e produtividade de hoje viram correção para amanhã, em todas as áreas</td></tr>
+          <tr><td>Projeto vivo</td><td>Nada é fechado: regras viram configuração, o desenho muda com a operação e falha encontrada é corrigida logo</td></tr>
+        </tbody>
+      </table></div>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
+    </section>
+
+    <section class="view" id="paineis" data-titulo="Painéis" hidden>
+      <span class="eyebrow">Apresentação</span>
+      <h2>A operação inteira, à vista de todos</h2>
+      <p class="lead">Cada painel roda numa TV ou no celular e se alimenta sozinho dos eventos registrados. Ninguém digita nada para o painel. Os dados abaixo são exemplos.</p>
+      <div class="tabs" role="tablist" aria-label="Painéis">
+        <button class="tab" role="tab" id="t-chegadas" aria-controls="p-chegadas" aria-selected="true" type="button">Chegadas</button>
+        <button class="tab" role="tab" id="t-partidas" aria-controls="p-partidas" aria-selected="false" type="button">Partidas</button>
+        <button class="tab" role="tab" id="t-camara" aria-controls="p-camara" aria-selected="false" type="button">Câmara</button>
+        <button class="tab" role="tab" id="t-linha" aria-controls="p-linha" aria-selected="false" type="button">Linha</button>
+        <button class="tab" role="tab" id="t-turno" aria-controls="p-turno" aria-selected="false" type="button">Turno</button>
+        <button class="tab" role="tab" id="t-retornos" aria-controls="p-retornos" aria-selected="false" type="button">Retornos</button>
+        <button class="tab" role="tab" id="t-onda" aria-controls="p-onda" aria-selected="false" type="button">Onda</button>
+      </div>
+
+      <div role="tabpanel" id="p-chegadas" aria-labelledby="t-chegadas">
+        <p class="panel-desc">TV da doca. Mostra as carretas do dia, as duas câmaras e se a doca está pronta para a próxima.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Câmara descarga 1</span><b>Vazia</b></div>
+            <div class="tile"><span>Câmara retorno 1</span><b>12/12 dolys</b></div>
+            <div class="tile"><span>Doca 1</span><b>Pronta</b></div>
+            <div class="tile"><span>Carretas hoje</span><b>2 de 3</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Prev.</th><th>Origem</th><th>Montados</th><th>Retorno</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>13:30</td><td>Fábrica A</td><td>12/12</td><td>12/12</td><td><span class="flap ok">Liberada</span></td></tr>
+              <tr><td>14:45</td><td>Fábrica B</td><td>12/12</td><td>9/12</td><td><span class="flap go">Conferindo</span></td></tr>
+              <tr><td>16:00</td><td>Fábrica C</td><td>0/10</td><td>7/10</td><td><span class="flap bad">Retorno incompleto</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-partidas" aria-labelledby="t-partidas" hidden>
+        <p class="panel-desc">TV das rampas. Cada rota com seu veículo, ocupação do baú e quantos dolys já subiram.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Rota</th><th>Rampa</th><th>Ocupação</th><th>Carregados</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>02</td><td>1</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12 posições</span></td><td>8/8</td><td><span class="flap ok">Partiu 03:20</span></td></tr>
+            <tr><td>04</td><td>3</td><td><div class="bar"><i style="width:92%"></i></div><span class="sub">11/12 posições</span></td><td><span data-cont="rota04">7</span>/11</td><td><span class="flap go">Carregando</span></td></tr>
+            <tr><td>07</td><td>2</td><td><div class="bar"><i style="width:50%"></i></div><span class="sub">6/12 posições</span></td><td>0/6</td><td><span class="flap wait">Conferindo</span></td></tr>
+            <tr><td>11</td><td>4</td><td><div class="bar"><i style="width:75%"></i></div><span class="sub">9/12 posições</span></td><td>0/9</td><td><span class="flap dim">Separando</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-camara" aria-labelledby="t-camara" hidden>
+        <p class="panel-desc">TV dentro da câmara de descarregamento. A NF fecha sozinha: cada doly que nasce na doca é lido pelo portal, e o colaborador da doca só resolve as exceções.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>NF 451 · Fábrica B</span><b><span data-cont="montados">7</span>/12 dolys</b></div>
+            <div class="tile"><span>Validade</span><b>18/10</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">1</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Produto</th><th>NF (volumes)</th><th>Dolys esperados</th><th>Lidos</th><th>Situação</th></tr></thead>
+            <tbody>
+              <tr><td>Pão de forma 500 g</td><td>128</td><td>4</td><td>4</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bisnaguinha 300 g</td><td>96</td><td>3</td><td>2</td><td><span class="flap bad">Falta 1 doly</span></td></tr>
+              <tr><td>Pão integral</td><td>64</td><td>2</td><td>2</td><td><span class="flap ok">OK</span></td></tr>
+              <tr><td>Bolo de chocolate</td><td>96</td><td>3</td><td>0</td><td><span class="flap go">Descarregando</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">1 doly = 1 produto = 32 volumes. Volumes da NF ÷ 32 = dolys esperados.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-linha" aria-labelledby="t-linha" hidden>
+        <p class="panel-desc">Painel da linha de dolys. As antenas contam as volumes de cada posição; a IA olha os próximos dolys da fila e pede reposição antes de a posição zerar.</p>
+        <div class="board"><div class="board-scroll"><table>
+          <thead><tr><th>Posição</th><th>Produto</th><th>Estoque</th><th>Próximos precisam</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>L01</td><td>Pão de forma</td><td><div class="bar"><i class="ok" style="width:88%"></i></div><span class="sub">22 volumes</span></td><td>10</td><td><span class="flap ok">OK</span></td></tr>
+            <tr><td>L05</td><td>Bisnaguinha</td><td><div class="bar"><i style="width:24%"></i></div><span class="sub">6 volumes</span></td><td>8</td><td><span class="flap wait">Abastecer</span></td></tr>
+            <tr><td>L09</td><td>Bolo</td><td><div class="bar"><i class="bad" style="width:3%"></i></div><span class="sub">0 volumes</span></td><td>4</td><td><span class="flap bad">2 dolys aguardando</span></td></tr>
+            <tr><td>L12</td><td>Torrada</td><td><div class="bar"><i class="ok" style="width:60%"></i></div><span class="sub">15 volumes</span></td><td>3</td><td><span class="flap ok">OK</span></td></tr>
+          </tbody>
+        </table></div></div>
+      </div>
+
+      <div role="tabpanel" id="p-turno" aria-labelledby="t-turno" hidden>
+        <p class="panel-desc">Painel do turno, para a gerência e o guardião do turno. Quem está fazendo o quê, a previsão contra o real, o relógio de frio de cada um e onde remanejar gente. Cada linha também vibra no pulso da própria pessoa.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>2º turno · presentes</span><b>6 de 7</b></div>
+            <div class="tile"><span>No frio · em repouso</span><b>3 · 1</b></div>
+            <div class="tile"><span>Onda 3 · previsão</span><b>21:40</b></div>
+            <div class="tile"><span>Fim do turno</span><b class="alerta">21:20</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Pessoa</th><th>Tarefa</th><th>Progresso</th><th>Previsão</th><th>Relógio de frio</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr data-frio="82"><td>Colaborador 1</td><td>Linha · doly 052</td><td><div class="bar"><i data-anda="1" style="width:60%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="47"><td>Colaborador 2</td><td>Linha · doly 053</td><td><div class="bar"><i data-anda="1" style="width:35%"></i></div></td><td>8 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr><td>Colaborador 3</td><td>Abastecer L05</td><td><div class="bar"><i data-anda="1" style="width:80%"></i></div></td><td>4 min</td><td class="frio-c">fora do frio</td><td><span class="flap wait">Atrasado 3 min</span></td></tr>
+              <tr><td>Colaborador 4</td><td>Descarga · Fábrica C</td><td><div class="bar"><i data-anda="1" style="width:20%"></i></div></td><td>45 min</td><td class="frio-c">fora do frio</td><td><span class="flap go">Doca</span></td></tr>
+              <tr data-frio="18"><td>Colaborador 6</td><td>Exceções · NF 451</td><td><div class="bar"><i data-anda="1" style="width:58%"></i></div></td><td>15 min</td><td class="frio-c"></td><td><span class="flap ok">No ritmo</span></td></tr>
+              <tr data-frio="-12"><td>Colaborador 5</td><td>Repouso térmico</td><td><div class="bar"><i data-anda="1" style="width:40%"></i></div></td><td>—</td><td class="frio-c"></td><td><span class="flap go">Pausa legal</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Alerta: a onda 3 termina depois do fim do turno. Remanejar 1 pessoa para a linha agora evita passar pendência para o 3º turno.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-retornos" aria-labelledby="t-retornos" hidden>
+        <p class="panel-desc">Painel de retorno de rota. Cada caminhão precisa estar liberado antes do 3º turno.</p>
+        <div class="board">
+          <div class="grid">
+            <div class="tile"><span>Rotas retornadas</span><b>9 de 15</b></div>
+            <div class="tile"><span>Devolução do dia</span><b>2,4%</b></div>
+            <div class="tile"><span>Em triagem</span><b>14 itens</b></div>
+            <div class="tile"><span>Divergências</span><b class="alerta">2</b></div>
+          </div>
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Retorno</th><th>Devolvido</th><th>Volumes</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>13:10</td><td>6 un</td><td>48/48</td><td><span class="flap ok">Concluído</span></td></tr>
+              <tr><td>04</td><td>13:42</td><td>12 un</td><td>60/62</td><td><span class="flap bad">Divergência</span></td></tr>
+              <tr><td>07</td><td>14:05</td><td>9 un</td><td>40/40</td><td><span class="flap wait">Em triagem</span></td></tr>
+              <tr><td>09</td><td>prev. 15:00</td><td>4 un declar.</td><td>—</td><td><span class="flap dim">A caminho</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="p-onda" aria-labelledby="t-onda" hidden>
+        <p class="panel-desc">Tela de aprovação da onda. A IA propõe veículos e mostra onde não cabe; a gerência aceita ou altera antes de separar.</p>
+        <div class="board">
+          <div class="board-scroll"><table>
+            <thead><tr><th>Rota</th><th>Veículo</th><th>Posições</th><th>Peso</th><th>Sugestão da IA</th></tr></thead>
+            <tbody>
+              <tr><td>02</td><td>ABC1D23</td><td><div class="bar"><i class="ok" style="width:67%"></i></div><span class="sub">8/12</span></td><td>1.900/3.500 kg</td><td>—</td></tr>
+              <tr><td>04</td><td>QRS4T56</td><td><div class="bar"><i class="bad" style="width:100%"></i></div><span class="sub">14/12</span></td><td>3.100/3.500 kg</td><td><span class="flap wait">Mover 2 clientes p/ rota 07</span></td></tr>
+              <tr><td>07</td><td>XYZ7G89</td><td><div class="bar"><i class="ok" style="width:50%"></i></div><span class="sub">6/12</span></td><td>1.200/3.500 kg</td><td><span class="flap go">Recebe 2 dolys</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="board-note">Estado da onda: PROPOSTA → EM_REVISAO. Plano com veículo excedido não pode ser aprovado.</p>
+        </div>
+      </div>
+          <nav class="passo" aria-label="Anterior e próximo"></nav>
+    </section>
+
+    <section class="view" id="ia" data-titulo="A IA regenerativa" hidden>
+      <span class="eyebrow">Apresentação</span>
+      <h2>A IA generativa e regenerativa</h2>
       <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
       <div class="ia-grid">
       <div class="chat" aria-label="Exemplo de conversa pelo relógio">
@@ -585,6 +764,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card"><h3>Propõe, a pessoa aprova</h3><p>Monta a onda, distribui o turno, sugere o destino da avaria. Quem aprova é sempre uma pessoa.</p></div>
         <div class="card"><h3>Lê o que chega</h3><p>Nota fiscal da SEFAZ, checklist, foto da avaria: a IA lê, confere e descreve o que viu.</p></div>
         <div class="card"><h3>Responde ao patrão</h3><p>Pergunta em português, resposta com número: perdas, esperas, vencimentos, resultado do dia.</p></div>
+        <div class="card dark"><h3>Regenerativa</h3><p>Aprende com o próprio registro: erros, tempos e produtividade de hoje viram correção para amanhã, em todas as áreas.</p></div>
         <div class="card"><h3>Ensina, não pune</h3><p>O erro vira uma lição curta para quem errou e uma melhoria no processo. Quem faz bem feito aparece no registro.</p></div>
       </div>
         </div>
@@ -633,6 +813,67 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     try { localStorage.setItem('demeter-tema', novo); } catch (e) {}
   };
   ['tema', 'tema2'].forEach(id => { const b = document.getElementById(id); if (b) b.addEventListener('click', alternar); });
+})();
+</script>
+<script>
+(function(){
+  // Painéis: abas acessíveis (clique e setas do teclado).
+  const abas = Array.from(document.querySelectorAll('.tab'));
+  const mostrar = (aba) => {
+    abas.forEach((a) => {
+      const ativa = a === aba;
+      a.setAttribute('aria-selected', String(ativa));
+      a.tabIndex = ativa ? 0 : -1;
+      document.getElementById(a.getAttribute('aria-controls')).hidden = !ativa;
+    });
+  };
+  abas.forEach((a, i) => {
+    a.tabIndex = i === 0 ? 0 : -1;
+    a.addEventListener('click', () => mostrar(a));
+    a.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const prox = abas[(i + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length];
+      prox.focus(); mostrar(prox);
+    });
+  });
+
+  // Relógio de frio no painel do turno: +1 minuto a cada 3 s; aos 100 min entra em repouso de 20 min (valores negativos).
+  const linhasFrio = Array.from(document.querySelectorAll('[data-frio]'));
+  const pintarFrio = () => {
+    linhasFrio.forEach((tr) => {
+      const m = Number(tr.dataset.frio), c = tr.querySelector('.frio-c');
+      if (!c) return;
+      if (m < 0) { c.innerHTML = '<span class="flap go">Repouso · volta em ' + (-m) + ' min</span>'; return; }
+      const hm = Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0');
+      c.innerHTML = m >= 90 ? '<span class="flap wait">' + hm + ' · repouso em ' + (100 - m) + ' min</span>' : '<span class="flap ok">' + hm + '</span>';
+    });
+  };
+  pintarFrio();
+  setInterval(() => {
+    linhasFrio.forEach((tr) => {
+      let m = Number(tr.dataset.frio) + 1;
+      if (m >= 100) m = -20;
+      tr.dataset.frio = String(m);
+    });
+    pintarFrio();
+  }, 3000);
+
+  // Painéis vivos: barras do turno andam e contadores sobem, voltando ao início em ciclo.
+  setInterval(() => {
+    document.querySelectorAll('[data-anda]').forEach((b) => {
+      const atual = parseFloat(b.style.width) || 0;
+      b.style.width = (atual >= 96 ? 8 : Math.min(atual + 4 + Math.random() * 6, 100)) + '%';
+    });
+    const torres = document.querySelector('[data-cont="torres"]');
+    if (torres) torres.textContent = String(Number(torres.textContent) >= 12 ? 7 : Number(torres.textContent) + 1);
+    const temp = document.querySelector('[data-temp="f1"]');
+    if (temp) temp.textContent = (3.4 + Math.random() * 0.9).toFixed(1).replace('.', ',');
+    const cenaTemp = null;
+    if (cenaTemp && temp) cenaTemp.textContent = temp.textContent;
+    const rota = document.querySelector('[data-cont="rota04"]');
+    if (rota) rota.textContent = String(Number(rota.textContent) >= 11 ? 7 : Number(rota.textContent) + 1);
+  }, 3000);
+
 })();
 </script>
 <script>
