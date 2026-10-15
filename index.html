@@ -457,6 +457,18 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .tour-card .tpe span { font: 500 12px var(--font-mono); color: var(--ink-3); }
 .tour-card button { font: inherit; font-size: 14px; cursor: pointer; border-radius: 999px; padding: 6px 14px; border: 1px solid var(--line); background: none; color: var(--ink-2); }
 .tour-card button.tprox { background: var(--board); color: var(--board-ink); border-color: var(--board); }
+
+/* Depois do áudio principal: convite para seguir ouvindo, e a barra do tour com áudio */
+.continuar { border: 1px solid var(--accent); background: var(--surface); border-radius: var(--radius); padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; max-width: 760px; animation: entra .35s ease; }
+.continuar p { font-size: 16px; color: var(--ink); max-width: 46ch; }
+.continuar p b { font-family: var(--font-display); }
+.continuar div { display: flex; gap: 8px; flex-wrap: wrap; flex: none; }
+.continuar button, .barra-tour button { font: inherit; font-size: 14px; cursor: pointer; border-radius: 999px; padding: 8px 16px; border: 1px solid var(--line); background: none; color: var(--ink-2); }
+.continuar button.sim { background: var(--accent); border-color: var(--accent); color: #1A120D; font-weight: 600; }
+.barra-tour { position: fixed; z-index: 40; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 10px; background: var(--board); color: var(--board-ink); border-radius: 999px; padding: 8px 10px 8px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.3); max-width: calc(100vw - 32px); }
+.barra-tour span { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-tour span b { color: #E3A15E; font-weight: 600; }
+.barra-tour button { color: var(--board-ink); border-color: rgba(247,241,230,.25); padding: 6px 12px; }
 /* Menu sempre na lateral; só some no celular */
 @media (max-width: 920px) { .shell { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; } .toc { display: block; } .mnav { display: none; } footer { display: none; } }
 @media (max-width: 640px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } .mnav { display: flex; } footer { display: flex; } }
@@ -947,6 +959,44 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   }
   document.addEventListener('click', e => { if (e.target.closest('[data-tour]')) tourComecar(); });
   document.addEventListener('keydown', e => { if (tp < 0) return; if (e.key === 'Escape') tourFechar(); if (e.key === 'ArrowRight') tourIr(tp + 1); if (e.key === 'ArrowLeft') tourIr(tp - 1); });
+
+  // Tour com áudio: ao terminar o áudio da Home, convida a seguir ouvindo tela a tela
+  const SEQ = Array.from(document.querySelectorAll('.toc > a[href^="#"]')).map(a => a.getAttribute('href').slice(1)).filter(id => id !== 'inicio' && document.querySelector('#' + id + ' .player'));
+  const titulo = id => (document.getElementById(id) || {}).dataset ? document.getElementById(id).dataset.titulo : id;
+  let si = -1, barra = null;
+  function barraUI() {
+    if (!barra) { barra = document.createElement('div'); barra.className = 'barra-tour'; barra.setAttribute('role', 'region'); barra.setAttribute('aria-label', 'Tour com áudio'); document.body.append(barra); }
+    barra.innerHTML = `<span>Tour com áudio · <b>${titulo(SEQ[si])}</b> · ${si + 1} de ${SEQ.length}</span><button type="button" class="bt-pausa">${window.demeterAudio.tocando() ? 'Pausar' : 'Continuar'}</button><button type="button" class="bt-pula">Pular</button><button type="button" class="bt-sai" aria-label="Parar o tour">✕</button>`;
+    barra.querySelector('.bt-pausa').onclick = () => { window.demeterAudio.alternar(); setTimeout(barraUI, 50); };
+    barra.querySelector('.bt-pula').onclick = () => seguir(si + 1);
+    barra.querySelector('.bt-sai').onclick = sairTour;
+  }
+  function sairTour() { si = -1; window.demeterSeguindo = false; window.demeterAudio.parar(); if (barra) { barra.remove(); barra = null; } }
+  function seguir(i) {
+    if (i >= SEQ.length) { sairTour(); location.hash = 'ia'; setTimeout(() => oferecer('fim'), 300); return; }
+    si = i; window.demeterSeguindo = true;
+    location.hash = SEQ[i];
+    setTimeout(() => { window.demeterAudio.tocar(SEQ[i]); barraUI(); }, 120);
+  }
+  function oferecer(tipo) {
+    document.querySelectorAll('.continuar').forEach(e => e.remove());
+    const box = document.createElement('div'); box.className = 'continuar';
+    if (tipo === 'fim') {
+      box.innerHTML = '<p><b>Fim do tour com áudio.</b> Quer ver e ouvir as oito fases em tela cheia, com as animações e as tirinhas?</p><div><a class="btn main" href="olho/#puxada">Ver as fases</a><button type="button" class="nao">Agora não</button></div>';
+      document.querySelector('#ia .passo').before(box);
+    } else {
+      box.innerHTML = '<p><b>Ficou curioso?</b> Continue ouvindo: eu passo por cada parte do projeto, você ouve e vê, e para quando quiser.</p><div><button type="button" class="sim">Sim, continuar ouvindo</button><button type="button" class="nao">Agora não</button></div>';
+      document.querySelector('#inicio .player').after(box);
+      box.querySelector('.sim').onclick = () => { box.remove(); seguir(0); };
+    }
+    box.querySelector('.nao').onclick = () => box.remove();
+  }
+  document.addEventListener('audio-fim', e => {
+    if (e.detail === 'home' && si < 0 && window.demeterAudio && window.demeterAudio.ok) oferecer('inicio');
+    else if (si >= 0 && e.detail === SEQ[si]) seguir(si + 1);
+  });
+  // se a pessoa mudar de tela por conta própria, o tour com áudio para
+  addEventListener('hashchange', () => { if (si >= 0 && location.hash.slice(1) !== SEQ[si]) sairTour(); });
   addEventListener('hashchange', mostrar); mostrar();
   // Chips da cena levam à tirinha da etapa
   document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) location.href = 'olho/#' + b.getAttribute('data-ir'); });
@@ -1047,7 +1097,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   }
   function parar(p) { if (!p) return; p._estado = 'idle'; p._i = 0; ui(p); limparAlvo(); if (atual === p) atual = null; }
   function falarParte(p) {
-    if (p._i >= p._partes.length) { parar(p); return; }
+    if (p._i >= p._partes.length) { parar(p); document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
     const parte = p._partes[p._i], meu = ++gen;
     if (parte.etapa && window.demeterIr) window.demeterIr(parte.etapa, true);
     limparAlvo();
@@ -1082,7 +1132,15 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     atual._i = j; gen++; synth.cancel(); falarParte(atual);
   });
   // mudou de tela no site: o áudio da tela anterior para
-  addEventListener('hashchange', () => { if (atual) { gen++; synth.cancel(); parar(atual); } });
+  addEventListener('hashchange', () => { if (atual && !window.demeterSeguindo) { gen++; synth.cancel(); parar(atual); } });
+  // controle para quem quiser encadear áudios (tour com áudio)
+  window.demeterAudio = {
+    ok,
+    tocar(k) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = 0; gen++; synth.cancel(); falarParte(p); return true; },
+    alternar() { if (atual) atual.querySelector('.pbtn').click(); },
+    parar() { if (atual) { gen++; synth.cancel(); parar(atual); } },
+    tocando() { return !!(atual && atual._estado === 'tocando'); },
+  };
   addEventListener('pagehide', () => { if (ok) synth.cancel(); });
 })();
 </script>

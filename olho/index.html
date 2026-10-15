@@ -1733,7 +1733,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
   }
   function parar(p) { if (!p) return; p._estado = 'idle'; p._i = 0; ui(p); limparAlvo(); if (atual === p) atual = null; }
   function falarParte(p) {
-    if (p._i >= p._partes.length) { parar(p); return; }
+    if (p._i >= p._partes.length) { parar(p); document.dispatchEvent(new CustomEvent('audio-fim', { detail: p.dataset.audio })); return; }
     const parte = p._partes[p._i], meu = ++gen;
     if (parte.etapa && window.demeterIr) window.demeterIr(parte.etapa, true);
     limparAlvo();
@@ -1768,7 +1768,15 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
     atual._i = j; gen++; synth.cancel(); falarParte(atual);
   });
   // mudou de tela no site: o áudio da tela anterior para
-  addEventListener('hashchange', () => { if (atual) { gen++; synth.cancel(); parar(atual); } });
+  addEventListener('hashchange', () => { if (atual && !window.demeterSeguindo) { gen++; synth.cancel(); parar(atual); } });
+  // controle para quem quiser encadear áudios (tour com áudio)
+  window.demeterAudio = {
+    ok,
+    tocar(k) { const p = players.find(x => x.dataset.audio === k); if (!p || !ok) return false; if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); } atual = p; p._estado = 'tocando'; p._i = 0; gen++; synth.cancel(); falarParte(p); return true; },
+    alternar() { if (atual) atual.querySelector('.pbtn').click(); },
+    parar() { if (atual) { gen++; synth.cancel(); parar(atual); } },
+    tocando() { return !!(atual && atual._estado === 'tocando'); },
+  };
   addEventListener('pagehide', () => { if (ok) synth.cancel(); });
 })();
 </script>
