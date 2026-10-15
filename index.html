@@ -264,6 +264,26 @@ footer a { color: var(--ink-2); }
 .ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
 @media print { .ouvir { display: none; } }
 
+.player { display: flex; flex-direction: column; gap: 8px; max-width: 760px; }
+.player .pbtn { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 16px 6px 6px; text-align: left; }
+.player .pbtn:hover { border-color: var(--accent); }
+.player .pic { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #1A120D; display: grid; place-items: center; font-size: 13px; }
+.player .pbtn b { font-family: var(--font-display, Rubik, sans-serif); font-weight: 600; font-size: 15px; display: block; line-height: 1.2; }
+.player .pbtn small { color: var(--ink-3); font-size: 12.5px; }
+.player.grande .pbtn { background: var(--board); color: var(--board-ink); border-color: var(--board); padding: 10px 22px 10px 10px; }
+.player.grande .pbtn small { color: var(--board-dim); }
+.player.grande .pic { width: 44px; height: 44px; font-size: 16px; }
+.player.grande .pbtn b { font-size: 18px; }
+.player .prow { display: flex; align-items: center; gap: 8px; }
+.player .pbar { flex: 1; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.player .pbar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.player .pchip { font: inherit; font-size: 12.5px; cursor: pointer; border: 1px solid var(--line); background: none; color: var(--ink-2); border-radius: 999px; padding: 4px 10px; }
+.player .pnow { font-size: 15px; color: var(--ink); margin: 0; }
+.player details summary { cursor: pointer; color: var(--ink-3); font-size: 13px; }
+.player details p { margin: .4em 0; font-size: 14px; color: var(--ink-2); }
+.player [hidden] { display: none !important; }
+.falando { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 8px; transition: outline-color .3s; }
+
 /* Telas: um item do painel por vez, sem rolar a página inteira */
 [hidden] { display: none !important; }
 main { gap: 0; min-height: calc(100vh - 140px); }
@@ -371,6 +391,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .an-lista { font-size: clamp(18px, 1.7vw, 22px); margin-top: -8px; }
 .an-pe { padding-top: 18px; }
 .home .ouvir { max-width: none; }
+.home { gap: 16px; }
 .toc-pe { margin-top: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .toc .toc-pe a { border: 0; padding: 2px 0; font-size: 13px; }
 @media (min-width: 921px) { footer { display: none; } }
@@ -409,6 +430,19 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .bomba .note { color: #A8957E; }
 .callout.tese { max-width: none; padding: 14px 18px; }
 .bomba { padding: 16px 20px; gap: 10px; }
+
+.dashes { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px; }
+.dashes .board table { min-width: 0; }
+.dashes .board .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dashes .tile b { font-size: 22px; }
+.dashes .board td { white-space: normal; }
+.lucro { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid rgba(247, 241, 230, 0.15); padding-top: 10px; }
+.lucro span { color: var(--board-dim); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+.lucro b { font-family: var(--font-display); font-size: 34px; color: #6CC08E; }
+.perdas { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+.perdas > div { display: grid; grid-template-columns: 130px minmax(0, 1fr) 80px; gap: 10px; align-items: center; font-size: 13px; }
+.perdas span { color: var(--board-dim); }
+.perdas b { text-align: right; font-family: var(--font-display); }
 /* Menu sempre na lateral; só some no celular */
 @media (max-width: 920px) { .shell { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; } .toc { display: block; } .mnav { display: none; } footer { display: none; } }
 @media (max-width: 640px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } .mnav { display: flex; } footer { display: flex; } }
@@ -462,6 +496,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <a href="#principios">Princípios</a>
     <a href="olho/#puxada" data-titulo="As fases">As fases ↗</a>
     <a href="#paineis">Painéis</a>
+    <a href="#dash">Dashboards</a>
     <a href="#ia">A IA regenerativa</a>
     <div class="toc-pe"><a href="v1/">Versão anterior</a><a href="https://github.com/sanicolauvix/demeter" target="_blank" rel="noopener">GitHub</a><button class="theme-btn" id="tema2" type="button">Alternar tema</button></div>
   </nav>
@@ -469,6 +504,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   <main>
     <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#nasceu">Como nasceu</a><a href="#tecnologia">O que usa</a><a href="#problema">O problema</a><a href="#principios">Princípios</a><a href="olho/#puxada">As fases ↗</a><a href="#paineis">Painéis</a><a href="#ia">IA regenerativa</a></nav>
     <section class="view home" id="inicio" data-titulo="Home" aria-label="Home">
+      <div class="player grande" data-audio="home"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouça o Deméter em 2 minutos</b><small>para quem tem pouco tempo: o projeto inteiro</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
         <h1>Você sabe de toda a sua operação?</h1>
@@ -500,19 +536,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         </div>
         <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>Parece o futuro.</b><small>Pode ser o presente: a tecnologia já existe.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/#puxada">As fases</a></div></div>
       </div>
-      <div class="ouvir" id="ouvir">
-  <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
-  <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
-  <p class="onow" id="oNow" hidden aria-live="polite"></p>
-  <details id="oDet"><summary>Prefere ler? Veja o resumo em texto</summary><div id="oText"></div></details>
-</div>
-
       <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
     <section class="view" id="oque" data-titulo="O que é" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>O que é</h2>
+      <div class="player" data-audio="oque"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: O que é</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <p class="lead">O Deméter é fruto da imaginação de um desenvolvedor que não quer parar no tempo. É um projeto que junta tecnologias que já existem, estão disponíveis no mercado e têm um custo-benefício muito bom.</p>
       <div class="cards">
         <div class="card"><h3>Nasceu numa distribuidora de alimentos</h3><p>Foi pensado no chão da operação: câmaras frias, puxada, onda, rota e retorno, com os problemas de verdade de quem vive isso todo dia.</p></div>
@@ -531,6 +561,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="nasceu" data-titulo="Como nasceu" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>Como nasceu</h2>
+      <div class="player" data-audio="nasceu"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: Como nasceu</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <p class="lead">O Deméter nasceu do chão. Um desenvolvedor com 40 anos de logística, automação e sistemas passou algumas semanas no posto mais baixo de uma distribuidora de alimentos, como diarista, e anotou o que viu num diário, sem nomes, só padrões: o <em>Diário de um Fantasma</em>.</p>
       <div class="cards mini">
         <div class="card"><span class="eyebrow">01</span><h3>Ninguém sabe o que acontece no chão</h3><p>Separação na prancheta, erro sem autor ("de quem é essa letra?"), conferente que corrige em silêncio e caminhão que volta com devolução. Lá em cima, cada um sabe só o que contam.</p></div>
@@ -555,6 +586,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="tecnologia" data-titulo="O que usa" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>O que usa</h2>
+      <div class="player" data-audio="tecnologia"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: O que usa</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <p class="lead">Tecnologias que já existem, estão no mercado e têm ótimo custo-benefício. Seis sentidos e um único registro: nada depende de alguém lembrar de bipar.</p>
       <div class="selos claro"><span>RFID UHF</span><span>Câmeras com IA</span><span>Sensores IoT de temperatura</span><span>Balanças integradas</span><span>Relógios inteligentes</span><span>GPS e cercas eletrônicas</span><span>NF-e da SEFAZ</span><span>IA generativa</span></div>
       <div class="cards">
@@ -573,6 +605,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="problema" data-titulo="O problema" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>Hoje, a operação roda no olho e na memória</h2>
+      <div class="player" data-audio="problema"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: O problema</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <div class="cards c2">
         <div class="card"><h3>Conferência visual</h3><p>Montados chegam envoltos em filme stretch e são contados no olho. O erro entra no estoque já no recebimento.</p></div>
         <div class="card"><h3>Separação sem rumo</h3><p>Separador e ajudante pegam uma carga e andam o depósito inteiro, cruzando com outros dolys num espaço pequeno.</p></div>
@@ -585,6 +618,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="principios" data-titulo="Princípios" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>Dez regras guiam todo o desenho</h2>
+      <div class="player" data-audio="principios"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: Os princípios</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <div class="tbl"><table class="t">
         <thead><tr><th>Princípio</th><th>Na prática</th></tr></thead>
         <tbody>
@@ -606,6 +640,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <section class="view" id="paineis" data-titulo="Painéis" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>A operação inteira, à vista de todos</h2>
+      <div class="player" data-audio="paineis"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: Os painéis</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <p class="lead">Cada painel roda numa TV ou no celular e se alimenta sozinho dos eventos registrados. Ninguém digita nada para o painel. Os dados abaixo são exemplos.</p>
       <div class="tabs" role="tablist" aria-label="Painéis">
         <button class="tab" role="tab" id="t-chegadas" aria-controls="p-chegadas" aria-selected="true" type="button">Chegadas</button>
@@ -746,9 +781,54 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
           <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
+    <section class="view" id="dash" data-titulo="Dashboards" hidden>
+      <span class="eyebrow">Apresentação</span>
+      <h2>Dashboards: a visão do dono</h2>
+      <div class="player" data-audio="dash"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: Os dashboards</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
+      <p class="lead">Os painéis são da operação. Os dashboards são de quem decide: a visão do lucro, e de onde ele escapa. Dados de exemplo.</p>
+      <div class="dashes">
+        <div class="board"><div class="board-head"><b>Resultado do dia</b><span>atualiza sozinho</span></div>
+          <div class="grid">
+            <div class="tile"><span>Faturamento</span><b>R$ 512 mil</b></div>
+            <div class="tile"><span>Margem bruta</span><b>18,4%</b></div>
+            <div class="tile"><span>Perdas</span><b class="alerta">R$ 3,2 mil</b></div>
+            <div class="tile"><span>Custo por entrega</span><b>R$ 41</b></div>
+          </div>
+          <div class="lucro"><span>Lucro do dia (estimado)</span><b>R$ 91 mil</b></div>
+        </div>
+        <div class="board"><div class="board-head"><b>De onde a perda veio</b><span>outubro</span></div>
+          <div class="perdas">
+            <div><span>Avaria</span><div class="bar"><i class="bad" style="width:86%"></i></div><b>R$ 31 mil</b></div>
+            <div><span>Vencimento</span><div class="bar"><i style="width:67%"></i></div><b>R$ 24 mil</b></div>
+            <div><span>Falta e divergência</span><div class="bar"><i style="width:42%"></i></div><b>R$ 15 mil</b></div>
+            <div><span>Espera em cliente</span><div class="bar"><i style="width:33%"></i></div><b>R$ 12 mil</b></div>
+          </div>
+          <p class="sub">Saber quanto se perde é saber quanto se pode ganhar.</p>
+        </div>
+        <div class="board"><div class="board-head"><b>Regras em dia</b><span>sem surpresa futura</span></div>
+          <div class="grid">
+            <div class="tile"><span>Pausas no frio</span><b>100%</b></div>
+            <div class="tile"><span>Sem registro</span><b>0</b></div>
+            <div class="tile"><span>EPI conferido</span><b>98%</b></div>
+            <div class="tile"><span>Diário de bordo</span><b>em dia</b></div>
+          </div>
+        </div>
+        <div class="board"><div class="board-head"><b>Decisões do dono</b><span>2 pendentes</span></div>
+          <div class="board-scroll"><table><tbody>
+            <tr><td>Destino de 3 avarias do lote 2410</td><td><span class="flap wait">Pendente</span></td></tr>
+            <tr><td>Agendar entrega do cliente 0412</td><td><span class="flap wait">Pendente</span></td></tr>
+            <tr><td>Promoção do lote 2410 na rota 04</td><td><span class="flap ok">Decidido</span></td></tr>
+          </tbody></table></div>
+          <p class="sub">O que ficar sem decisão, fica registrado.</p>
+        </div>
+      </div>
+      <nav class="passo" aria-label="Anterior e próximo"></nav>
+    </section>
+
     <section class="view" id="ia" data-titulo="A IA regenerativa" hidden>
       <span class="eyebrow">Apresentação</span>
       <h2>A IA generativa e regenerativa</h2>
+      <div class="player" data-audio="ia"><button class="pbtn" type="button"><span class="pic" aria-hidden="true">▶</span><span><b>Ouvir: A IA</b><small>cerca de 1 minuto</small></span></button><div class="prow" hidden><div class="pbar"><i></i></div><button class="pchip pvel" type="button" aria-label="Velocidade da voz">1,6×</button><button class="pchip pstop" type="button">Parar</button></div><p class="pnow" hidden aria-live="polite"></p><details><summary>Prefere ler? Veja o texto</summary><div class="ptexto"></div></details></div>
       <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
       <div class="ia-grid">
       <div class="chat" aria-label="Exemplo de conversa pelo relógio">
@@ -878,64 +958,65 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 </script>
 <script>
 (function(){
-  const PRONUNCIA = [[/\bRFID\b/g,"erre efe i dê"],[/\bEPI\b/g,"é pê i"],[/\bCRONOS\b/g,"Crônos"],[/\bSOS\b/g,"esse ó esse"],[/Deméter/g,"Demeter"],[/\bchecklist\b/gi,"chéquilist"]];
-  const falar = t => PRONUNCIA.reduce((x,[re,r])=>x.replace(re,r), t);
-  const RESUMO = ["Olá. Este é o Deméter, o olho que tudo vê.", "Diz o ditado que o olho do dono é que engorda a boiada. O Deméter é esse olho: em cada baia, em cada volume, em cada carga e em cada entrega. O produto segue, o erro para.", "Como ele vê? Etiquetas RFID nos montados e nos volumes, antenas nas portas e nas baias, câmeras, balanças e sensores. Ninguém bipa nada. O olho fala com cada colaborador pelo relógio no pulso, de mãos livres. E o dono acompanha o olho.", "Antes da descarga vem a puxada, e fora do galpão quem vigia é o olho do CRONOS, que passa tudo para o Deméter. Pelo rastreador da carreta, ele acompanha a espera na fábrica, a estrada, o descanso e a chegada ao CD, e a câmara de descarga já fica pronta. O motorista da puxada não bate ponto na empresa: o CRONOS controla a jornada e gera o diário de bordo eletrônico e a folha de ponto, como manda a lei do caminhoneiro.", "Na descarga, o olho vê a carreta chegar, confere a câmara vazia, faz o checklist e autoriza. Cada montado é lido na entrada, com lote e vencimento, e já ganha o seu lugar no estoque. E os vazios voltam para a fábrica na mesma carreta.", "Na onda, o olho acompanha as vendas hora a hora e monta as cargas até o ponto de corte.", "No abastecimento, ele chama quem está livre e diz de onde tirar e onde colocar. Na câmara fria, só entra com EPI, e o tempo de frio é contado. O montado é aberto e cada volume ganha a sua etiqueta: o controle desce de nível.", "Na separação, a luz guia o separador. O que precisa virar unidade já foi preparado em paralelo, e ninguém para. O queijo, que vem sem preço, é pesado peça a peça. Os secos vão para a rampa; os refrigerados esperam numa câmara.", "No carregamento, o olho identifica o caminhão, confere a rampa, faz o checklist de temperatura e autoriza. A antena da porta confere cada montado que sobe. Carga encerrada, veículo lacrado.", "Na rota, o olho do CRONOS sai do galpão junto com o caminhão e passa tudo para o Deméter. O GPS e as cercas eletrônicas mostram a saída do CD, o tempo em trânsito, a chegada e a espera em cada cliente.", "O motorista da rota bate o ponto na empresa, e na estrada o olho separa direção, espera e pausa. No fim do dia, o tempo perdido vira número: onde, quanto e com qual cliente.", "No retorno, o olho confirma o que voltou. O colaborador informa o motivo de cada devolução, e cada item vai para o seu destino. As etiquetas dos vazios são desvinculadas, para não virar estoque fantasma.", "E tem o que corre em paralelo, em qualquer fase. O colaborador avisa o olho: uma avaria, com a origem, se foi o montado, o volume ou a unidade, e o imediato do turno decide o destino. Um pedido de troca, uma divergência, um SOS, uma sugestão.", "O olho nunca dorme. Faz o inventário, inclusive dos vazios, e vigia temperatura, vencimento, tempo de frio, equipamentos e até ele mesmo.", "E conversa com a empresa: avisa compras antes de faltar, avisa vendas antes de vencer, para dar tempo da promoção, e entrega ao patrão o resultado financeiro do dia, com a origem de cada perda.", "Por trás do olho está uma IA generativa. Ela conversa com cada colaborador pelo relógio, explica o motivo de cada alerta, propõe a onda e o turno, lê notas e fotos, e responde às perguntas do patrão em português. Ela propõe; quem decide é sempre uma pessoa.", "Não tem conferente, fiscal ou coordenador. São multicolaboradores, todos no mesmo nível, e uma gerência. O erro não é para punir: é para corrigir e treinar. E quem faz bem feito é remunerado por isso.", "A função do Deméter é gerenciar, conferir e controlar. Decidir cabe ao dono. E o que ele deixar sem decisão, fica registrado.", "É possível? É. A tecnologia já existe. O caminho é um piloto: uma doca, uma câmara e o retorno dos vazios, medindo o antes e o depois.", "O Deméter. O olho que tudo vê. O produto segue, o erro para. Obrigado por ouvir."];
-  const ETAPA = ["descarga", "descarga", "descarga", "puxada", "descarga", "onda", "abastecimento", "separacao", "carregamento", "rota", "rota", "retorno", "colab", "vigia", "empresa", "empresa", "empresa", "empresa", "empresa", "descarga"];  // qual etapa a página mostra em cada trecho do áudio
-  const $=id=>document.getElementById(id);
-  const box=$("ouvir"); if (!box) return;
-  const play=$("oPlay"), ic=$("oIc"), title=$("oTitle"), sub=$("oSub"), row=$("oRow"), bar=$("oBar"), now=$("oNow");
-  $("oText").innerHTML = RESUMO.map(t=>"<p>"+t+"</p>").join("");
+  const ROTEIROS = {"home": [{"t": "Você sabe de toda a sua operação?"}, {"t": "Hoje, o patrão sabe o que o gerente geral conta. O gerente, o que o encarregado conta. E assim por diante, cada um contando um pouco menos."}, {"t": "O Deméter é o olho que tudo vê numa distribuidora de alimentos. Da carreta que carrega na fábrica ao caminhão que volta da rota, cada volume tem dono, lugar e hora. O produto segue, o erro para."}, {"t": "Ele usa tecnologias que já existem e têm ótimo custo-benefício: etiquetas RFID, câmeras com inteligência artificial, sensores, balanças, relógios no pulso de cada colaborador e GPS nos caminhões. Por trás de tudo, uma IA generativa e regenerativa, que conversa, explica, propõe e aprende com o próprio registro."}, {"t": "O resultado: o erro é pego onde nasce, a perda passa a ser medida, e as regras, da CLT à vigilância sanitária, são cumpridas sem surpresa no futuro. Numa operação de quinhentos mil reais por dia, cada um por cento que escapa são cento e trinta mil reais por mês."}, {"t": "Fora do galpão, o CRONOS, um sistema de jornada de motoristas que já roda há anos em transportadoras, olha pelo Deméter: a puxada, a rota, a espera no cliente e a lei do caminhoneiro."}, {"t": "O Deméter nasceu no chão de uma distribuidora de alimentos, mas serve para qualquer operação onde há volume que entra, anda e sai."}, {"t": "Por trás dele está um desenvolvedor com quarenta anos de logística, automação e sistemas, que pensou cada fase por dentro da operação, tem capacidade para desenvolvê-lo e procura uma grande oportunidade para torná-lo realidade."}, {"t": "Parece o futuro. Pode ser o presente: a tecnologia já existe. Navegue pelo menu ao lado. Cada parte tem o seu próprio áudio."}], "oque": [{"t": "O que é o Deméter."}, {"t": "O Deméter é fruto da imaginação de um desenvolvedor que não quer parar no tempo. Ele junta tecnologias que já existem, estão no mercado e têm um custo-benefício muito bom."}, {"t": "Nasceu numa distribuidora de alimentos, pensado no chão da operação: câmaras frias, puxada, onda, rota e retorno, com os problemas de verdade de quem vive isso todo dia."}, {"t": "Mas serve para qualquer operação: atacado, indústria, farmacêutica, varejo, comércio eletrônico, armazém geral. Onde há volume que entra, anda e sai, o olho se adapta."}, {"t": "E está pronto para sair do papel: o autor tem capacidade para desenvolvê-lo e espera uma grande oportunidade para torná-lo realidade."}], "nasceu": [{"t": "Como nasceu o Deméter."}, {"t": "Ele nasceu do chão. Um desenvolvedor com quarenta anos de logística, automação e sistemas passou algumas semanas no posto mais baixo de uma distribuidora de alimentos, como diarista, e anotou tudo num diário: o Diário de um Fantasma."}, {"t": "Ele viu três coisas. Ninguém sabe o que acontece no chão: separação na prancheta, erro sem autor, caminhão que volta com devolução. A perda que ninguém mede: avaria no corredor, refrigerado no lixo, vencimento controlado no olho. E as regras que ninguém vê."}, {"t": "Aí está a bomba-relógio do diarista fantasma. Chamado de diarista, mas trabalhando toda semana, com horário e chefe, ele é empregado pela CLT. Cada um sem registro soma multa, atrasados de FGTS e INSS, hora extra da pausa no frio e autuações. E o pavio é longo: a cobrança pode olhar cinco anos para trás."}, {"t": "A tese do Fantasma: estavam trocando a caneta pelo bipe. O problema não era a ferramenta, era o método. O Deméter nasceu para mudar o método."}], "tecnologia": [{"t": "O que o Deméter usa."}, {"t": "Tecnologias que já existem e têm ótimo custo-benefício. São seis sentidos e um único registro, e nada depende de alguém lembrar de bipar."}, {"t": "Etiquetas RFID UHF nos montados e nos volumes, com antenas nas portas e nas baias. Câmeras com inteligência artificial, que veem o processo: EPI na câmara fria, o que saiu da doca, a avaria na hora."}, {"t": "Sensores de temperatura em cada câmara e balanças integradas para o produto de peso variável. Relógio no pulso de cada colaborador, de mãos livres. E GPS com cercas eletrônicas na estrada, com o CRONOS cuidando da jornada."}, {"t": "Tudo vira evento num registro único, no padrão GS1. Dele saem os painéis, os alertas e o resultado do patrão."}], "problema": [{"t": "O problema."}, {"t": "Hoje, a operação roda no olho e na memória."}, {"t": "A conferência é visual: os montados chegam envoltos em filme e são contados no olho, e o erro entra no estoque já no recebimento. A separação anda sem rumo pelo depósito inteiro."}, {"t": "O patrimônio não tem saldo: dolys, paletes e vazios entram e saem sem contagem, e ninguém sabe quem deve a quem."}, {"t": "E trocar a prancheta pelo coletor de código de barras digitaliza a anotação, não o processo. O coletor registra só o que alguém lembrou de bipar. O Deméter lê sozinho e orienta o que vai acontecer."}], "principios": [{"t": "Os princípios. Dez regras guiam todo o desenho do Deméter."}, {"t": "Tudo começa no recebimento. O erro morre onde nasce. Patrimônio é dinheiro, com saldo por fornecedor e por cliente."}, {"t": "A IA propõe e a pessoa aprova. O processo independe do aparelho: antena, câmera, balança ou pulso geram o mesmo evento. O comercial não é da logística."}, {"t": "Papel zero. O registro não esquece: o Deméter mostra, o dono decide, e a decisão também fica registrada."}, {"t": "Regenerativo: erros, tempos e produtividade de hoje viram correção para amanhã. E projeto vivo: nada é fechado, o desenho muda com a operação."}], "paineis": [{"t": "Os painéis. A operação inteira, à vista de todos."}, {"t": "Cada painel roda numa TV ou no celular e se alimenta sozinho dos eventos registrados. Ninguém digita nada para o painel."}, {"t": "Chegadas mostra as carretas do dia e se a doca está pronta. Partidas, os caminhões que saem. Câmara, a temperatura e quem está no frio. Linha, a separação andando."}, {"t": "Turno mostra cada colaborador, o tempo de frio e a pausa que está chegando. Retornos, o que voltou e para onde vai. E Onda, as vendas virando cargas até o ponto de corte."}, {"t": "Todo mundo vê o mesmo número, ao mesmo tempo."}], "dash": [{"t": "Os dashboards. A visão do dono, e a visão do lucro."}, {"t": "Os painéis são da operação. Os dashboards são de quem decide."}, {"t": "O resultado do dia: faturamento, margem, perdas, custo por entrega e o lucro estimado, atualizados sozinhos."}, {"t": "De onde a perda veio no mês: avaria, vencimento, falta e espera em cliente, cada uma com o seu valor. Saber quanto se perde é saber quanto se pode ganhar."}, {"t": "As regras em dia: pausas no frio cumpridas, nenhum colaborador sem registro, EPI conferido e o diário de bordo da puxada fechado."}, {"t": "E as decisões do dono: o que está esperando por ele. O que ficar sem decisão, fica registrado."}], "ia": [{"t": "A IA generativa e regenerativa."}, {"t": "Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa."}, {"t": "Um exemplo. O colaborador diz pelo relógio: achei trinta, o sistema diz trinta e dois. O olho lê a baia na hora, registra a falta, avisa o imediato e mostra quando foi a última leitura certa."}, {"t": "O patrão pergunta, no fim do dia: quanto perdi com espera em cliente este mês? E recebe o número, os clientes que mais seguram o caminhão e uma sugestão."}, {"t": "Ela lê notas e fotos, dá o motivo de cada alerta, propõe a onda e o turno, e ensina em vez de punir. E é regenerativa: aprende com o próprio registro, e os erros de hoje viram correção para amanhã."}, {"t": "O próprio Deméter foi desenhado em parceria com uma IA generativa."}]};
+  const REGRAS = [["\\bRFID\\b", "erre efe i dê"], ["\\bEPI\\b", "é pê i"], ["\\bSOS\\b", "esse ó esse"], ["Deméter", "Demeter"], ["\\bchecklist\\b", "chéquilist"], ["\\bCRONOS\\b", "Crônos"], ["\\bIA\\b", "i a"], ["\\bGPS\\b", "gê pê esse"], ["\\bNF-e\\b", "nota fiscal eletrônica"], ["\\bSEFAZ\\b", "Sefaz"], ["\\bCLT\\b", "cê éle tê"], ["\\bEPCIS\\b", "é pê cis"], ["\\bGS1\\b", "gê esse um"], ["\\bUHF\\b", "u agá éfe"], ["\\bNR-(\\d+)", "ene erre \\1"], ["\\bLGPD\\b", "éle gê pê dê"], ["\\bTV\\b", "tevê"], ["\\bdoly\\b", "dóli"], ["\\bdolys\\b", "dólis"], ["→", ""], ["↔", "e"], ["·", ","]].map(([p, r]) => [new RegExp(p, "g"), r]);
+  const falar = t => REGRAS.reduce((x, [re, r]) => x.replace(re, r), t);
   const synth = window.speechSynthesis;
-  if (!synth || typeof SpeechSynthesisUtterance==="undefined"){
-    play.hidden=true; $("oDet").open=true; $("oDet").querySelector("summary").textContent="Resumo do Deméter";
-    return;
+  const ok = synth && typeof SpeechSynthesisUtterance !== 'undefined';
+  const RATES = [1, 1.2, 1.4, 1.6]; let ri = 3;
+  try { const r = +localStorage.getItem('vozRate'); if (RATES.includes(r)) ri = RATES.indexOf(r); } catch (e) {}
+  let voz = null;
+  const pegarVoz = () => { const vs = ok ? synth.getVoices() : []; voz = vs.find(v => /pt[-_]BR/i.test(v.lang) && /antonio|daniel|male|masculin/i.test(v.name)) || vs.find(v => /pt[-_]BR/i.test(v.lang)) || vs.find(v => /^pt/i.test(v.lang)) || null; };
+  if (ok) { pegarVoz(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = pegarVoz; }
+  let atual = null, gen = 0;
+  const players = Array.from(document.querySelectorAll('.player[data-audio]'));
+  function limparAlvo() { document.querySelectorAll('.falando').forEach(e => e.classList.remove('falando')); }
+  function ui(p) {
+    const s = p._estado, n = p._partes.length;
+    p.querySelector('.prow').hidden = s === 'idle'; p.querySelector('.pnow').hidden = s === 'idle';
+    p.querySelector('.pic').textContent = s === 'tocando' ? '❚❚' : '▶';
+    p.querySelector('.pbar i').style.width = (s === 'idle' ? 0 : p._i / n * 100) + '%';
+    p.querySelectorAll('.pvel').forEach(b => b.textContent = String(RATES[ri]).replace('.', ',') + '×');
   }
-  let voice=null, idx=0, state="idle", gen=0;
-  const RATES=[1,1.2,1.4,1.6]; let ri=3;
-  try{ const r=+localStorage.getItem("vozRate"); if (RATES.includes(r)) ri=RATES.indexOf(r); }catch(e){}
-  const spB=$("oSpeed");
-  const spTxt=()=>{ spB.textContent=String(RATES[ri]).replace(".",",")+"×"; }; spTxt();
-  spB.addEventListener("click", ()=>{
-    ri=(ri+1)%RATES.length; spTxt();
-    try{ localStorage.setItem("vozRate", RATES[ri]); }catch(e){}
-    if (state==="playing"){ synth.cancel(); speak(); }
+  function parar(p) { if (!p) return; p._estado = 'idle'; p._i = 0; ui(p); limparAlvo(); if (atual === p) atual = null; }
+  function falarParte(p) {
+    if (p._i >= p._partes.length) { parar(p); return; }
+    const parte = p._partes[p._i], meu = ++gen;
+    if (parte.etapa && window.demeterIr) window.demeterIr(parte.etapa, true);
+    limparAlvo();
+    if (parte.alvo) { const el = document.querySelector(parte.alvo); if (el) { el.classList.add('falando'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
+    p.querySelector('.pnow').textContent = parte.t; ui(p);
+    const u = new SpeechSynthesisUtterance(falar(parte.t)); u.lang = 'pt-BR'; if (voz) u.voice = voz; u.rate = RATES[ri];
+    u.onend = () => { if (meu === gen && p._estado === 'tocando') { p._i++; falarParte(p); } };
+    u.onerror = e => { if (meu === gen && e.error !== 'interrupted' && e.error !== 'canceled') { parar(p); p.querySelector('details').open = true; } };
+    synth.speak(u);
+  }
+  players.forEach(p => {
+    p._partes = ROTEIROS[p.dataset.audio] || []; p._estado = 'idle'; p._i = 0;
+    p.querySelector('.ptexto').innerHTML = p._partes.map(x => '<p>' + x.t + '</p>').join('');
+    if (!ok) { p.querySelector('.pbtn').hidden = true; p.querySelector('details').open = true; return; }
+    p.querySelector('.pbtn').addEventListener('click', () => {
+      if (p._estado === 'tocando') { p._estado = 'pausado'; gen++; synth.cancel(); ui(p); return; }
+      if (atual && atual !== p) { gen++; synth.cancel(); parar(atual); }
+      atual = p; p._estado = 'tocando'; synth.cancel(); falarParte(p);
+    });
+    p.querySelector('.pstop').addEventListener('click', () => { gen++; synth.cancel(); parar(p); });
+    p.querySelector('.pvel').addEventListener('click', () => {
+      ri = (ri + 1) % RATES.length; try { localStorage.setItem('vozRate', RATES[ri]); } catch (e) {}
+      players.forEach(ui); if (p._estado === 'tocando') { gen++; synth.cancel(); falarParte(p); }
+    });
+    ui(p);
   });
-  function pickVoice(){
-    const vs=synth.getVoices();
-    voice = vs.find(v=>/pt[-_]BR/i.test(v.lang) && /antonio|daniel|male|masculin/i.test(v.name))
-         || vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang)) || null;
-  }
-  pickVoice(); if (synth.onvoiceschanged!==undefined) synth.onvoiceschanged=pickVoice;
-  function ui(){
-    const on = state!=="idle";
-    row.hidden=!on; now.hidden=!on;
-    ic.textContent = state==="playing" ? "❚❚" : "▶";
-    title.textContent = state==="playing" ? "Ouvindo…" : state==="paused" ? "Pausado, toque para continuar" : "Sem tempo para ver tudo? Ouça antes";
-    sub.textContent = state==="idle" ? "O Deméter em uns 3 minutos" : Math.min(idx+1,RESUMO.length)+" de "+RESUMO.length;
-    bar.style.width = (state==="idle"?0:(idx/RESUMO.length*100))+"%";
-  }
-  function speak(){
-    if (idx>=RESUMO.length){ state="idle"; idx=0; ui(); return; }
-    const my=++gen; const u=new SpeechSynthesisUtterance(falar(RESUMO[idx]));
-    u.lang="pt-BR"; if (voice) u.voice=voice; u.rate=RATES[ri];
-    u.onend=()=>{ if (my===gen && state==="playing"){ idx++; speak(); } };
-    u.onerror=e=>{ if (my===gen && e.error!=="interrupted" && e.error!=="canceled"){ state="idle"; ui(); $("oDet").open=true; } };
-    if (window.demeterIr) window.demeterIr(ETAPA[idx], true);
-    now.textContent=RESUMO[idx]; ui(); synth.speak(u);
-  }
-  play.addEventListener("click", ()=>{
-    if (state==="playing"){ state="paused"; synth.cancel(); ui(); }
-    else { state="playing"; synth.cancel(); speak(); }
+  // clicou numa fase enquanto ouve o passeio: o áudio pula para o trecho dela
+  document.addEventListener('demeter-etapa', e => {
+    if (!atual || atual._estado !== 'tocando') return;
+    const j = atual._partes.findIndex(x => x.etapa === e.detail);
+    if (j < 0 || (atual._partes[atual._i] || {}).etapa === e.detail) return;
+    atual._i = j; gen++; synth.cancel(); falarParte(atual);
   });
-  $("oStop").addEventListener("click", ()=>{ state="idle"; idx=0; synth.cancel(); ui(); });
-  // clicou numa etapa enquanto ouve: o áudio pula para o trecho dela
-  document.addEventListener("demeter-etapa", e=>{
-    if (state!=="playing") return;
-    const j=ETAPA.indexOf(e.detail); if (j<0 || ETAPA[idx]===e.detail) return;
-    idx=j; synth.cancel(); speak();
-  });
-  window.addEventListener("pagehide", ()=>synth.cancel());
+  // mudou de tela no site: o áudio da tela anterior para
+  addEventListener('hashchange', () => { if (atual) { gen++; synth.cancel(); parar(atual); } });
+  addEventListener('pagehide', () => { if (ok) synth.cancel(); });
 })();
 </script>
 </body>
