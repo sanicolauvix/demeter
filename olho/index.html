@@ -22,7 +22,7 @@ html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!i
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1E1510;--surface:#2A1E17;--sunk:#33251C;--line:#45352A;--ink:#F3E9DA;--ink-2:#D2C1AA;--ink-3:#A8957E;--accent:#E3A15E;--accent-ink:#E8AE70;--board:#120C08;--board-ink:#F7F1E6;--board-dim:#A8957E;--ok:#6CC08E;--warn:#E2B44F;--bad:#F08A78;--info:#8DB8E0;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#1E1510;--surface:#2A1E17;--sunk:#33251C;--line:#45352A;--ink:#F3E9DA;--ink-2:#D2C1AA;--ink-3:#A8957E;--accent:#E3A15E;--accent-ink:#E8AE70;--board:#120C08;--board-ink:#F7F1E6;--board-dim:#A8957E;--ok:#6CC08E;--warn:#E2B44F;--bad:#F08A78;--info:#8DB8E0;color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:12px}.fshell{display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px;max-width:1560px;margin:0 auto}.fshell .wrap{max-width:none;margin:0;min-width:0}.ftoc{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 32px);overflow-y:auto}.ftoc a{text-decoration:none;color:var(--ink-3);font-size:14px;padding:6px 0 6px 12px;border-left:2px solid var(--line);display:flex;gap:8px;align-items:baseline}.ftoc a span{font:500 11px 'IBM Plex Mono',monospace;color:var(--accent-ink)}.ftoc a:hover{color:var(--ink)}.ftoc a[aria-pressed=true]{color:var(--ink);border-left-color:var(--accent);font-weight:600}.ftoc .fbrand{border:0;padding:0 0 14px;font:600 15px Rubik,sans-serif;letter-spacing:3px;color:var(--ink)}.ftoc .fgrp{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-3);margin:14px 0 4px}.ftoc .fpe{margin-top:18px;display:flex;flex-direction:column;gap:6px}.ftoc .fpe a{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px}.ftoc .fpe a.fprox{background:var(--board);color:var(--board-ink);border-color:var(--board)}@media (max-width:760px){.fshell{grid-template-columns:minmax(0,1fr)}.ftoc{display:none}}
 .scene{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:8px;overflow-x:auto}
 .scene svg{display:block;width:100%;min-width:680px;height:auto}
 .note{font:500 13px/1.4 'IBM Plex Mono',monospace;color:var(--ink-3)}
@@ -60,7 +60,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
 </head>
 <body>
 
-<div class="wrap">
+<div class="fshell"><nav class="ftoc" aria-label="Fases"><a class="fbrand" href="../">DEMETER</a><div class="fgrp">Operação contínua</div><a data-ir="puxada" href="#puxada"><span>01</span>Puxada</a><a data-ir="descarga" href="#descarga"><span>02</span>Descarga</a><a data-ir="onda" href="#onda"><span>03</span>Onda</a><a data-ir="abastecimento" href="#abastecimento"><span>04</span>Abastecimento</a><a data-ir="separacao" href="#separacao"><span>05</span>Separação</a><a data-ir="carregamento" href="#carregamento"><span>06</span>Carregamento</a><a data-ir="rota" href="#rota"><span>07</span>Rota</a><a data-ir="retorno" href="#retorno"><span>08</span>Retorno</a><div class="fgrp">Em paralelo</div><a data-ir="colab" href="#colab">Colaborador → olho</a><a data-ir="vigia" href="#vigia">Olho sempre ligado</a><a data-ir="empresa" href="#empresa">Olho ↔ empresa</a><div class="fpe"><a href="../#tecnologia">← O que usa</a><a class="fprox" href="../#ia">A IA generativa →</a></div></nav><div class="wrap">
 <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
   <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
@@ -1756,7 +1756,7 @@ body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Arial,san
   window.addEventListener("pagehide", ()=>synth.cancel());
 })();
 </script>
-</div>
+</div></div>
 
 </body>
 </html>

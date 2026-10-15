@@ -458,15 +458,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     <a href="#oque">O que é</a>
     <a href="#nasceu">Como nasceu</a>
     <a href="#tecnologia">O que usa</a>
-    <a href="#fases">As fases</a>
+    <a href="olho/#puxada" data-titulo="As fases">As fases ↗</a>
     <a href="#ia">A IA generativa</a>
-    <div class="grp">Ver</div>
-    <a class="out" href="olho/">O olho em ação →</a>
     <div class="toc-pe"><a href="v1/">Versão anterior</a><a href="https://github.com/sanicolauvix/demeter" target="_blank" rel="noopener">GitHub</a><button class="theme-btn" id="tema2" type="button">Alternar tema</button></div>
   </nav>
 
   <main>
-    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#nasceu">Como nasceu</a><a href="#tecnologia">O que usa</a><a href="#fases">Fases</a><a href="#ia">IA generativa</a><a href="olho/">O olho em ação →</a></nav>
+    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#nasceu">Como nasceu</a><a href="#tecnologia">O que usa</a><a href="olho/#puxada">As fases ↗</a><a href="#ia">IA generativa</a></nav>
     <section class="view home" id="inicio" data-titulo="Home" aria-label="Home">
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
@@ -497,7 +495,7 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
           <p>E as regras? Das inúmeras que temos no Brasil, você sabe se a empresa cumpre todas, sem nenhuma surpresa no futuro.</p>
           <div class="selos"><span>CLT</span><span>Pausa no frio</span><span>NR-6 · EPI</span><span>NR-11 · cargas</span><span>Lei 13.103 · motorista</span><span>Vigilância sanitária</span><span>NF-e · SEFAZ</span><span>LGPD</span></div>
         </div>
-        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>Parece o futuro.</b><small>Pode ser o presente: a tecnologia já existe.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/">O olho em ação</a></div></div>
+        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>Parece o futuro.</b><small>Pode ser o presente: a tecnologia já existe.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/#puxada">As fases</a></div></div>
       </div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
@@ -567,164 +565,6 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
       <nav class="passo" aria-label="Anterior e próximo"></nav>
     </section>
 
-    <section class="view" id="fases" data-titulo="As fases" hidden>
-      <span class="eyebrow">Apresentação</span>
-      <h2>As fases</h2>
-      <p class="lead">Uma operação contínua em oito fases, e três trilhas que correm em paralelo, em qualquer fase. Fora do galpão, o CRONOS olha pelo Deméter. Toque numa fase para ver a tirinha.</p>
-      <div class="fases"><a class="fase" href="olho/#puxada"><span>01</span>Puxada</a><a class="fase" href="olho/#descarga"><span>02</span>Descarga</a><a class="fase" href="olho/#onda"><span>03</span>Onda</a><a class="fase" href="olho/#abastecimento"><span>04</span>Abastecimento</a><a class="fase" href="olho/#separacao"><span>05</span>Separação</a><a class="fase" href="olho/#carregamento"><span>06</span>Carregamento</a><a class="fase" href="olho/#rota"><span>07</span>Rota</a><a class="fase" href="olho/#retorno"><span>08</span>Retorno</a></div>
-      <div class="fases"><a class="fase par" href="olho/#colab">Colaborador → olho</a><a class="fase par" href="olho/#vigia">Olho sempre ligado</a><a class="fase par" href="olho/#empresa">Olho ↔ empresa</a></div>
-      <div id="cena-home" class="scene descarga-scene">
-  <svg viewBox="0 0 1100 430" role="img" aria-label="Animação da descarga: a carreta encosta; cada doly cheio passa pelo portal RFID e entra numa baia da câmara de descarregamento; a NF fecha; depois os dolys vazios saem da câmara de retorno e sobem na carreta, que é liberada e vai embora. O olho confere tudo e o dono acompanha o olho.">
-    <defs>
-      <symbol id="ico-doly-vazio" viewBox="0 0 28 44">
-        <rect x="2" y="2" width="24" height="34" rx="2" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="3 2"/>
-        <rect x="0" y="36" width="28" height="4" rx="1" fill="var(--ink)"/>
-        <circle cx="5" cy="42" r="2" fill="var(--ink)"/><circle cx="23" cy="42" r="2" fill="var(--ink)"/>
-      </symbol>
-    </defs>
-    <rect width="1100" height="430" fill="var(--surface)"/>
-    <g transform="translate(0 50)">
-    <rect width="1" height="1" opacity="0"><animate id="cicloDesc" attributeName="x" from="0" to="0" dur="22s" begin="0s;cicloDesc.end"/></rect>
-    <line x1="0" y1="340" x2="1100" y2="340" stroke="var(--line)" stroke-width="2"/>
-    <rect x="360" y="64" width="720" height="132" rx="10" fill="var(--info)" fill-opacity="0.07" stroke="var(--info)" stroke-width="1.2"/>
-    <text x="380" y="86" font-family="Rubik, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Câmara de descarregamento</text>
-    <text x="380" y="102" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">vazia antes de abrir; tudo o que entra pertence à NF</text>
-    <rect x="360" y="208" width="720" height="132" rx="10" fill="var(--accent)" fill-opacity="0.06" stroke="var(--accent)" stroke-width="1.2"/>
-    <text x="380" y="230" font-family="Rubik, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Câmara de retorno</text>
-    <text x="380" y="246" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">cheia antes de abrir; os vazios que voltam para a fábrica</text>
-    <g>
-      <rect x="296" y="96" width="8" height="244" rx="2" fill="var(--ink-3)"/><rect x="332" y="96" width="8" height="244" rx="2" fill="var(--ink-3)"/>
-      <circle cx="318" cy="102" r="5" fill="var(--accent)"/><circle cx="318" cy="102" r="10" fill="none" stroke="var(--accent)" stroke-width="2" class="nfc-pulse"/>
-      <text x="318" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--accent-ink)">PORTAL RFID</text>
-    </g>
-    <rect x="440" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="440" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="470" cy="112" r="5" fill="var(--line)"/><circle cx="470" cy="258" r="5" fill="var(--line)"/>
-    <text x="470" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B01</text>
-    <rect x="515" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="515" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="545" cy="112" r="5" fill="var(--line)"/><circle cx="545" cy="258" r="5" fill="var(--line)"/>
-    <text x="545" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B02</text>
-    <rect x="590" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="590" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="620" cy="112" r="5" fill="var(--line)"/><circle cx="620" cy="258" r="5" fill="var(--line)"/>
-    <text x="620" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B03</text>
-    <rect x="665" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="665" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="695" cy="112" r="5" fill="var(--line)"/><circle cx="695" cy="258" r="5" fill="var(--line)"/>
-    <text x="695" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B04</text>
-    <rect x="740" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="740" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="770" cy="112" r="5" fill="var(--line)"/><circle cx="770" cy="258" r="5" fill="var(--line)"/>
-    <text x="770" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B05</text>
-    <rect x="815" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="815" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="845" cy="112" r="5" fill="var(--line)"/><circle cx="845" cy="258" r="5" fill="var(--line)"/>
-    <text x="845" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B06</text>
-    <rect x="890" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="890" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="920" cy="112" r="5" fill="var(--line)"/><circle cx="920" cy="258" r="5" fill="var(--line)"/>
-    <text x="920" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B07</text>
-    <rect x="965" y="122" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <rect x="965" y="266" width="60" height="70" fill="none" stroke="var(--ink-3)" stroke-opacity="0.55"/>
-    <circle cx="995" cy="112" r="5" fill="var(--line)"/><circle cx="995" cy="258" r="5" fill="var(--line)"/>
-    <text x="995" y="360" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">B08</text>
-    <circle cx="995" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.1818" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.1000" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L995 192" keyPoints="0;0;1;1" keyTimes="0;0.1000;0.1818;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="920" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.2227" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.1409" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L920 192" keyPoints="0;0;1;1" keyTimes="0;0.1409;0.2227;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="845" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.2636" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.1818" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L845 192" keyPoints="0;0;1;1" keyTimes="0;0.1818;0.2636;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="770" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3045" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.2227" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L770 192" keyPoints="0;0;1;1" keyTimes="0;0.2227;0.3045;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="695" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3455" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.2636" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L695 192" keyPoints="0;0;1;1" keyTimes="0;0.2636;0.3455;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="620" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3864" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3045" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L620 192" keyPoints="0;0;1;1" keyTimes="0;0.3045;0.3864;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="545" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.4273" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3455" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L545 192" keyPoints="0;0;1;1" keyTimes="0;0.3455;0.4273;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="470" cy="112" r="5" fill="var(--ok)"><animate attributeName="opacity" values="0;1" keyTimes="0;0.4682" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-torre" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="0;1" keyTimes="0;0.3864" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M236 336 L318 336 L318 192 L470 192" keyPoints="0;0;1;1" keyTimes="0;0.3864;0.4682;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="470" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.5045" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.5773" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M470 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.5045;0.5773;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="545" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.5409" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6136" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M545 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.5409;0.6136;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="620" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.5773" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6500" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M620 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.5773;0.6500;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="695" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6136" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6864" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M695 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.6136;0.6864;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="770" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6500" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.7227" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M770 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.6500;0.7227;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="845" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.6864" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.7591" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M845 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.6864;0.7591;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="920" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.7227" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.7955" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M920 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.7227;0.7955;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <circle cx="995" cy="258" r="5" fill="var(--ok)"><animate attributeName="opacity" values="1;0" keyTimes="0;0.7591" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/></circle>
-    <use href="#ico-doly-vazio" width="28" height="44" x="-14" y="-44"><animate attributeName="opacity" values="1;0" keyTimes="0;0.8318" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/><animateMotion path="M995 336 L236 336" keyPoints="0;0;1;1" keyTimes="0;0.7591;0.8318;1" calcMode="linear" dur="22s" begin="cicloDesc.begin"/></use>
-    <g>
-      <rect x="20" y="272" width="200" height="62" rx="6" fill="var(--sunk)" stroke="var(--ink-3)"/>
-      <text x="120" y="308" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-3)">FÁBRICA A</text>
-      <path d="M20 286 H-14 L-32 306 V334 H20 Z" fill="var(--board)"/>
-      <circle cx="160" cy="336" r="10" fill="var(--ink)"/><circle cx="186" cy="336" r="10" fill="var(--ink)"/>
-      <animateTransform attributeName="transform" type="translate" values="-340 0;0 0;0 0;-380 0;-380 0" keyTimes="0;0.0909;0.8591;0.9409;1" dur="22s" begin="cicloDesc.begin"/>
-    </g>
-    <g opacity="0"><animate attributeName="opacity" values="0;1" keyTimes="0;0.4682" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/>
-      <rect x="846" y="72" width="196" height="30" rx="15" fill="var(--ok)" fill-opacity="0.16" stroke="var(--ok)" stroke-width="1.5"/>
-      <text x="944" y="92" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">NF fechada · 8 de 8 dolys</text>
-    </g>
-    <g><animate attributeName="opacity" values="1;0" keyTimes="0;0.5045" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/>
-      <rect x="846" y="216" width="196" height="30" rx="15" fill="var(--ok)" fill-opacity="0.16" stroke="var(--ok)" stroke-width="1.5"/>
-      <text x="944" y="236" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Retorno pronto · 8 de 8</text>
-    </g>
-    <g opacity="0"><animate attributeName="opacity" values="0;1" keyTimes="0;0.8318" calcMode="discrete" dur="22s" begin="cicloDesc.begin"/>
-      <rect x="826" y="216" width="216" height="30" rx="15" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="1.5"/>
-      <text x="934" y="236" text-anchor="middle" font-family="Rubik, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Retorno carregado · liberada</text>
-    </g>
-    </g>
-    <!-- Etapas -->
-    <g class="etapas">
-      <g role="button" tabindex="0" data-ir="puxada" aria-pressed="false" aria-label="Ver a etapa Puxada"><rect x="238" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="285.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Puxada</text></g>
-      <path d="M331.5 81 H345.5 M340.5 76 L346.5 81 L340.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="descarga" aria-pressed="true" aria-label="Ver a etapa Descarga"><rect x="346" y="66" width="94" height="30" rx="15" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent)" stroke-width="1.6"/><text x="393.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Descarga</text></g>
-      <path d="M439.5 81 H453.5 M448.5 76 L454.5 81 L448.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="onda" aria-pressed="false" aria-label="Ver a etapa Onda"><rect x="454" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="501.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Onda</text></g>
-      <path d="M547.5 81 H561.5 M556.5 76 L562.5 81 L556.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="abastecimento" aria-pressed="false" aria-label="Ver a etapa Abastecimento"><rect x="562" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="609.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Abastecimento</text></g>
-      <path d="M655.5 81 H669.5 M664.5 76 L670.5 81 L664.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="separacao" aria-pressed="false" aria-label="Ver a etapa Separação"><rect x="670" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="717.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Separação</text></g>
-      <path d="M763.5 81 H777.5 M772.5 76 L778.5 81 L772.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="carregamento" aria-pressed="false" aria-label="Ver a etapa Carregamento"><rect x="778" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="825.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Carregamento</text></g>
-      <path d="M871.5 81 H885.5 M880.5 76 L886.5 81 L880.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="rota" aria-pressed="false" aria-label="Ver a etapa Rota"><rect x="886" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="933.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Rota</text></g>
-      <path d="M979.5 81 H993.5 M988.5 76 L994.5 81 L988.5 86" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/>
-      <g role="button" tabindex="0" data-ir="retorno" aria-pressed="false" aria-label="Ver a etapa Retorno"><rect x="994" y="66" width="94" height="30" rx="15" fill="var(--bg)" stroke="var(--line)"/><text x="1041.0" y="86" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink-2)">Retorno</text></g>
-      <rect x="12" y="6" width="190" height="104" rx="12" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 4"/>
-      <text x="28" y="24" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" letter-spacing="2">EM PARALELO</text>
-      <g role="button" tabindex="0" data-ir="colab" aria-pressed="false" aria-label="Ver Colaborador → olho"><rect x="24" y="30" width="166" height="22" rx="11" fill="var(--warn)" fill-opacity="0.08" stroke="var(--warn)" stroke-width="1.3"/><text x="107" y="45.5" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Colaborador → olho</text></g>
-      <g role="button" tabindex="0" data-ir="vigia" aria-pressed="false" aria-label="Ver Olho sempre ligado"><rect x="24" y="56" width="166" height="22" rx="11" fill="var(--info)" fill-opacity="0.08" stroke="var(--info)" stroke-width="1.3"/><text x="107" y="71.5" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Olho sempre ligado</text></g>
-      <g role="button" tabindex="0" data-ir="empresa" aria-pressed="false" aria-label="Ver Olho ↔ empresa"><rect x="24" y="82" width="166" height="22" rx="11" fill="var(--ok)" fill-opacity="0.08" stroke="var(--ok)" stroke-width="1.3"/><text x="107" y="97.5" text-anchor="middle" font-family="Rubik, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Olho ↔ empresa</text></g>
-      <text x="238" y="58" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" letter-spacing="2">OPERAÇÃO CONTÍNUA</text>
-      <line x1="708" y1="54" x2="708" y2="66" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4"/>
-    </g>
-    <g transform="translate(600 4) scale(0.85)" aria-hidden="true">
-      <circle cx="20" cy="12" r="10" fill="var(--sunk)" stroke="var(--ink)" stroke-width="1.5"/>
-      <path d="M6 26 H34 Q40 26 40 32 V62 H0 V32 Q0 26 6 26 Z" fill="var(--board)"/>
-      <path d="M17 27 L23 27 L25 46 L20 52 L15 46 Z" fill="var(--accent)"/>
-      <rect x="30" y="38" width="18" height="13" rx="2" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.2"/>
-      <path d="M33 47 L37 43 L40 45 L45 40" fill="none" stroke="var(--ok)" stroke-width="1.5"/>
-    </g>
-    <line x1="644" y1="30" x2="662" y2="32" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 4"/>
-    <text x="590" y="26" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)">O DONO</text>
-    <text x="590" y="43" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">acompanha o olho</text>
-    <path d="M664 34 C 680 14, 736 14, 752 34 C 736 54, 680 54, 664 34 Z" fill="var(--bg)" stroke="var(--accent)" stroke-width="2.5"/>
-    <circle cx="708" cy="35" r="9" fill="none" stroke="var(--accent)" stroke-width="2.5"/><circle cx="708" cy="35" r="4" fill="var(--accent)"/>
-    <text x="768" y="31" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="var(--accent-ink)">O OLHO CONFERE</text>
-    <text x="768" y="48" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink-3)">o que entra cheio e o que sai vazio</text>
-  </svg>
-  </div>
-      <p class="scene-hint">Arraste para o lado para ver a cena inteira.</p>
-      <nav class="passo" aria-label="Anterior e próximo"></nav>
-    </section>
 
 
     <section class="view" id="ia" data-titulo="A IA generativa" hidden>
@@ -772,12 +612,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
     window.scrollTo(0, 0);
     const m = document.querySelector('.mnav a.on'); if (m && m.scrollIntoView) m.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
-  // anterior e próximo, na ordem das telas
-  views.forEach((v, i) => {
+  // anterior e próximo seguem a ordem do menu lateral
+  const ordem = Array.from(document.querySelectorAll('.toc > a')).map(a => ({ href: a.getAttribute('href'), titulo: (a.dataset.titulo || a.textContent).replace(' ↗', '') }));
+  views.forEach(v => {
     const n = v.querySelector('.passo'); if (!n) return;
-    const a = views[i - 1], d = views[i + 1];
-    n.innerHTML = (a ? `<a href="#${a.id}">← ${a.dataset.titulo}</a>` : '<span></span>') +
-                  (d ? `<a class="prox" href="#${d.id}">${d.dataset.titulo} →</a>` : '<a class="prox" href="olho/">O olho em ação →</a>');
+    const i = ordem.findIndex(o => o.href === '#' + v.id);
+    const a = ordem[i - 1], d = ordem[i + 1];
+    n.innerHTML = (a ? `<a href="${a.href}">← ${a.titulo}</a>` : '<span></span>') + (d ? `<a class="prox" href="${d.href}">${d.titulo} →</a>` : '<span></span>');
   });
   addEventListener('hashchange', mostrar); mostrar();
   // Chips da cena levam à tirinha da etapa
