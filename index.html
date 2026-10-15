@@ -264,6 +264,43 @@ footer a { color: var(--ink-2); }
 .ouvir details p { margin: .5em 0; font-size: .95rem; color: var(--ink-2); }
 @media print { .ouvir { display: none; } }
 
+/* Telas: um item do painel por vez, sem rolar a página inteira */
+[hidden] { display: none !important; }
+main { gap: 0; min-height: calc(100vh - 140px); }
+.view { animation: entra .35s ease; }
+@keyframes entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.passo { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 8px; }
+.passo a { text-decoration: none; color: var(--ink-2); font-size: 15px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.passo a.prox { color: var(--board-ink); background: var(--board); border-color: var(--board); font-family: var(--font-display); font-weight: 600; }
+.mnav { display: none; }
+@media (max-width: 920px) {
+  .mnav { display: flex; gap: 8px; overflow-x: auto; padding: 16px 0 12px; position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 5; scrollbar-width: none; }
+  .mnav a { flex: none; font-size: 14px; text-decoration: none; color: var(--ink-2); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
+  .mnav a.on { color: var(--board-ink); background: var(--board); border-color: var(--board); }
+}
+.home { padding-block: 0; }
+.an-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+@media (max-width: 860px) { .an-grid { grid-template-columns: minmax(0, 1fr); } }
+.an-esq, .an-dir { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.anuncio h1 { font-size: clamp(32px, 3.9vw, 50px); max-width: 18ch; }
+.anuncio { padding: clamp(24px, 4vw, 48px); gap: clamp(18px, 2.4vw, 26px); }
+.anuncio .btn.main { background: #E3A15E; color: #1A120D; border-color: #E3A15E; }
+.an-olho { width: min(100%, 300px); }
+.an-lista { margin-top: 0; font-size: clamp(19px, 1.9vw, 24px); }
+.an-sabe { font-size: clamp(18px, 1.8vw, 22px); }
+.an-conta strong { font-size: clamp(34px, 3.6vw, 46px); }
+.an-conta p { font-size: 17px; }
+.an-pe { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
+.btn.escuro { background: transparent; color: #F3E9DA; border-color: #45352A; }
+.btn.escuro:hover { border-color: #E3A15E; }
+.ia-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 980px) { .ia-grid { grid-template-columns: minmax(0, 1fr); } }
+.ia-grid .chat p { max-width: 92%; }
+.cards.mini { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.cards.mini .card { padding: 14px 16px; gap: 4px; }
+.cards.mini .card h3 { font-size: 16px; }
+.cards.mini .card p { font-size: 14px; }
+
 .sub3 { font-size: clamp(22px, 2.6vw, 28px); margin-top: 16px; }
 .fases { display: flex; flex-wrap: wrap; gap: 8px; }
 .fase { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-family: var(--font-display); font-weight: 500; font-size: 16px; }
@@ -322,6 +359,22 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 .honest li span { color: var(--ink-2); font-size: 15px; }
 .honest li em { font-style: normal; color: var(--ok); font-size: 15px; }
 
+/* Ajustes finais da Home em tela única (vêm por último para valer) */
+.anuncio { padding: clamp(24px, 3.4vw, 44px); gap: clamp(16px, 2vw, 22px); }
+.anuncio h1 { font-size: clamp(30px, 3.6vw, 46px); max-width: 20ch; }
+.anuncio h1 span { margin-top: 4px; }
+.an-olho { width: min(100%, 280px); }
+.an-conta { padding: 18px 22px; }
+.an-conta p { font-size: 16px; }
+.an-conta strong { font-size: clamp(32px, 3.2vw, 42px); white-space: nowrap; }
+.an-sabe { font-size: clamp(17px, 1.6vw, 20px); }
+.an-lista { font-size: clamp(18px, 1.7vw, 22px); margin-top: -8px; }
+.an-pe { padding-top: 18px; }
+.home .ouvir { max-width: none; }
+.toc-pe { margin-top: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.toc .toc-pe a { border: 0; padding: 2px 0; font-size: 13px; }
+@media (min-width: 921px) { footer { display: none; } }
+
 .ouvir{max-width:64ch;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
 .ouvir[hidden],.ouvir [hidden]{display:none!important}
 .ouvir .obtn{width:100%;display:flex;align-items:center;gap:12px;background:var(--board);color:var(--board-ink);border:0;border-radius:10px;padding:12px 14px;text-align:left;cursor:pointer;font:inherit;min-height:56px}
@@ -363,32 +416,40 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   <nav class="toc" aria-label="Seções">
     <div class="brand"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg>DEMETER</div>
     <a href="#inicio">Home</a>
-    <a href="#apresentacao">Apresentação</a>
+    <div class="grp">Apresentação</div>
+    <a href="#oque">O que é o Deméter</a>
+    <a href="#fases">As fases</a>
+    <a href="#tecnologia">A tecnologia</a>
+    <a href="#ia">A IA generativa</a>
+    <div class="grp">Ver</div>
     <a class="out" href="olho/">O olho em ação →</a>
+    <div class="toc-pe"><a href="v1/">Versão anterior</a><a href="https://github.com/sanicolauvix/demeter" target="_blank" rel="noopener">GitHub</a><button class="theme-btn" id="tema2" type="button">Alternar tema</button></div>
   </nav>
 
   <main>
-    <section class="home" id="inicio" aria-label="Início">
-      <div class="home-top">
-        <div class="hero-mark"><svg role="img" aria-label="Logo Deméter"><use href="#mark"/></svg><span>DEMETER</span></div>
-        <nav aria-label="Atalhos"><a href="#apresentacao">Apresentação</a><a href="olho/">O olho em ação</a></nav>
-      </div>
+    <nav class="mnav" aria-label="Seções"><a href="#inicio">Home</a><a href="#oque">O que é</a><a href="#fases">Fases</a><a href="#tecnologia">Tecnologia</a><a href="#ia">IA generativa</a><a href="olho/">O olho em ação →</a></nav>
+    <section class="view home" id="inicio" aria-label="Home">
       <div class="anuncio">
         <div class="an-top"><span>PARA QUEM DISTRIBUI ALIMENTOS</span><span class="vivo">● AO VIVO</span></div>
-        <svg class="an-olho" viewBox="0 0 560 220" aria-hidden="true">
+        <div class="an-grid">
+          <div class="an-esq">
+            <h1>Quanto a sua operação perdeu ontem?<span>Ninguém sabe.</span></h1>
+            <p class="an-sabe">Existe um olho que sabe.</p>
+            <p class="an-lista">Em cada baia. Em cada volume.<br>Em cada carga. Em cada entrega.</p>
+          </div>
+          <div class="an-dir">
+            <svg class="an-olho" viewBox="0 0 560 220" aria-hidden="true">
           <path d="M20 110 C 120 10, 440 10, 540 110 C 440 210, 120 210, 20 110 Z" fill="none" stroke="#E3A15E" stroke-width="5"/>
           <circle cx="280" cy="110" r="74" fill="none" stroke="#F3E9DA" stroke-width="3" stroke-opacity="0.35"/>
           <circle cx="280" cy="110" r="50" fill="none" stroke="#E3A15E" stroke-width="5"/>
           <circle cx="280" cy="110" r="20" fill="#E3A15E"><animate attributeName="r" values="20;24;20" dur="2.4s" repeatCount="indefinite"/></circle>
           <g stroke="#F3E9DA" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"><line x1="280" y1="22" x2="280" y2="44"/><line x1="280" y1="176" x2="280" y2="198"/><line x1="192" y1="110" x2="214" y2="110"/><line x1="346" y1="110" x2="368" y2="110"/></g>
         </svg>
-        <h1>Quanto a sua operação perdeu ontem?<span>Ninguém sabe.</span></h1>
-        <div class="an-conta"><b>FAÇA A CONTA</b><p>Numa operação de R$ 500 mil por dia, cada 1% que escapa é</p><strong>R$ 130 mil<small> por mês</small></strong></div>
-        <p class="an-sabe">Existe um olho que sabe.</p>
-        <p class="an-lista">Em cada baia.<br>Em cada volume.<br>Em cada carga.<br>Em cada entrega.</p>
-        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div></div>
+            <div class="an-conta"><b>FAÇA A CONTA</b><p>Numa operação de R$ 500 mil por dia, cada 1% que escapa é</p><strong>R$ 130 mil<small> por mês</small></strong></div>
+          </div>
+        </div>
+        <div class="an-pe"><div class="an-marca"><svg role="img" aria-label="Deméter"><use href="#mark"/></svg><span><b>DEMÉTER</b><small>O produto segue. O erro para.</small></span></div><div class="cta"><a class="btn main" href="#oque">Conheça o Deméter →</a><a class="btn escuro" href="olho/">O olho em ação</a></div></div>
       </div>
-      <div class="cta"><a class="btn main" href="olho/">Veja o olho em ação →</a><a class="btn" href="#apresentacao">Apresentação</a></div>
       <div class="ouvir" id="ouvir">
   <button class="obtn" type="button" id="oPlay"><span class="oic" id="oIc" aria-hidden="true">▶</span><span><b id="oTitle">Sem tempo para ver tudo? Ouça antes</b><small id="oSub">O Deméter em uns 3 minutos</small></span></button>
   <div class="orow" id="oRow" hidden><div class="obar"><i id="oBar"></i></div><button class="ochip" type="button" id="oSpeed" aria-label="Velocidade da voz">1,6×</button><button class="ochip" type="button" id="oStop">Parar</button></div>
@@ -396,6 +457,33 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   <details id="oDet"><summary>Prefere ler? Veja o resumo em texto</summary><div id="oText"></div></details>
 </div>
 
+      <nav class="passo" aria-label="Navegação"><span></span><a class="prox" href="#oque">O que é o Deméter →</a></nav>
+    </section>
+
+    <section class="view" id="oque" hidden>
+      <span class="eyebrow">Apresentação · 1 de 4</span>
+      <h2>O que é o Deméter</h2>
+      <p class="lead">O Deméter vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Cada volume com dono, lugar e hora. Ele gerencia; quem decide é o dono.</p>
+      <div class="cards">
+        <div class="card"><h3>Vê</h3><p>Etiquetas, antenas, câmeras, sensores, balanças e GPS: tudo o que se move vira um evento com dono, lugar e hora.</p></div>
+        <div class="card"><h3>Entende</h3><p>Uma IA generativa transforma os eventos em conversa, alerta com motivo, proposta de trabalho e resumo para o dono.</p></div>
+        <div class="card dark"><h3>Para o erro</h3><p>Volume errado, local errado, carga errada: o olho avisa antes de seguir. O produto segue. O erro para.</p></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>8</b><span>fases da operação contínua</span></div>
+        <div class="stat"><b>3</b><span>trilhas que correm em paralelo</span></div>
+        <div class="stat"><b>0</b><span>papel circulando na operação</span></div>
+        <div class="stat"><b>24 h</b><span>de olho, sem cansar</span></div>
+      </div>
+      <nav class="passo" aria-label="Navegação"><a href="#inicio">← Home</a><a class="prox" href="#fases">As fases →</a></nav>
+    </section>
+
+    <section class="view" id="fases" hidden>
+      <span class="eyebrow">Apresentação · 2 de 4</span>
+      <h2>As fases</h2>
+      <p class="lead">Uma operação contínua em oito fases, e três trilhas que correm em paralelo, em qualquer fase. Fora do galpão, o CRONOS olha pelo Deméter. Toque numa fase para ver a tirinha.</p>
+      <div class="fases"><a class="fase" href="olho/#puxada"><span>01</span>Puxada</a><a class="fase" href="olho/#descarga"><span>02</span>Descarga</a><a class="fase" href="olho/#onda"><span>03</span>Onda</a><a class="fase" href="olho/#abastecimento"><span>04</span>Abastecimento</a><a class="fase" href="olho/#separacao"><span>05</span>Separação</a><a class="fase" href="olho/#carregamento"><span>06</span>Carregamento</a><a class="fase" href="olho/#rota"><span>07</span>Rota</a><a class="fase" href="olho/#retorno"><span>08</span>Retorno</a></div>
+      <div class="fases"><a class="fase par" href="olho/#colab">Colaborador → olho</a><a class="fase par" href="olho/#vigia">Olho sempre ligado</a><a class="fase par" href="olho/#empresa">Olho ↔ empresa</a></div>
       <div id="cena-home" class="scene descarga-scene">
   <svg viewBox="0 0 1100 430" role="img" aria-label="Animação da descarga: a carreta encosta; cada doly cheio passa pelo portal RFID e entra numa baia da câmara de descarregamento; a NF fecha; depois os dolys vazios saem da câmara de retorno e sobem na carreta, que é liberada e vai embora. O olho confere tudo e o dono acompanha o olho.">
     <defs>
@@ -546,26 +634,13 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
   </svg>
   </div>
       <p class="scene-hint">Arraste para o lado para ver a cena inteira.</p>
-      <p class="note">Toque numa etapa da cena para abrir a tirinha dela.</p>
-      <div class="stats">
-        <div class="stat"><b>8</b><span>etapas da operação contínua</span></div>
-        <div class="stat"><b>3</b><span>trilhas que correm em paralelo</span></div>
-        <div class="stat"><b>0</b><span>papel circulando na operação</span></div>
-        <div class="stat"><b>24 h</b><span>de olho, sem cansar</span></div>
-      </div>
+      <nav class="passo" aria-label="Navegação"><a href="#oque">← O que é o Deméter</a><a class="prox" href="#tecnologia">A tecnologia →</a></nav>
     </section>
 
-    <section id="apresentacao">
-      <span class="eyebrow">Apresentação</span>
-      <h2>Deméter, o olho que tudo vê</h2>
-      <p class="lead">O Deméter vê, confere e controla a operação de uma distribuidora de alimentos, da carreta que carrega na fábrica ao caminhão que volta da rota. Cada volume com dono, lugar e hora. Ele gerencia; quem decide é o dono.</p>
-
-      <h3 class="sub3">As fases</h3>
-      <p class="prose">Uma operação contínua em oito fases, e três trilhas que correm em paralelo, em qualquer fase. Fora do galpão, na puxada e na rota, o CRONOS olha pelo Deméter. Toque numa fase para ver a tirinha.</p>
-      <div class="fases"><a class="fase" href="olho/#puxada"><span>01</span>Puxada</a><a class="fase" href="olho/#descarga"><span>02</span>Descarga</a><a class="fase" href="olho/#onda"><span>03</span>Onda</a><a class="fase" href="olho/#abastecimento"><span>04</span>Abastecimento</a><a class="fase" href="olho/#separacao"><span>05</span>Separação</a><a class="fase" href="olho/#carregamento"><span>06</span>Carregamento</a><a class="fase" href="olho/#rota"><span>07</span>Rota</a><a class="fase" href="olho/#retorno"><span>08</span>Retorno</a></div>
-      <div class="fases"><a class="fase par" href="olho/#colab">Colaborador → olho</a><a class="fase par" href="olho/#vigia">Olho sempre ligado</a><a class="fase par" href="olho/#empresa">Olho ↔ empresa</a></div>
-
-      <h3 class="sub3">A tecnologia</h3>
+    <section class="view" id="tecnologia" hidden>
+      <span class="eyebrow">Apresentação · 3 de 4</span>
+      <h2>A tecnologia</h2>
+      <p class="lead">Seis sentidos e um único registro. Nada depende de alguém lembrar de bipar.</p>
       <div class="cards">
         <div class="card"><h3>RFID UHF</h3><p>Etiquetas nos montados e nos volumes; antenas nas portas e nas baias. Ninguém bipa nada.</p></div>
         <div class="card"><h3>Câmeras com IA</h3><p>Veem o processo: EPI na câmara fria, o que saiu da doca, a avaria na hora.</p></div>
@@ -574,16 +649,22 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card"><h3>GPS e CRONOS</h3><p>Rastreador e cercas eletrônicas na estrada; jornada, diário de bordo e folha de ponto.</p></div>
         <div class="card"><h3>Registro único</h3><p>Cada evento no padrão GS1 (EPCIS). Painéis, alertas e o resultado do patrão saem dele.</p></div>
       </div>
+      <nav class="passo" aria-label="Navegação"><a href="#fases">← As fases</a><a class="prox" href="#ia">A IA generativa →</a></nav>
+    </section>
 
-      <h3 class="sub3">A IA generativa</h3>
-      <p class="prose">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
+    <section class="view" id="ia" hidden>
+      <span class="eyebrow">Apresentação · 4 de 4</span>
+      <h2>A IA generativa</h2>
+      <p class="lead">Sensores enxergam. Quem entende o que está acontecendo, e fala disso como gente, é a IA generativa do Deméter. Ela conversa, explica e propõe; a decisão continua sendo de uma pessoa.</p>
+      <div class="ia-grid">
       <div class="chat" aria-label="Exemplo de conversa pelo relógio">
         <p class="eu"><b>Colaborador · baia 12</b>Achei 30, o sistema diz 32.</p>
         <p class="ia"><b>Olho</b>Li a baia agora: 30 volumes. Registrei a falta de 2 do lote 2410 e avisei o imediato. A última leitura com 32 foi às 14:05, no abastecimento.</p>
         <p class="eu"><b>Patrão · fim do dia</b>Quanto perdi com espera em cliente este mês?</p>
         <p class="ia"><b>Olho</b>41 horas de caminhão parado, 62% delas em três clientes. O 0412 lidera: 14 esperas acima de 30 minutos. Sugiro agendar a entrega dele.</p>
       </div>
-      <div class="cards">
+        <div class="ia-lado">
+      <div class="cards mini">
         <div class="card"><h3>Conversa pelo relógio</h3><p>O colaborador fala do jeito dele, por voz ou toque. O olho entende e responde curto, de mãos livres.</p></div>
         <div class="card"><h3>Alerta com motivo</h3><p>Todo aviso vem com o porquê: "baú a 9 °C, o limite é 7". Ninguém precisa adivinhar.</p></div>
         <div class="card"><h3>Propõe, a pessoa aprova</h3><p>Monta a onda, distribui o turno, sugere o destino da avaria. Quem aprova é sempre uma pessoa.</p></div>
@@ -591,9 +672,10 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
         <div class="card"><h3>Responde ao patrão</h3><p>Pergunta em português, resposta com número: perdas, esperas, vencimentos, resultado do dia.</p></div>
         <div class="card"><h3>Ensina, não pune</h3><p>O erro vira uma lição curta para quem errou e uma melhoria no processo. Quem faz bem feito aparece no registro.</p></div>
       </div>
+        </div>
+      </div>
       <div class="callout"><b>Feito com IA generativa</b><p>O próprio Deméter foi desenhado em parceria com IA generativa: o fluxo, as animações, as tirinhas e este site. A experiência de chão de quem conhece a operação, somada a uma IA como parceira de equipe.</p></div>
-
-      <p class="rule">O produto segue. O erro para.</p>
+      <nav class="passo" aria-label="Navegação"><a href="#tecnologia">← A tecnologia</a><a class="prox" href="olho/">O olho em ação →</a></nav>
     </section>
   </main>
 </div>
@@ -604,28 +686,30 @@ a.etapa-card .ver { margin-top: auto; font-size: 14px; color: var(--accent-ink);
 </footer>
 <script>
 (function(){
-  // Índice: marca a seção visível
-  const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
-  const alvos = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  const marcar = () => {
-    const linha = innerHeight * 0.35; let atual = alvos[0];
-    alvos.forEach(s => { if (s.getBoundingClientRect().top <= linha) atual = s; });
-    links.forEach(l => l.classList.toggle('on', atual && l.getAttribute('href') === '#' + atual.id));
-  };
-  let pedido = false;
-  addEventListener('scroll', () => { if (pedido) return; pedido = true; requestAnimationFrame(() => { pedido = false; marcar(); }); }, { passive: true });
-  addEventListener('resize', marcar); marcar();
+  // Telas: mostra só a seção pedida no endereço (#oque, #fases...), sem rolar a página
+  const views = Array.from(document.querySelectorAll('main > section.view'));
+  const links = Array.from(document.querySelectorAll('.toc a[href^="#"], .mnav a[href^="#"]'));
+  function mostrar() {
+    const id = (location.hash || '#inicio').slice(1);
+    const alvo = views.find(v => v.id === id) || views[0];
+    views.forEach(v => { v.hidden = v !== alvo; });
+    links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + alvo.id));
+    window.scrollTo(0, 0);
+    const m = document.querySelector('.mnav a.on'); if (m && m.scrollIntoView) m.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+  addEventListener('hashchange', mostrar); mostrar();
   // Chips da cena levam à tirinha da etapa
   document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) location.href = 'olho/#' + b.getAttribute('data-ir'); });
   document.addEventListener('keydown', e => { const b = e.target.closest && e.target.closest('[data-ir]'); if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); location.href = 'olho/#' + b.getAttribute('data-ir'); } });
   // Tema
   const raiz = document.documentElement;
   try { const t = localStorage.getItem('demeter-tema'); if (t) raiz.setAttribute('data-theme', t); } catch (e) {}
-  document.getElementById('tema').addEventListener('click', () => {
+  const alternar = () => {
     const escuro = raiz.getAttribute('data-theme') === 'dark' || (!raiz.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
     const novo = escuro ? 'light' : 'dark'; raiz.setAttribute('data-theme', novo);
     try { localStorage.setItem('demeter-tema', novo); } catch (e) {}
-  });
+  };
+  ['tema', 'tema2'].forEach(id => { const b = document.getElementById(id); if (b) b.addEventListener('click', alternar); });
 })();
 </script>
 <script>
